@@ -12,6 +12,7 @@
   users = {
     users.andrew = {
       isNormalUser = true;
+      shell = pkgs.fish;
       extraGroups = [ "wheel" ];
       packages = with pkgs; [
       ];
@@ -22,11 +23,31 @@
     users.root.passwordFile = config.sops.secrets.password.path;
   };
 
-  home-manager.users.andrew = {
-    programs.git = {
+  programs = {
+    fish = {
       enable = true;
-      userEmail = "andrew@a-jackson.co.uk";
-      userName = "Andrew Jackson";
+      vendor = {
+        completions.enable = true;
+        config.enable = true;
+        functions.enable = true;
+      };
+    };
+  };
+
+  home-manager.users.andrew = {
+    programs = {
+      git = {
+        enable = true;
+        userEmail = "andrew@a-jackson.co.uk";
+        userName = "Andrew Jackson";
+      };
+
+      fish = {
+        enable = true;
+        interactiveShellInit = ''
+          set fish_greeting # Disable greeting
+        '';
+      };
     };
 
     home.stateVersion = "23.05";
