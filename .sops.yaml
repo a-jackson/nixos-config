@@ -1,0 +1,11 @@
+
+keys:
+  - &andrew 53B0B8FAA9B9D22BA74CBF65A846782DB3E2C28E
+  - &laptop age1hzmeyxc78hrgn3p7cjlzvud03gqrdtnr5785sg855ltwwjywny4qkxe77w
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - pgp:
+      - *andrew
+      age:
+      - *laptop
