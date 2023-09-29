@@ -17,6 +17,8 @@
     networkmanager.enable = true;
   };
 
+  services.tailscale.enable = true;
+
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
 
