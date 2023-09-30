@@ -41,6 +41,7 @@
     {
       nixosConfigurations = {
         laptop = systemConfig "laptop";
+        server = systemConfig "server";
       };
     };
 }
