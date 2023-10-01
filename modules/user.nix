@@ -1,4 +1,4 @@
-{ pkgs, home-manager, config, ... }:
+{ pkgs, home-manager, impermanence, config, ... }:
 {
   imports = [
     home-manager.nixosModules.home-manager
@@ -35,6 +35,8 @@
   };
 
   home-manager.users.andrew = {
+    imports = [ impermanence.nixosModules.home-manager.impermanence ];
+
     programs = {
       git = {
         enable = true;
@@ -48,6 +50,20 @@
           set fish_greeting # Disable greeting
         '';
       };
+
+      ssh = {
+        enable = true;
+      };
+    };
+
+    home.persistence."/persist/home/andrew" = {
+      allowOther = true;
+      directories = [
+        "repos"
+        ".local/share/keyrings"
+        ".ssh"
+        ".config/gh"
+      ];
     };
 
     home.stateVersion = "23.05";

@@ -33,6 +33,8 @@
     keyMap = "uk";
   };
 
+  programs.fuse.userAllowOther = true;
+
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
