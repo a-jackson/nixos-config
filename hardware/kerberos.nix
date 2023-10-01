@@ -12,20 +12,6 @@
   boot.extraModulePackages = [ ];
   boot.supportedFilesystems = [ "btrfs" ];
 
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-label/boot";
-      fsType = "vfat";
-    };
-
-
-  fileSystems."/home" =
-    {
-      device = "/dev/mapper/kerberos";
-      fsType = "btrfs";
-      options = [ "defaults" "compress-force=zstd" "ssd" "subvol=home" ];
-    };
-
   swapDevices = [{
     device = "/swap/swapfile";
     size = 4096;

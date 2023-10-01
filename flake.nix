@@ -40,7 +40,7 @@
     in
     {
       nixosConfigurations = {
-        laptop = systemConfig "laptop";
+        kerberos = systemConfig "kerberos";
         server = systemConfig "server";
       };
     };
