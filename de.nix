@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
   imports = [
-    ./packages/gnome.nix
-    ./packages/coding.nix
+    ./modules/gnome.nix
+    ./modules/coding.nix
   ];
 
   environment.systemPackages = with pkgs; [

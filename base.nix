@@ -1,8 +1,9 @@
 { pkgs, nixpkgs, ... }:
 {
   imports = [
-    ./packages/sops.nix
-    ./packages/user.nix
+    ./modules/sops.nix
+    ./modules/user.nix
+    ./modules/ephemeral-btrfs.nix
     ./impermanence/system.nix
   ];
 

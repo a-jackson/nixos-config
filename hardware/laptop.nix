@@ -12,41 +12,12 @@
   boot.extraModulePackages = [ ];
   boot.supportedFilesystems = [ "btrfs" ];
 
-  fileSystems."/" =
-    {
-      device = "none";
-      fsType = "tmpfs";
-      neededForBoot = true;
-    };
-
   fileSystems."/boot" =
     {
-      device = "/dev/disk/by-uuid/C828-8CDB";
+      device = "/dev/disk/by-label/boot";
       fsType = "vfat";
     };
 
-  fileSystems."/nix" =
-    {
-      device = "/dev/mapper/kerberos";
-      fsType = "btrfs";
-      options = [ "defaults" "compress-force=zstd" "noatime" "ssd" "subvol=nix" ];
-      neededForBoot = true;
-    };
-
-  fileSystems."/persist" =
-    {
-      device = "/dev/mapper/kerberos";
-      fsType = "btrfs";
-      options = [ "defaults" "compress-force=zstd" "noatime" "ssd" "subvol=persist" ];
-      neededForBoot = true;
-    };
-
-  fileSystems."/etc/nixos" =
-    {
-      device = "/dev/mapper/kerberos";
-      fsType = "btrfs";
-      options = [ "defaults" "compress-force=zstd" "noatime" "ssd" "subvol=nixos-config" ];
-    };
 
   fileSystems."/home" =
     {
@@ -54,12 +25,6 @@
       fsType = "btrfs";
       options = [ "defaults" "compress-force=zstd" "ssd" "subvol=home" ];
     };
-
-  fileSystems."/swap" = {
-    device = "/dev/mapper/kerberos";
-    fsType = "btrfs";
-    options = [ "subvol=swap" "noatime" "compress=lzo" ];
-  };
 
   swapDevices = [{
     device = "/swap/swapfile";
