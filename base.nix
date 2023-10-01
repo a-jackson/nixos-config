@@ -19,6 +19,11 @@
   };
 
   services.tailscale.enable = true;
+  environment.persistence."/persist" = {
+    directories = [
+      "/var/lib/tailscale"
+    ];
+  };
 
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
@@ -32,6 +37,7 @@
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       warn-dirty = false;
+      trusted-users = [ "root" "@wheel" ];
     };
 
     gc = {
