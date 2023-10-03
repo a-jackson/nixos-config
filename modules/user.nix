@@ -16,11 +16,11 @@
       extraGroups = [ "wheel" ];
       packages = with pkgs; [
       ];
-      passwordFile = config.sops.secrets.password.path;
+      hashedPasswordFile = config.sops.secrets.password.path;
     };
 
     mutableUsers = false;
-    users.root.passwordFile = config.sops.secrets.password.path;
+    users.root.hashedPasswordFile = config.sops.secrets.password.path;
   };
 
   programs = {
@@ -63,6 +63,8 @@
         ".local/share/keyrings"
         ".ssh"
         ".config/gh"
+        ".vscode"
+        ".mozilla"
       ];
     };
 
