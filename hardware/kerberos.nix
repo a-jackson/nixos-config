@@ -12,6 +12,11 @@
   boot.extraModulePackages = [ ];
   boot.supportedFilesystems = [ "btrfs" ];
 
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-label/boot";
+      fsType = "vfat";
+    };
+
   swapDevices = [{
     device = "/swap/swapfile";
     size = 4096;
