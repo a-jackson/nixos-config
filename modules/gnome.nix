@@ -26,7 +26,8 @@
       "org/gnome/shell" = {
         favorite-apps = [
           "firefox.desktop"
-          "code.desktop"
+          "codium.desktop"
+          "org.gnome.Console.desktop"
         ];
         welcome-dialog-last-shown-version = "44.3";
       };

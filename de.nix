@@ -10,7 +10,7 @@
 
   users.users.andrew = {
     packages = with pkgs; [
-      firefox
+      firefox-wayland
     ];
   };
 }
