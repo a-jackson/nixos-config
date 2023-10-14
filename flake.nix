@@ -26,8 +26,8 @@
 
   outputs = { self, nixpkgs, home-manager, impermanence, sops-nix }@inputs:
     let
-      systemConfig = hostname: nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+      systemConfig = hostname: system: nixpkgs.lib.nixosSystem {
+        system = system;
         specialArgs = inputs;
         modules = [
           ./${hostname}.nix
@@ -40,8 +40,10 @@
     in
     {
       nixosConfigurations = {
-        kerberos = systemConfig "kerberos";
-        server = systemConfig "server";
+        kerberos = systemConfig "kerberos" "x86_64-linux";
+        server = systemConfig "server" "x86_64-linux";
+        desktop = systemConfig "desktop" "x86_64-linux";
+        cloud = systemConfig "cloud" "aarch64-linux";
       };
     };
 }

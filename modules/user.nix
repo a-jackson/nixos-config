@@ -80,6 +80,7 @@
       directories = [
         "repos"
         ".local/share/keyrings"
+        ".gnupg"
         ".ssh"
         ".config/VSCodium"
         ".mozilla"
