@@ -27,7 +27,7 @@
   outputs = { self, nixpkgs, home-manager, impermanence, sops-nix }@inputs:
     let
       systemConfig = hostname: system: nixpkgs.lib.nixosSystem {
-        system = system;
+        inherit system;
         specialArgs = inputs;
         modules = [
           ./${hostname}.nix
@@ -37,6 +37,26 @@
           }
         ];
       };
+      shell = (system:
+        let
+          overlays = [ ];
+          pkgs = import nixpkgs {
+            inherit system overlays;
+          };
+          buildInputs = with pkgs; [
+            sops
+            ssh-to-age
+            gnupg
+            pinentry
+          ];
+        in
+        with pkgs;
+        {
+          default = mkShell {
+            inherit buildInputs;
+          };
+        }
+      );
     in
     {
       nixosConfigurations = {
@@ -45,5 +65,7 @@
         desktop = systemConfig "desktop" "x86_64-linux";
         cloud = systemConfig "cloud" "aarch64-linux";
       };
+
+      devShells.x86_64-linux = shell "x86_64-linux";
     };
 }
