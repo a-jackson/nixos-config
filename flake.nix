@@ -37,6 +37,14 @@
           }
         ];
       };
+      homeConfig = hostname: system: home-manager.lib.homeManagerConfiguration {
+          modules = [
+            impermanence.nixosModules.home-manager.impermanence
+            ./home/${hostname}.nix
+          ];
+          pkgs = nixpkgs.legacyPackages.${system};
+          extraSpecialArgs = { inherit inputs; };
+        };
       shell = (system:
         let
           overlays = [ ];
@@ -64,6 +72,10 @@
         server = systemConfig "server" "x86_64-linux";
         desktop = systemConfig "desktop" "x86_64-linux";
         cloud = systemConfig "cloud" "aarch64-linux";
+      };
+
+      homeConfigurations = {
+        "andrew@kerberos" = homeConfig "kerberos" "x86_64-linux";
       };
 
       devShells.x86_64-linux = shell "x86_64-linux";

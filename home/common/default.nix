@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, ... }:
 {
   programs = {
     git = {
@@ -26,8 +26,6 @@
     gh.enable = true;
     gh-dash.enable = true;
 
-    home-manager.enable = true;
-
     fish = {
       enable = true;
       interactiveShellInit = ''
@@ -41,6 +39,10 @@
       enable = true;
     };
   };
+
+  home.packages = with pkgs; [
+    home-manager
+  ];
 
   home.persistence."/persist/home/andrew" = {
     allowOther = true;
@@ -56,5 +58,9 @@
     ];
   };
 
-  home.stateVersion = "23.05";
+  home = {
+    username = lib.mkDefault "andrew";
+    homeDirectory = lib.mkDefault "/home/${config.home.username}";
+    stateVersion = "23.05";
+  };
 }
