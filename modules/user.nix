@@ -31,66 +31,17 @@
         config.enable = true;
         functions.enable = true;
       };
-      interactiveShellInit = "
-        set __fish_git_prompt_show_informative_status 1
-        set __fish_git_prompt_showupstream 1
-      ";
     };
   };
 
-  home-manager.users.andrew = {
-    imports = [ impermanence.nixosModules.home-manager.impermanence ];
-
-    programs = {
-      git = {
-        enable = true;
-        userEmail = "andrew@a-jackson.co.uk";
-        userName = "Andrew Jackson";
-        aliases = {
-          co = "checkout";
-          ci = "commit";
-          br = "branch";
-          st = "status";
-          sw = "switch";
-          amend = "commit --amend --no-edit";
-          branches = "branch --all";
-          hist = "log --decorate --oneline --graph";
-          nuke = "clean -dfx";
-          fixup = "!sh -c '(git diff-files --quiet || (echo Unstaged changes, please commit or stash with --keep-index; exit 1)) && COMMIT=$(git rev-parse $1) && git commit --fixup=$COMMIT && git -c sequence.editor=: rebase -i --autosquash $COMMIT~1' -";
-          pu = "!f() { BRANCH=$(git head) && git push --set-upstream origin $BRANCH; }; f";
-          head = "rev-parse --abbrev-ref HEAD";
-          localtrim = "!f() { git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done; }; f";
-          pf = "push --force-with-lease";
-        };
-      };
-
-      gh.enable = true;
-      gh-dash.enable = true;
-
-      fish = {
-        enable = true;
-        interactiveShellInit = ''
-          set fish_greeting # Disable greeting
-        '';
-      };
-
-      ssh = {
-        enable = true;
-      };
-    };
-
-    home.persistence."/persist/home/andrew" = {
-      allowOther = true;
-      directories = [
-        "repos"
-        ".local/share/keyrings"
-        ".gnupg"
-        ".ssh"
-        ".config/VSCodium"
-        ".mozilla"
+  home-manager.users.andrew =
+    let
+      hostname = config.networking.hostName;
+    in
+    {
+      imports = [
+        impermanence.nixosModules.home-manager.impermanence
+        ../home/${hostname}.nix
       ];
     };
-
-    home.stateVersion = "23.05";
-  };
 }
