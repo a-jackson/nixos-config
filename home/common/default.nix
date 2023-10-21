@@ -43,7 +43,13 @@
     ssh = {
       enable = true;
     };
+
+    gpg = {
+      enable = true;
+    };
   };
+
+  services.gpg-agent.enable = true;
 
   home.packages = with pkgs; [
     home-manager
@@ -53,13 +59,8 @@
     allowOther = true;
     directories = [
       "repos"
-      ".local/share/keyrings"
       ".gnupg"
       ".ssh"
-      ".mozilla"
-    ];
-    files = [
-      ".config/monitors.xml"
     ];
   };
 

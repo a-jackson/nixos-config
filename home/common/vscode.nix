@@ -13,6 +13,10 @@
     }];
   };
 
+  home.packages = with pkgs; [
+    sops
+    nixpkgs-fmt
+  ];
 
   home.persistence."/persist/home/andrew" = {
     allowOther = true;
