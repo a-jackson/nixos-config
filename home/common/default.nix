@@ -51,6 +51,9 @@
       ".ssh"
       ".mozilla"
     ];
+    files = [
+      ".config/monitors.xml"
+    ];
   };
 
   home.stateVersion = "23.05";
