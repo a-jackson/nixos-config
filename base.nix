@@ -14,7 +14,7 @@
 
   networking = {
     useDHCP = nixpkgs.lib.mkDefault true;
-    firewall.enable = false;
+    firewall.enable = true;
     networkmanager.enable = true;
   };
 

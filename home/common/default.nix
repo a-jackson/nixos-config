@@ -61,6 +61,8 @@
       "repos"
       ".gnupg"
       ".ssh"
+      ".cache/flatpak"
+      ".local/share/flatpak"
       "documents"
       "desktop"
       "downloads"
