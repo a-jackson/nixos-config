@@ -42,6 +42,13 @@
       imports = [
         impermanence.nixosModules.home-manager.impermanence
         ../home/${hostname}.nix
+        {
+          home = {
+            username = lib.mkDefault "andrew";
+            homeDirectory = lib.mkDefault "/home/andrew";
+            stateVersion = "23.05";
+          };
+        }
       ];
     };
 }

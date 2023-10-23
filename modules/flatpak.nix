@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   services.flatpak.enable = true;
   environment.etc = {
@@ -8,7 +8,7 @@
     };
   };
 
-  users.users.andrew.extraGroups = [ "flatpak" ];
+  users.users.${config.home.username}.extraGroups = [ "flatpak" ];
 
   environment.persistence."/persist" = {
     directories = [

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
 
   programs.vscode = {
@@ -18,7 +18,7 @@
     nixpkgs-fmt
   ];
 
-  home.persistence."/persist/home/andrew" = {
+  home.persistence."/persist${config.home.homeDirectory}" = {
     allowOther = true;
     directories = [
       ".config/VSCodium"

@@ -37,10 +37,17 @@
           }
         ];
       };
-      homeConfig = hostname: system: home-manager.lib.homeManagerConfiguration {
+      homeConfig = username: hostname: system: home-manager.lib.homeManagerConfiguration {
           modules = [
             impermanence.nixosModules.home-manager.impermanence
             ./home/${hostname}.nix
+            {
+              home = {
+                username = nixpkgs.lib.mkDefault "${username}";
+                homeDirectory = nixpkgs.lib.mkDefault "/home/${username}";
+                stateVersion = "23.05";
+              };
+            }
           ];
           pkgs = nixpkgs.legacyPackages.${system};
           extraSpecialArgs = { inherit inputs; };
@@ -75,7 +82,8 @@
       };
 
       homeConfigurations = {
-        "andrew@kerberos" = homeConfig "kerberos" "x86_64-linux";
+        "andrew@kerberos" = homeConfig "andrew" "kerberos" "x86_64-linux";
+        "andrew@work" = homeConfig "andrew" "work" "x86_64-linux";
       };
 
       devShells.x86_64-linux = shell "x86_64-linux";
