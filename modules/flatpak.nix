@@ -8,7 +8,7 @@
     };
   };
 
-  users.users.${config.home.username}.extraGroups = [ "flatpak" ];
+  users.users.andrew.extraGroups = [ "flatpak" ];
 
   environment.persistence."/persist" = {
     directories = [
