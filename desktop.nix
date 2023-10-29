@@ -10,4 +10,5 @@
     allowedUDPPorts = [ 21027 22000 ];
   };
 
+  nixpkgs.config.allowUnfree = true;
 }
