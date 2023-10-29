@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-export NIX_SSHOPTS="-A"
+export NIX_SSHOPTS="-At"
 
 build_remote=false
 
@@ -11,5 +11,5 @@ if [ -z "$hosts" ]; then
 fi
 
 for host in ${hosts//,/ }; do
-    nixos-rebuild --flake .\#$host switch --target-host $host --use-remote-sudo --use-substitutes $@
+    nixos-rebuild --flake .\#$host boot --target-host $host --use-remote-sudo --use-substitutes $@
 done
