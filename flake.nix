@@ -38,20 +38,20 @@
         ];
       };
       homeConfig = username: hostname: system: home-manager.lib.homeManagerConfiguration {
-          modules = [
-            impermanence.nixosModules.home-manager.impermanence
-            ./home/${hostname}.nix
-            {
-              home = {
-                username = nixpkgs.lib.mkDefault "${username}";
-                homeDirectory = nixpkgs.lib.mkDefault "/home/${username}";
-                stateVersion = "23.05";
-              };
-            }
-          ];
-          pkgs = nixpkgs.legacyPackages.${system};
-          extraSpecialArgs = { inherit inputs; };
-        };
+        modules = [
+          impermanence.nixosModules.home-manager.impermanence
+          ./home/${hostname}.nix
+          {
+            home = {
+              username = nixpkgs.lib.mkDefault "${username}";
+              homeDirectory = nixpkgs.lib.mkDefault "/home/${username}";
+              stateVersion = "23.05";
+            };
+          }
+        ];
+        pkgs = nixpkgs.legacyPackages.${system};
+        extraSpecialArgs = { inherit inputs; };
+      };
       shell = (system:
         let
           overlays = [ ];
