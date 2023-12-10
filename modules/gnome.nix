@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   services = {
     xserver = {
@@ -20,4 +20,10 @@
   programs.dconf.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    libreoffice
+    hunspell
+    hunspellDicts.en_GB-ise
+  ];
 }
