@@ -77,6 +77,7 @@
       nixosConfigurations = {
         kerberos = systemConfig "kerberos" "x86_64-linux";
         server = systemConfig "server" "x86_64-linux";
+        apps = systemConfig "apps" "x86_64-linux";
         desktop = systemConfig "desktop" "x86_64-linux";
         cloud = systemConfig "cloud" "aarch64-linux";
       };
