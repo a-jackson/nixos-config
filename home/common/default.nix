@@ -4,20 +4,6 @@
     ./shell.nix
   ];
 
-  home.persistence."/persist/home/${config.home.username}" = {
-    allowOther = true;
-    directories = [
-      "repos"
-      ".gnupg"
-      ".ssh"
-      ".cache/flatpak"
-      ".local/share/flatpak"
-      "documents"
-      "desktop"
-      "downloads"
-    ];
-  };
-
   xdg.userDirs = {
     enable = true;
     createDirectories = true;

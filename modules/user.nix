@@ -40,7 +40,6 @@
     in
     {
       imports = [
-        impermanence.nixosModules.home-manager.impermanence
         ../home/${hostname}.nix
         {
           home = {

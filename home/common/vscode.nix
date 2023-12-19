@@ -17,11 +17,4 @@
     sops
     nixpkgs-fmt
   ];
-
-  home.persistence."/persist${config.home.homeDirectory}" = {
-    allowOther = true;
-    directories = [
-      ".config/VSCodium"
-    ];
-  };
 }

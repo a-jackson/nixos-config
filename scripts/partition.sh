@@ -31,15 +31,17 @@ mount -t btrfs /dev/disk/by-label/$NAME -o $MOUNT_OPTS /tmp/root
 
 cd /tmp/root
 btrfs subvolume create root
+btrfs subvolume create home
 btrfs subvolume create nix
 btrfs subvolume create persist
 btrfs subvolume create swap
 
 mount -t btrfs /dev/disk/by-label/$NAME -o $MOUNT_OPTS,subvol=root /mnt
-mkdir /mnt/{boot,nix,persist,swap}
+mkdir /mnt/{boot,nix,home,persist,swap}
 
 mount -t btrfs /dev/disk/by-label/$NAME -o $MOUNT_OPTS,subvol=nix /mnt/nix
 mount -t btrfs /dev/disk/by-label/$NAME -o $MOUNT_OPTS,subvol=persist /mnt/persist
+mount -t btrfs /dev/disk/by-label/$NAME -o $MOUNT_OPTS,subvol=home /mnt/home
 mount -t btrfs /dev/disk/by-label/$NAME -o $MOUNT_OPTS,subvol=swap /mnt/swap
 mount /dev/disk/by-partlabel/ESP /mnt/boot
 

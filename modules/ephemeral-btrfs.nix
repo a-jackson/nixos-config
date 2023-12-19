@@ -57,6 +57,13 @@ in
         device = "/dev/disk/by-label/${config.rootDiskLabel}";
         fsType = "btrfs";
         options = [ "subvol=root" "compress=zstd" ];
+        neededForBoot = true;
+      };
+
+      "/home" = {
+        device = "/dev/disk/by-label/${config.rootDiskLabel}";
+        fsType = "btrfs";
+        options = [ "subvol=home" "compress=zstd" ];
       };
 
       "/nix" = {

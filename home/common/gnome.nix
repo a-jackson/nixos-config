@@ -28,14 +28,4 @@
   };
 
   services.kdeconnect.enable = true;
-  home.persistence."/persist/home/andrew" = {
-    allowOther = true;
-    directories = [
-      ".local/share/keyrings"
-      ".config/kdeconnect"
-    ];
-    files = [
-      ".config/monitors.xml"
-    ];
-  };
 }

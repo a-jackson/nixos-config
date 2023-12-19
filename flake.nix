@@ -39,7 +39,6 @@
       };
       homeConfig = username: hostname: system: home-manager.lib.homeManagerConfiguration {
         modules = [
-          impermanence.nixosModules.home-manager.impermanence
           ./home/${hostname}.nix
           {
             home = {
@@ -79,11 +78,11 @@
         server = systemConfig "server" "x86_64-linux";
         apps = systemConfig "apps" "x86_64-linux";
         desktop = systemConfig "desktop" "x86_64-linux";
-        cloud = systemConfig "cloud" "aarch64-linux";
       };
 
       homeConfigurations = {
         "andrew@kerberos" = homeConfig "andrew" "kerberos" "x86_64-linux";
+        "andrew@desktop" = homeConfig "andrew" "desktop" "x86_64-linux";
         "andrew@work" = homeConfig "andrew" "work" "x86_64-linux";
       };
 
