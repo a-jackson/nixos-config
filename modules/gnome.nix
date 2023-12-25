@@ -26,4 +26,11 @@
     hunspell
     hunspellDicts.en_GB-ise
   ];
+
+  services.printing.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
 }

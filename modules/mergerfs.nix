@@ -68,22 +68,3 @@ in
       };
     };
 }
-
-# [Unit]
-# Description=Dummy mergerfs service
-# Requires=prepare-for-mergerfs.service
-# After=prepare-for-mergerfs.service
-
-# [Service]
-# Type=simple
-# KillMode=none
-# ExecStart=/usr/bin/mergerfs \
-#   -f \
-#   -o OPTIONS \
-#   /mnt/filesystem0:/mnt/filesystem1 \
-#   /mnt/mergerfs
-# ExecStop=/bin/fusermount -uz /mnt/mergerfs
-# Restart=on-failure
-
-# [Install]
-# WantedBy=default.target
