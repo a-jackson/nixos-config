@@ -16,6 +16,10 @@ in
     cloudflare_credentials = {
       sopsFile = ./secrets/common.yaml;
     };
+    paperless_env = {
+      sopsFile = ./apps/paperless/.env;
+      format = "dotenv";
+    };
   };
 
   networking = {
@@ -188,6 +192,12 @@ in
     etc = {
       "docker-compose/media/docker-compose.yml" = {
         source = ./apps/media/docker-compose.yml;
+      };
+      "docker-compose/paperless/docker-compose.yml" = {
+        source = ./apps/paperless/docker-compose.yml;
+      };
+      "docker-compose/paperless/.env" = {
+        source = config.sops.secrets.paperless_env.path;
       };
     };
   };

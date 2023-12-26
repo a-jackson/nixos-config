@@ -13,3 +13,9 @@ creation_rules:
       - *laptop
       - *server
       - *desktop
+  - path_regex: apps/.*/*.env$
+    key_groups:
+    - pgp:
+      - *andrew
+      age:
+      - *server

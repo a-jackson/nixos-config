@@ -1,0 +1,69 @@
+version: '3.5'
+
+services:
+  broker:
+    image: docker.io/library/redis:7
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+
+  db:
+    image: docker.io/library/postgres:14
+    restart: unless-stopped
+    volumes:
+      - "pgdata:/var/lib/postgresql/data"
+    env_file:
+      - .env
+
+  paperless:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "-S", "--max-time", "2", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - data:/usr/src/paperless/data
+      - media:/usr/src/paperless/media
+      - ./export:/usr/src/paperless/export
+      - ./consume:/usr/src/paperless/consume
+
+      - "./paperless-ng/data:/usr/src/paperless/data"
+      - "/mnt/user/documents/paperless/media:/usr/src/paperless/media"
+      - "/mnt/user/documents/paperless/consume:/usr/src/paperless/consume"
+    env_file:
+      - .env
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBHOST: db
+      PAPERLESS_TIME_ZONE: "Europe/London"
+      USERMAP_UID: "99"
+      USERMAP_GID: "100"
+      PAPERLESS_DBNAME: "${POSTGRES_DB}"
+      PAPERLESS_DBUSER: "${POSTGRES_USER}"
+      PAPERLESS_DBPASS: "${POSTGRES_PASSWORD}"
+      PAPERLESS_FILENAME_FORMAT: "{created_year}/{correspondent}/{title}"
+      PAPERLESS_CONSUMER_POLLING: "120"
+      PAPERLESS_CONSUMER_RECURSIVE: "true"
+      PAPERLESS_CONSUMER_DELETE_DUPLICATES: "true"
+      PAPERLESS_URL: "https://paperless.ajackson.dev"
+
+  backup:
+    image: prodrigestivill/postgres-backup-local
+    env_file:
+      - .env
+    environment:
+      POSTGRES_HOST: db
+      SCHEDULE: "@daily"
+      BACKUP_NUM_KEEP: 7
+      BACKUP_DIR: /db_dumps
+    volumes:
+      - /persist/backups/paperless:/db_dumps
+    depends_on:
+      - database
