@@ -4,6 +4,7 @@
     ./modules/sops.nix
     ./modules/user.nix
     ./modules/ephemeral-btrfs.nix
+    ./modules/auto-upgrade.nix
     ./impermanence/system.nix
   ];
 

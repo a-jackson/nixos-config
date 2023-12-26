@@ -3,7 +3,7 @@ set -e
 DISK=$1
 NAME=$2
 
-MOUNT_OPTS=compress-force=zstd,noatime,ssd
+MOUNT_OPTS=compress-force=zstd,ssd
 
 # partition table
 parted $DISK -- mklabel gpt
