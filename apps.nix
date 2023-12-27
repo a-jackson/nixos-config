@@ -42,6 +42,15 @@ in
   ];
 
   services = {
+    restic_backups = {
+      daily = {
+        paths = [
+          "/persist"
+        ];
+        repo_key = "restic_apps_repo";
+      };
+    };
+
     jellyseerr = {
       enable = true;
       openFirewall = true;

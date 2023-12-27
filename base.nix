@@ -5,6 +5,7 @@
     ./modules/user.nix
     ./modules/ephemeral-btrfs.nix
     ./modules/auto-upgrade.nix
+    ./modules/restic.nix
     ./impermanence/system.nix
   ];
 
@@ -53,6 +54,7 @@
   environment.systemPackages = with pkgs; [
     git
     vim
+    jq
   ];
 
   nixpkgs.config.allowUnfree = true;
