@@ -199,6 +199,12 @@ in
     };
 
     etc = {
+      "docker-compose/immich/docker-compose.yml" = {
+        source = ./apps/immich/docker-compose.yml;
+      };
+      "docker-compose/immich/.env" = {
+        source = ./apps/immich/.env;
+      };
       "docker-compose/media/docker-compose.yml" = {
         source = ./apps/media/docker-compose.yml;
       };
@@ -215,10 +221,17 @@ in
     "/mnt/user/appdata" = {
       device = "triton.home:/mnt/user/appdata";
       fsType = "nfs";
+      options = [ "x-systemd.automount" "noauto" ];
     };
     "/mnt/user/video" = {
       device = "triton.home:/mnt/user/video";
       fsType = "nfs";
+      options = [ "x-systemd.automount" "noauto" ];
+    };
+    "/mnt/user/images" = {
+      device = "triton.home:/mnt/user/images";
+      fsType = "nfs";
+      options = [ "x-systemd.automount" "noauto" ];
     };
   };
 }

@@ -66,4 +66,4 @@ services:
     volumes:
       - /persist/backups/paperless:/db_dumps
     depends_on:
-      - database
+      - db
