@@ -33,10 +33,6 @@ services:
       - media:/usr/src/paperless/media
       - ./export:/usr/src/paperless/export
       - ./consume:/usr/src/paperless/consume
-
-      - "./paperless-ng/data:/usr/src/paperless/data"
-      - "/mnt/user/documents/paperless/media:/usr/src/paperless/media"
-      - "/mnt/user/documents/paperless/consume:/usr/src/paperless/consume"
     env_file:
       - .env
     environment:
@@ -67,3 +63,9 @@ services:
       - /persist/backups/paperless:/db_dumps
     depends_on:
       - db
+
+volumes:
+  redisdata:
+  pgdata:
+  data:
+  media:

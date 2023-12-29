@@ -24,14 +24,14 @@ in
 
   networking = {
     interfaces = {
-      enp57s0u1u2c2.ipv4.addresses = [{
+      eno1.ipv4.addresses = [{
         address = "192.168.1.205";
         prefixLength = 24;
       }];
     };
     defaultGateway = {
       address = "192.168.1.1";
-      interface = "enp57s0u1u2c2";
+      interface = "eno1";
     };
   };
 
@@ -141,7 +141,7 @@ in
           forceSSL = true;
           useACMEHost = "${internal_domain}";
           locations."/" = {
-            proxyPass = "http://pisvrapp03:2283";
+            proxyPass = "http://charon:2283";
             proxyWebsockets = true;
           };
         };
@@ -150,6 +150,14 @@ in
           useACMEHost = "${public_domain}";
           locations."/" = {
             proxyPass = "http://localhost:3000";
+            proxyWebsockets = true;
+          };
+        };
+        "paperless.${internal_domain}" = {
+          forceSSL = true;
+          useACMEHost = "${internal_domain}";
+          locations."/" = {
+            proxyPass = "http://localhost:8000";
             proxyWebsockets = true;
           };
         };
