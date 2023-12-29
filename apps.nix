@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, leng, ... }:
 let
   overlay-jellyseer = final: prev: {
     jellyseerr = final.callPackage ./packages/jellyseerr { };
@@ -10,6 +10,7 @@ in
   imports = [
     ./base.nix
     ./modules/ssh.nix
+    leng.nixosModules.default
   ];
 
   sops.secrets = {
@@ -41,7 +42,20 @@ in
     overlay-jellyseer
   ];
 
+  systemd.services.leng.serviceConfig.AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+
   services = {
+    leng = {
+      enable = true;
+      configuration = {
+        customdnsrecords = [
+          "*.ajackson.dev IN A 192.168.1.205"
+          "triton.home IN A 192.168.1.75"
+        ];
+        blocking.sourcesStore = "/var/lib/leng-sources";
+      };
+    };
+
     restic_backups = {
       daily = {
         paths = [
@@ -203,6 +217,7 @@ in
         "/var/lib/acme"
         "/var/lib/docker"
         "/var/lib/private/jellyseerr"
+        "/var/lib/private/leng-sources"
       ];
     };
 

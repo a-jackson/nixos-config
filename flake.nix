@@ -22,9 +22,16 @@
         nixpkgs-stable.follows = "nixpkgs";
       };
     };
+
+    leng = {
+      url = "github:cottand/leng/v1.5.0";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, impermanence, sops-nix }@inputs:
+  outputs = { self, nixpkgs, home-manager, impermanence, sops-nix, leng }@inputs:
     let
       systemConfig = hostname: system: nixpkgs.lib.nixosSystem {
         inherit system;
