@@ -24,14 +24,14 @@ in
 
   networking = {
     interfaces = {
-      enp1s0.ipv4.addresses = [{
+      enp57s0u1u2c2.ipv4.addresses = [{
         address = "192.168.1.205";
         prefixLength = 24;
       }];
     };
     defaultGateway = {
       address = "192.168.1.1";
-      interface = "enp1s0";
+      interface = "enp57s0u1u2c2";
     };
   };
 
