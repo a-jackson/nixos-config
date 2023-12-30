@@ -13,6 +13,10 @@ in
     leng.nixosModules.default
   ];
 
+  networking.firewall = {
+    allowedTCPPorts = [ 443 ];
+  };
+
   sops.secrets = {
     cloudflare_credentials = {
       sopsFile = ./secrets/common.yaml;
