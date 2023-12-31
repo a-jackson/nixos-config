@@ -17,7 +17,6 @@
           "/persist"
           "/home"
         ];
-        repo_key = "restic_kerberos_repo";
       };
     };
   };

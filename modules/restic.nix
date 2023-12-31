@@ -16,9 +16,6 @@ in
             type = types.listOf types.str;
             default = [ ];
           };
-          repo_key = mkOption {
-            type = types.str;
-          };
         };
       }));
     };
@@ -32,10 +29,10 @@ in
       restic_env = {
         sopsFile = ../secrets/restic.yaml;
       };
-    } // (flip mapAttrs' cfg (name: backupCfg:
-      nameValuePair "${backupCfg.repo_key}" {
+      restic_repo = {
         sopsFile = ../secrets/restic.yaml;
-      }));
+      };
+    };
 
     services.restic.backups = (
       (flip mapAttrs' cfg (name: backupCfg:
@@ -43,7 +40,7 @@ in
           initialize = true;
 
           environmentFile = config.sops.secrets.restic_env.path;
-          repositoryFile = config.sops.secrets."${backupCfg.repo_key}".path;
+          repositoryFile = config.sops.secrets.restic_repo.path;
           passwordFile = config.sops.secrets.restic_password.path;
 
           paths = backupCfg.paths;
@@ -53,6 +50,7 @@ in
             "--keep-daily 7"
             "--keep-weekly 5"
             "--keep-monthly 12"
+            "--host ${config.networking.hostName}"
           ];
         }))
     );

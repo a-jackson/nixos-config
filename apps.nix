@@ -65,7 +65,6 @@ in
         paths = [
           "/persist"
         ];
-        repo_key = "restic_apps_repo";
       };
     };
 
