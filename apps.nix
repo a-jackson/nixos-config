@@ -82,104 +82,31 @@ in
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
 
-      virtualHosts = {
-        "jellyfin.${public_domain}" = {
-          forceSSL = true;
-          useACMEHost = "${public_domain}";
-          locations."/" = {
-            proxyPass = "http://triton:8096";
-            proxyWebsockets = true;
+      virtualHosts =
+        let
+          host = acmeHost: proxyPass: {
+            forceSSL = true;
+            useACMEHost = acmeHost;
+            locations."/" = {
+              proxyPass = proxyPass;
+              proxyWebsockets = true;
+            };
           };
+        in
+        {
+          "jellyfin.${public_domain}" = host public_domain "http://triton:8096";
+          "requests.${public_domain}" = host public_domain "http://localhost:5055";
+          "nextcloud.${public_domain}" = host public_domain "https://triton:4443";
+          "audiobooks.${internal_domain}" = host internal_domain "http://triton:13378";
+          "bazarr.${internal_domain}" = host internal_domain "http://localhost:6767";
+          "radarr.${internal_domain}" = host internal_domain "http://localhost:7878";
+          "sonarr.${internal_domain}" = host internal_domain "http://localhost:8989";
+          "sabnzbd.${internal_domain}" = host internal_domain "http://triton:8080";
+          "cal.${internal_domain}" = host internal_domain "http://pisvrapp03:5232";
+          "pics.${internal_domain}" = host internal_domain "http://charon:2283";
+          "git.${public_domain}" = host public_domain "http://localhost:3000";
+          "paperless.${internal_domain}" = host internal_domain "http://localhost:8000";
         };
-        "requests.${public_domain}" = {
-          forceSSL = true;
-          useACMEHost = "${public_domain}";
-          locations."/" = {
-            proxyPass = "http://localhost:5055";
-            proxyWebsockets = true;
-          };
-        };
-        "nextcloud.${public_domain}" = {
-          forceSSL = true;
-          useACMEHost = "${public_domain}";
-          locations."/" = {
-            proxyPass = "https://triton:4443";
-            proxyWebsockets = true;
-          };
-        };
-        "audiobooks.${internal_domain}" = {
-          forceSSL = true;
-          useACMEHost = "${internal_domain}";
-          locations."/" = {
-            proxyPass = "http://triton:13378";
-            proxyWebsockets = true;
-          };
-        };
-        "bazarr.${internal_domain}" = {
-          forceSSL = true;
-          useACMEHost = "${internal_domain}";
-          locations."/" = {
-            proxyPass = "http://localhost:6767";
-            proxyWebsockets = true;
-          };
-        };
-        "radarr.${internal_domain}" = {
-          forceSSL = true;
-          useACMEHost = "${internal_domain}";
-          locations."/" = {
-            proxyPass = "http://localhost:7878";
-            proxyWebsockets = true;
-          };
-        };
-        "sonarr.${internal_domain}" = {
-          forceSSL = true;
-          useACMEHost = "${internal_domain}";
-          locations."/" = {
-            proxyPass = "http://localhost:8989";
-            proxyWebsockets = true;
-          };
-        };
-        "sabnzbd.${internal_domain}" = {
-          forceSSL = true;
-          useACMEHost = "${internal_domain}";
-          locations."/" = {
-            proxyPass = "http://triton:8080";
-            proxyWebsockets = true;
-          };
-        };
-        "cal.${internal_domain}" = {
-          forceSSL = true;
-          useACMEHost = "${internal_domain}";
-          locations."/" = {
-            proxyPass = "http://pisvrapp03:5232";
-            proxyWebsockets = true;
-          };
-        };
-        "pics.${internal_domain}" = {
-          forceSSL = true;
-          useACMEHost = "${internal_domain}";
-          locations."/" = {
-            proxyPass = "http://charon:2283";
-            proxyWebsockets = true;
-          };
-        };
-        "git.${public_domain}" = {
-          forceSSL = true;
-          useACMEHost = "${public_domain}";
-          locations."/" = {
-            proxyPass = "http://localhost:3000";
-            proxyWebsockets = true;
-          };
-        };
-        "paperless.${internal_domain}" = {
-          forceSSL = true;
-          useACMEHost = "${internal_domain}";
-          locations."/" = {
-            proxyPass = "http://localhost:8000";
-            proxyWebsockets = true;
-          };
-        };
-      };
     };
   };
 
