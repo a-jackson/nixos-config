@@ -214,6 +214,7 @@ in
   environment = {
     systemPackages = with pkgs; [
       docker-compose
+      nfs-utils
     ];
 
     persistence."/persist" = {
@@ -244,21 +245,36 @@ in
     };
   };
 
-  fileSystems = {
-    "/mnt/user/appdata" = {
-      device = "triton.home:/mnt/user/appdata";
-      fsType = "nfs";
-      options = [ "x-systemd.automount" "noauto" ];
-    };
-    "/mnt/user/video" = {
-      device = "triton.home:/mnt/user/video";
-      fsType = "nfs";
-      options = [ "x-systemd.automount" "noauto" ];
-    };
-    "/mnt/user/images" = {
-      device = "triton.home:/mnt/user/images";
-      fsType = "nfs";
-      options = [ "x-systemd.automount" "noauto" ];
-    };
-  };
+  services.rpcbind.enable = true;
+  systemd.mounts =
+    let
+      tritonMount = folder: {
+        type = "nfs";
+        mountConfig = {
+          Options = "noatime";
+        };
+        what = "192.168.1.75:/mnt/user/${folder}";
+        where = "/mnt/user/${folder}";
+      };
+    in
+    [
+      (tritonMount "video")
+      (tritonMount "images")
+      (tritonMount "appdata")
+    ];
+  systemd.automounts =
+    let
+      tritonMount = folder: {
+        wantedBy = [ "multi-user.target" ];
+        automountConfig = {
+          TimeoutIdleSec = "600";
+        };
+        where = "/mnt/user/${folder}";
+      };
+    in
+    [
+      (tritonMount "video")
+      (tritonMount "images")
+      (tritonMount "appdata")
+    ];
 }
