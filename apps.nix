@@ -105,9 +105,33 @@ in
           "pics.${internal_domain}" = host internal_domain "http://charon:2283";
           "git.${public_domain}" = host public_domain "http://localhost:3000";
           "paperless.${internal_domain}" = host internal_domain "http://localhost:8000";
+          "prometheus.${internal_domain}" = host internal_domain "http://localhost:${toString config.services.prometheus.port}";
         };
     };
+
+    prometheus = {
+      enable = true;
+
+      exporters = {
+        smartctl = {
+          enable = true;
+        };
+      };
+
+      scrapeConfigs = [{
+        job_name = "apps_disk";
+        static_configs = [{
+          targets = [
+            "127.0.0.1:${toString config.services.prometheus.exporters.smartctl.port}"
+          ];
+        }];
+      }];
+    };
   };
+
+  services.udev.extraRules = ''
+    SUBSYSTEM=="nvme", KERNEL=="nvme[0-9]*", GROUP="disk"
+  '';
 
   security.acme = {
     acceptTerms = true;
@@ -147,6 +171,7 @@ in
       directories = [
         "/var/lib/acme"
         "/var/lib/docker"
+        "/var/lib/prometheus2"
         "/var/lib/private/jellyseerr"
         "/var/lib/private/leng-sources"
       ];
