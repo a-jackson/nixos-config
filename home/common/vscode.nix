@@ -12,9 +12,4 @@
       command = "workbench.action.files.saveFiles";
     }];
   };
-
-  home.packages = with pkgs; [
-    sops
-    nixpkgs-fmt
-  ];
 }

@@ -23,7 +23,17 @@
       };
     };
 
-    gh.enable = true;
+    gh = {
+      enable = true;
+      settings = {
+        git_protocol = "ssh";
+        prompt = "enabled";
+        aliases = {
+          co = "pr checkout";
+        };
+      };
+    };
+
     gh-dash.enable = true;
 
     fish = {
@@ -54,5 +64,7 @@
 
   home.packages = with pkgs; [
     home-manager
+    sops
+    nixpkgs-fmt
   ];
 }
