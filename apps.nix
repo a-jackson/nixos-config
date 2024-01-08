@@ -10,6 +10,7 @@ in
   imports = [
     ./base.nix
     ./modules/ssh.nix
+    ./modules/nextcloud.nix
     leng.nixosModules.default
   ];
 
@@ -24,6 +25,10 @@ in
     paperless_env = {
       sopsFile = ./apps/paperless/.env;
       format = "dotenv";
+    };
+    nextcloud_password = {
+      sopsFile = ./secrets/apps.yaml;
+      owner = config.systemd.services.nextcloud-setup.serviceConfig.User;
     };
   };
 
@@ -127,6 +132,14 @@ in
         }];
       }];
     };
+
+    mysqlBackup = {
+      enable = true;
+      databases = [
+        "nextcloud"
+      ];
+      location = "/persist/backups/mysql";
+    };
   };
 
   services.udev.extraRules = ''
@@ -159,6 +172,30 @@ in
     storageDriver = "btrfs";
   };
 
+  nextcloud = {
+    enable = true;
+    adminEmail = "andrew@a-jackson.co.uk";
+    adminPasswordFile = config.sops.secrets.nextcloud_password.path;
+    settings = {
+      system = {
+        appstoreenabled = true;
+        # mail_smtphost = "127.0.0.1:25";
+        # mail_domain = "markas.fr";
+      };
+      apps.core.backgroundjobs_mode = "cron";
+      # This avoids users to see the email of all others users when
+      # they try to share a file.
+      apps.core.shareapi_only_share_with_group_members = "yes";
+      apps.registration.admin_approval_required = "yes";
+      # Default quota for new users
+      apps.files.default_quota = "40GB";
+      apps.richdocuments.wopi_url = "https://office.andrewjackson.dev";
+      # This is to disable the rich workspace feature because of this issue:
+      # https://help.nextcloud.com/t/loading-spinner-in-files-overview/80393
+      apps.text.workspace_available = "0";
+    };
+  };
+
   users.users.andrew.extraGroups = [ "docker" ];
 
   environment = {
@@ -171,6 +208,8 @@ in
       directories = [
         "/var/lib/acme"
         "/var/lib/docker"
+        "/var/lib/mysql"
+        "/var/lib/nextcloud"
         "/var/lib/prometheus2"
         "/var/lib/private/jellyseerr"
         "/var/lib/private/leng-sources"
