@@ -14,10 +14,6 @@ in
     leng.nixosModules.default
   ];
 
-  networking.firewall = {
-    allowedTCPPorts = [ 443 ];
-  };
-
   sops.secrets = {
     cloudflare_credentials = {
       sopsFile = ./secrets/common.yaml;
@@ -43,6 +39,18 @@ in
       address = "192.168.1.1";
       interface = "eno1";
     };
+
+    firewall = {
+      allowedTCPPorts = [ 443 ];
+      extraCommands = ''
+        iptables -t nat -A POSTROUTING -o eno1 -j MASQUERADE
+      '';
+    };
+    nat = {
+      enable = true;
+      internalInterfaces = [ "ve-+" ];
+      externalInterface = "eno1";
+    };
   };
 
   rootDiskLabel = "server";
@@ -50,8 +58,6 @@ in
   nixpkgs.overlays = [
     overlay-jellyseer
   ];
-
-  systemd.services.leng.serviceConfig.AmbientCapabilities = "CAP_NET_BIND_SERVICE";
 
   services = {
     leng = {
@@ -267,4 +273,68 @@ in
       (tritonMount "images")
       (tritonMount "appdata")
     ];
+
+  sops.secrets.tailscale_authkey = {
+    sopsFile = ./secrets/common.yaml;
+  };
+
+  containers = {
+    tsdns =
+      let
+        authKey = config.sops.secrets.tailscale_authkey.path;
+      in
+      {
+        bindMounts = {
+          "${authKey}".isReadOnly = true;
+          "/var/lib/tailscale" = {
+            hostPath = "/persist/containers/tsdns/tailscale";
+            isReadOnly = false;
+          };
+        };
+        autoStart = true;
+        ephemeral = true;
+        enableTun = true;
+        privateNetwork = true;
+        hostAddress = "10.100.0.1";
+        localAddress = "10.100.0.2";
+        config = { config, pkgs, lib, ... }: {
+          imports = [
+            leng.nixosModules.default
+          ];
+
+          services = {
+            leng = {
+              enable = true;
+              configuration = {
+                customdnsrecords = [
+                  "*.ajackson.dev IN A 100.92.22.51"
+                  "triton.home IN A 192.168.1.75"
+                ];
+                blocking.sourcesStore = "/var/lib/leng-sources";
+                blocking.sourcedirs = [ "/var/lib/leng-sources/" ];
+              };
+            };
+
+            tailscale = {
+              enable = true;
+              # authKeyFile = authKey;
+              extraUpFlags = [
+                "--accept-dns=false"
+              ];
+            };
+          };
+
+          system.stateVersion = "23.05";
+
+          networking = {
+            firewall = {
+              enable = true;
+            };
+
+            useHostResolvConf = lib.mkForce false;
+            nameservers = [ "192.168.1.1" ];
+          };
+        };
+      };
+  };
 }

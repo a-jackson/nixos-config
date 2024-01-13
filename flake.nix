@@ -24,7 +24,7 @@
     };
 
     leng = {
-      url = "github:cottand/leng/v1.5.0";
+      url = "github:cottand/leng";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
