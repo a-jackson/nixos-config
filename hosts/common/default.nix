@@ -1,12 +1,11 @@
-{ pkgs, nixpkgs, ... }:
+{ pkgs, nixpkgs, impermanence, ... }:
 {
   imports = [
-    ./modules/sops.nix
-    ./modules/user.nix
-    ./modules/ephemeral-btrfs.nix
-    ./modules/auto-upgrade.nix
-    ./modules/restic.nix
-    ./impermanence/system.nix
+    ./sops.nix
+    ./user.nix
+    ./auto-upgrade.nix
+    ../../modules
+    impermanence.nixosModules.impermanence
   ];
 
   boot.loader = {
@@ -23,7 +22,15 @@
   services.tailscale.enable = true;
   environment.persistence."/persist" = {
     directories = [
-      "/var/lib/tailscale"
+      "/etc/ssh"
+      "/var/log"
+      "/var/db/sudo/lectured"
+      "/etc/NetworkManager"
+    ];
+    files = [
+      "/etc/machine_id"
+      "/etc/nix/id_rsa"
+      "/var/lib/logrotate.status"
     ];
   };
 

@@ -1,29 +1,23 @@
 { pkgs, config, leng, ... }:
 let
-  overlay-jellyseer = final: prev: {
-    jellyseerr = final.callPackage ./packages/jellyseerr { };
-  };
   public_domain = "andrewjackson.dev";
   internal_domain = "ajackson.dev";
 in
 {
   imports = [
-    ./base.nix
-    ./modules/ssh.nix
-    ./modules/nextcloud.nix
+    ./hardware-configuration.nix
+    ../common
     leng.nixosModules.default
   ];
 
   sops.secrets = {
-    cloudflare_credentials = {
-      sopsFile = ./secrets/common.yaml;
-    };
+    cloudflare_credentials = {};
     paperless_env = {
-      sopsFile = ./apps/paperless/.env;
+      sopsFile = ./paperless/.env;
       format = "dotenv";
     };
     nextcloud_password = {
-      sopsFile = ./secrets/apps.yaml;
+      sopsFile = ../../secrets/apps.yaml;
       owner = config.systemd.services.nextcloud-setup.serviceConfig.User;
     };
   };
@@ -54,10 +48,6 @@ in
   };
 
   rootDiskLabel = "server";
-
-  nixpkgs.overlays = [
-    overlay-jellyseer
-  ];
 
   services = {
     leng = {
@@ -224,16 +214,16 @@ in
 
     etc = {
       "docker-compose/immich/docker-compose.yml" = {
-        source = ./apps/immich/docker-compose.yml;
+        source = ./immich/docker-compose.yml;
       };
       "docker-compose/immich/.env" = {
-        source = ./apps/immich/.env;
+        source = ./immich/.env;
       };
       "docker-compose/media/docker-compose.yml" = {
-        source = ./apps/media/docker-compose.yml;
+        source = ./media/docker-compose.yml;
       };
       "docker-compose/paperless/docker-compose.yml" = {
-        source = ./apps/paperless/docker-compose.yml;
+        source = ./paperless/docker-compose.yml;
       };
       "docker-compose/paperless/.env" = {
         source = config.sops.secrets.paperless_env.path;
@@ -274,9 +264,7 @@ in
       (tritonMount "appdata")
     ];
 
-  sops.secrets.tailscale_authkey = {
-    sopsFile = ./secrets/common.yaml;
-  };
+  sops.secrets.tailscale_authkey = {};
 
   containers = {
     tsdns =

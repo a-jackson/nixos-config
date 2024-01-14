@@ -5,7 +5,6 @@
   ];
 
   sops.secrets.password = {
-    sopsFile = ../secrets/common.yaml;
     neededForUsers = true;
   };
 
@@ -40,7 +39,7 @@
     in
     {
       imports = [
-        ../home/${hostname}.nix
+        ../../home/${hostname}.nix
         {
           home = {
             username = lib.mkDefault "andrew";

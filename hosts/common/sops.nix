@@ -7,6 +7,6 @@
   sops = {
     age.sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
     gnupg.sshKeyPaths = [];
-    defaultSopsFile = ../secrets/common.yaml;
+    defaultSopsFile = ../../secrets/common.yaml;
   };
 }
