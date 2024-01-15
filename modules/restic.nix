@@ -23,15 +23,9 @@ in
 
   config = {
     sops.secrets = {
-      restic_password = {
-        sopsFile = ../secrets/restic.yaml;
-      };
-      restic_env = {
-        sopsFile = ../secrets/restic.yaml;
-      };
-      restic_repo = {
-        sopsFile = ../secrets/restic.yaml;
-      };
+      "restic/password" = { };
+      "restic/env" = { };
+      "restic/repo" = { };
     };
 
     services.restic.backups = (
@@ -39,9 +33,9 @@ in
         nameValuePair "${name}" {
           initialize = true;
 
-          environmentFile = config.sops.secrets.restic_env.path;
-          repositoryFile = config.sops.secrets.restic_repo.path;
-          passwordFile = config.sops.secrets.restic_password.path;
+          environmentFile = config.sops.secrets."restic/env".path;
+          repositoryFile = config.sops.secrets."restic/repo".path;
+          passwordFile = config.sops.secrets."restic/password".path;
 
           paths = backupCfg.paths;
           exclude = backupCfg.exclude;

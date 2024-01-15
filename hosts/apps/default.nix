@@ -5,19 +5,22 @@ let
 in
 {
   imports = [
+    leng.nixosModules.default
     ./hardware-configuration.nix
     ../common
-    leng.nixosModules.default
+    ./containers.nix
+    ./leng.nix
   ];
 
   sops.secrets = {
-    cloudflare_credentials = {};
+    cloudflare_credentials = { };
     paperless_env = {
       sopsFile = ./paperless/.env;
       format = "dotenv";
+      path = "/etc/docker-compose/paperless/.env";
     };
     nextcloud_password = {
-      sopsFile = ../../secrets/apps.yaml;
+      sopsFile = ./secrets.yaml;
       owner = config.systemd.services.nextcloud-setup.serviceConfig.User;
     };
   };
@@ -36,14 +39,6 @@ in
 
     firewall = {
       allowedTCPPorts = [ 443 ];
-      extraCommands = ''
-        iptables -t nat -A POSTROUTING -o eno1 -j MASQUERADE
-      '';
-    };
-    nat = {
-      enable = true;
-      internalInterfaces = [ "ve-+" ];
-      externalInterface = "eno1";
     };
   };
 
@@ -52,15 +47,7 @@ in
   services = {
     leng = {
       enable = true;
-      configuration = {
-        customdnsrecords = [
-          "*.ajackson.dev IN A 192.168.1.205"
-          "triton.home IN A 192.168.1.75"
-        ];
-        blocking.sourcesStore = "/var/lib/leng-sources";
-      };
     };
-
     restic_backups = {
       daily = {
         paths = [
@@ -225,9 +212,6 @@ in
       "docker-compose/paperless/docker-compose.yml" = {
         source = ./paperless/docker-compose.yml;
       };
-      "docker-compose/paperless/.env" = {
-        source = config.sops.secrets.paperless_env.path;
-      };
     };
   };
 
@@ -263,66 +247,4 @@ in
       (tritonMount "images")
       (tritonMount "appdata")
     ];
-
-  sops.secrets.tailscale_authkey = {};
-
-  containers = {
-    tsdns =
-      let
-        authKey = config.sops.secrets.tailscale_authkey.path;
-      in
-      {
-        bindMounts = {
-          "${authKey}".isReadOnly = true;
-          "/var/lib/tailscale" = {
-            hostPath = "/persist/containers/tsdns/tailscale";
-            isReadOnly = false;
-          };
-        };
-        autoStart = true;
-        ephemeral = true;
-        enableTun = true;
-        privateNetwork = true;
-        hostAddress = "10.100.0.1";
-        localAddress = "10.100.0.2";
-        config = { config, pkgs, lib, ... }: {
-          imports = [
-            leng.nixosModules.default
-          ];
-
-          services = {
-            leng = {
-              enable = true;
-              configuration = {
-                customdnsrecords = [
-                  "*.ajackson.dev IN A 100.92.22.51"
-                  "triton.home IN A 192.168.1.75"
-                ];
-                blocking.sourcesStore = "/var/lib/leng-sources";
-                blocking.sourcedirs = [ "/var/lib/leng-sources/" ];
-              };
-            };
-
-            tailscale = {
-              enable = true;
-              # authKeyFile = authKey;
-              extraUpFlags = [
-                "--accept-dns=false"
-              ];
-            };
-          };
-
-          system.stateVersion = "23.05";
-
-          networking = {
-            firewall = {
-              enable = true;
-            };
-
-            useHostResolvConf = lib.mkForce false;
-            nameservers = [ "192.168.1.1" ];
-          };
-        };
-      };
-  };
 }
