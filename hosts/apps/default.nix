@@ -32,6 +32,10 @@
   services = {
     leng = {
       enable = true;
+      virtualHosts = {
+        target = "192.168.1.205";
+        hosts = builtins.attrNames config.services.nginx.virtualHosts;
+      };
     };
 
     restic_backups = {

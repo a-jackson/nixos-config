@@ -1,4 +1,8 @@
-{ config, leng, ... }: {
+{ config, leng, ... }:
+let
+  hosts = builtins.attrNames config.services.nginx.virtualHosts;
+in
+{
   networking = {
     firewall = {
       extraCommands = ''
@@ -33,7 +37,13 @@
         ];
 
         services = {
-          leng.enable = true;
+          leng = {
+            enable = true;
+            virtualHosts = {
+              target = "100.92.22.51";
+              hosts = hosts;
+            };
+          };
           tailscale.enable = true;
         };
 

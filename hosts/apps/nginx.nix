@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 let
   public_domain = "andrewjackson.dev";
   internal_domain = "ajackson.dev";

@@ -1,4 +1,4 @@
-{ ... }: {
+{ config, ... }: {
   sops.secrets = {
     nextcloud_password = {
       sopsFile = ./secrets.yaml;
@@ -47,4 +47,5 @@
         "/var/lib/nextcloud"
       ];
     };
-  }
+  };
+}
