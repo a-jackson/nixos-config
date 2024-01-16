@@ -66,5 +66,6 @@
     home-manager
     sops
     nixpkgs-fmt
+    jq
   ];
 }
