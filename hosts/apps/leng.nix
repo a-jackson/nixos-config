@@ -4,7 +4,7 @@ let
   cfg = config.services.leng;
 in
 {
-  options = { 
+  options = {
     services.leng = {
       virtualHosts.target = mkOption {
         type = types.str;
@@ -30,6 +30,12 @@ in
             blocking.sourcedirs = [ "/var/lib/leng-sources/" ];
           };
         };
+    };
+
+    networking = {
+      firewall = {
+        allowedUDPPorts = [ 53 ];
+      };
     };
   };
 }
