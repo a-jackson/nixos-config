@@ -25,6 +25,7 @@ in
           configuration = {
             customdnsrecords = [
               "triton.home IN A 192.168.1.75"
+              "apps.home IN A 192.168.1.205"
             ] ++ records;
             blocking.sourcesStore = "/var/lib/leng-sources";
             blocking.sourcedirs = [ "/var/lib/leng-sources/" ];
