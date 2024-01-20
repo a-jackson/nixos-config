@@ -35,7 +35,11 @@ in
           "radarr.${internal_domain}" = host internal_domain "http://localhost:7878";
           "sonarr.${internal_domain}" = host internal_domain "http://localhost:8989";
           "sabnzbd.${internal_domain}" = host internal_domain "http://triton:8080";
-          "pics.${internal_domain}" = host internal_domain "http://localhost:2283";
+          "pics.${internal_domain}" = host internal_domain "http://localhost:2283" // {
+              locations."/".extraConfig = ''
+                  client_max_body_size 0;
+              '';
+          };
           "paperless.${internal_domain}" = host internal_domain "http://localhost:8000";
           "prometheus.${internal_domain}" = host internal_domain "http://localhost:${toString config.services.prometheus.port}";
         };
