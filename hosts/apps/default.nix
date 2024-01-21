@@ -10,6 +10,10 @@
     ./nginx.nix
   ];
 
+  sops.secrets.cloudflare_apikey = {
+    sopsFile = ./secrets.yaml;
+  };
+
   networking = {
     interfaces = {
       eno1.ipv4.addresses = [{
@@ -69,6 +73,15 @@
           ];
         }];
       }];
+    };
+
+    cloudflare-dyndns = {
+      enable = true;
+      domains = [
+        "requests.andrewjackson.dev"
+        "jellyfin.andrewjackson.dev"
+      ];
+      apiTokenFile = config.sops.secrets.cloudflare_apikey.path;
     };
   };
 
