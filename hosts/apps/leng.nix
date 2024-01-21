@@ -26,6 +26,7 @@ in
             customdnsrecords = [
               "triton.home IN A 192.168.1.75"
               "apps.home IN A 192.168.1.205"
+              "pisvrapp03.home IN A 192.168.1.203"
             ] ++ records;
             blocking.sourcesStore = "/var/lib/leng-sources";
             blocking.sourcedirs = [ "/var/lib/leng-sources/" ];
