@@ -23,8 +23,6 @@
     settings = {
       system = {
         appstoreenabled = true;
-        # mail_smtphost = "127.0.0.1:25";
-        # mail_domain = "markas.fr";
       };
       apps.core.backgroundjobs_mode = "cron";
       # This avoids users to see the email of all others users when

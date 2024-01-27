@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -21,6 +21,21 @@
           "/home"
         ];
       };
+    };
+  };
+
+  virtualisation.docker.enable = true;
+  users.users.andrew.extraGroups = [ "docker" ];
+
+  environment = {
+    systemPackages = with pkgs; [
+      docker-compose
+    ];
+
+    persistence."/persist" = {
+      directories = [
+        "/var/lib/docker"
+      ];
     };
   };
 }
