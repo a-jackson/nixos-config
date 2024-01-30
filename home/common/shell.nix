@@ -71,6 +71,8 @@
       extraConfig = ''
     '';
     };
+
+    zellij.enable = true;
   };
 
   services.gpg-agent.enable = true;
