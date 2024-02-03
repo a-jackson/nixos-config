@@ -75,9 +75,9 @@
       }];
     };
 
-    cloudflare-dyndns = {
+    cfdyndns = {
       enable = true;
-      domains = [
+      records = [
         "requests.andrewjackson.dev"
         "jellyfin.andrewjackson.dev"
       ];
