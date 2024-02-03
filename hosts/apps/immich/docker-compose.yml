@@ -27,6 +27,8 @@ services:
       - geocoding:/usr/src/app/.reverse-geocoding-dump
     env_file:
       - .env
+    devices:
+      - /dev/dri:/dev/dri
     depends_on:
       - redis
       - database
@@ -34,11 +36,16 @@ services:
 
   immich-machine-learning:
     container_name: immich_machine_learning
-    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}-openvino
     volumes:
       - model-cache:/cache
+      - /dev/bus/usb:/dev/bus/usb
     env_file:
       - .env
+    device_cgroup_rules:
+      - "c 189:* rmw"
+    devices:
+      - /dev/dri:/dev/dri
     restart: always
 
   redis:
