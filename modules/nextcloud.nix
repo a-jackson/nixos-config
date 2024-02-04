@@ -133,7 +133,7 @@ in
     services.nextcloud = {
       enable = true;
       package = pkgs.nextcloud28;
-      extraOptions.loglevel = 0;
+      settings.loglevel = 0;
       https = true;
       hostName = "cloud.andrewjackson.dev";
       configureRedis = true;

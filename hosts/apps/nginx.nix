@@ -37,7 +37,7 @@ in
           "bazarr.${internal_domain}" = host internal_domain "http://localhost:6767";
           "radarr.${internal_domain}" = host internal_domain "http://localhost:7878";
           "sonarr.${internal_domain}" = host internal_domain "http://localhost:8989";
-          "sabnzbd.${internal_domain}" = host internal_domain "http://triton:8080";
+          "sabnzbd.${internal_domain}" = host internal_domain "http://localhost:8181";
           "pics.${internal_domain}" = host internal_domain "http://localhost:2283";
           "paperless.${internal_domain}" = host internal_domain "http://localhost:8000";
           "prometheus.${internal_domain}" = host internal_domain "http://localhost:${toString config.services.prometheus.port}";

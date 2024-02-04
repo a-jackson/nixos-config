@@ -6,6 +6,7 @@
     ./containers.nix
     ./docker.nix
     ./leng.nix
+    ./multimedia.nix
     ./nextcloud.nix
     ./nginx.nix
   ];
