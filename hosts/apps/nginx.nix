@@ -31,7 +31,7 @@ in
           };
         in
         {
-          "jellyfin.${public_domain}" = host public_domain "http://triton:8096";
+          "jellyfin.${public_domain}" = host public_domain "http://localhost:8096";
           "requests.${public_domain}" = host public_domain "http://localhost:5055";
           "audiobooks.${internal_domain}" = host internal_domain "http://triton:13378";
           "bazarr.${internal_domain}" = host internal_domain "http://localhost:6767";

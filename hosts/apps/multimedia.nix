@@ -41,6 +41,16 @@ in
         enable = true;
         group = cfg.group;
       };
+      jellyseerr = {
+        enable = true;
+        openFirewall = true;
+        port = 5055;
+      };
+      jellyfin = {
+        enable = true;
+        group = cfg.group;
+        openFirewall = true;
+      };
     };
 
     environment.persistence."/persist" = {
@@ -65,6 +75,12 @@ in
           user = config.services.sabnzbd.user;
           group = config.services.sabnzbd.group;
         }
+        {
+          directory = "/var/lib/jellyfin";
+          user = config.services.jellyfin.user;
+          group = config.services.jellyfin.group;
+        }
+        "/var/lib/private/jellyseerr"
       ];
     };
 

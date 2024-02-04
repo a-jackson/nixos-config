@@ -33,9 +33,6 @@
       "docker-compose/immich/.env" = {
         source = ./immich/.env;
       };
-      "docker-compose/media/docker-compose.yml" = {
-        source = ./media/docker-compose.yml;
-      };
       "docker-compose/paperless/docker-compose.yml" = {
         source = ./paperless/docker-compose.yml;
       };

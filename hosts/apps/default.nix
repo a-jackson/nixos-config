@@ -51,12 +51,6 @@
       };
     };
 
-    jellyseerr = {
-      enable = true;
-      openFirewall = true;
-      port = 5055;
-    };
-
     prometheus = {
       enable = true;
 
@@ -98,7 +92,6 @@
     persistence."/persist" = {
       directories = [
         "/var/lib/prometheus2"
-        "/var/lib/private/jellyseerr"
         "/var/lib/private/leng-sources"
       ];
     };
@@ -120,6 +113,7 @@
       (tritonMount "video")
       (tritonMount "images")
       (tritonMount "appdata")
+      (tritonMount "audio")
     ];
   systemd.automounts =
     let
@@ -135,5 +129,6 @@
       (tritonMount "video")
       (tritonMount "images")
       (tritonMount "appdata")
+      (tritonMount "audio")
     ];
 }
