@@ -37,13 +37,4 @@
       apps.text.workspace_available = "0";
     };
   };
-
-  environment = {
-    persistence."/persist" = {
-      directories = [
-        "/var/lib/mysql"
-        "/var/lib/nextcloud"
-      ];
-    };
-  };
 }

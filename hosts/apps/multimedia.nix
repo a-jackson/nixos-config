@@ -53,37 +53,6 @@ in
       };
     };
 
-    environment.persistence."/persist" = {
-      directories = [
-        {
-          directory = "/var/lib/sonarr";
-          user = config.services.sonarr.user;
-          group = config.services.sonarr.group;
-        }
-        {
-          directory = "/var/lib/radarr";
-          user = config.services.radarr.user;
-          group = config.services.radarr.group;
-        }
-        {
-          directory = "/var/lib/bazarr";
-          user = config.services.bazarr.user;
-          group = config.services.bazarr.group;
-        }
-        {
-          directory = "/var/lib/sabnzbd";
-          user = config.services.sabnzbd.user;
-          group = config.services.sabnzbd.group;
-        }
-        {
-          directory = "/var/lib/jellyfin";
-          user = config.services.jellyfin.user;
-          group = config.services.jellyfin.group;
-        }
-        "/var/lib/private/jellyseerr"
-      ];
-    };
-
     fileSystems."/data" = {
       device = "/dev/disk/by-label/${config.rootDiskLabel}";
       fsType = "btrfs";

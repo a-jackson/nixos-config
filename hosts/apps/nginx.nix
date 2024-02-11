@@ -41,6 +41,7 @@ in
           "pics.${internal_domain}" = host internal_domain "http://localhost:2283";
           "paperless.${internal_domain}" = host internal_domain "http://localhost:8000";
           "prometheus.${internal_domain}" = host internal_domain "http://localhost:${toString config.services.prometheus.port}";
+          "grafana.${internal_domain}" = host internal_domain "http://localhost:${toString config.services.grafana.settings.server.http_port}";
         };
     };
   };
@@ -63,14 +64,6 @@ in
         credentialsFile = config.sops.secrets.cloudflare_credentials.path;
         group = config.services.nginx.group;
       };
-    };
-  };
-
-  environment = {
-    persistence."/persist" = {
-      directories = [
-        "/var/lib/acme"
-      ];
     };
   };
 }

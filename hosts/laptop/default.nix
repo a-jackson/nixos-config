@@ -31,11 +31,5 @@
     systemPackages = with pkgs; [
       docker-compose
     ];
-
-    persistence."/persist" = {
-      directories = [
-        "/var/lib/docker"
-      ];
-    };
   };
 }

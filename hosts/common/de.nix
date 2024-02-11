@@ -3,7 +3,7 @@
   services = {
     xserver = {
       enable = true;
-      layout = "gb";
+      xkb.layout = "gb";
       libinput.enable = true;
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
@@ -44,10 +44,4 @@
   };
 
   users.users.andrew.extraGroups = [ "flatpak" ];
-
-  environment.persistence."/persist" = {
-    directories = [
-      "/var/lib/flatpak"
-    ];
-  };
 }

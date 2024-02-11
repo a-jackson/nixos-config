@@ -6,6 +6,7 @@
     ./containers.nix
     ./docker.nix
     ./leng.nix
+    ./monitoring.nix
     ./multimedia.nix
     ./nextcloud.nix
     ./nginx.nix
@@ -51,25 +52,6 @@
       };
     };
 
-    prometheus = {
-      enable = true;
-
-      exporters = {
-        smartctl = {
-          enable = true;
-        };
-      };
-
-      scrapeConfigs = [{
-        job_name = "apps_disk";
-        static_configs = [{
-          targets = [
-            "127.0.0.1:${toString config.services.prometheus.exporters.smartctl.port}"
-          ];
-        }];
-      }];
-    };
-
     cfdyndns = {
       enable = true;
       records = [
@@ -80,21 +62,10 @@
     };
   };
 
-  services.udev.extraRules = ''
-    SUBSYSTEM=="nvme", KERNEL=="nvme[0-9]*", GROUP="disk"
-  '';
-
   environment = {
     systemPackages = with pkgs; [
       nfs-utils
     ];
-
-    persistence."/persist" = {
-      directories = [
-        "/var/lib/prometheus2"
-        "/var/lib/private/leng-sources"
-      ];
-    };
   };
 
   services.rpcbind.enable = true;

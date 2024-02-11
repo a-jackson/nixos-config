@@ -20,12 +20,6 @@
       docker-compose
     ];
 
-    persistence."/persist" = {
-      directories = [
-        "/var/lib/docker"
-      ];
-    };
-
     etc = {
       "docker-compose/immich/docker-compose.yml" = {
         source = ./immich/docker-compose.yml;
