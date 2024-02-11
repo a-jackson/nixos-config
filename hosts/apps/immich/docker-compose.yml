@@ -7,7 +7,11 @@ services:
     command: [ "start.sh", "immich" ]
     user: "${PUID}:${PGID}"
     volumes:
-      - ${UPLOAD_LOCATION}:/usr/src/app/upload
+      - type: volume
+        source: library
+        target: /usr/src/app/upload
+        volume:
+          nocopy: true
     env_file:
       - .env
     ports:
@@ -23,8 +27,12 @@ services:
     command: [ "start.sh", "microservices" ]
     user: "${PUID}:${PGID}"
     volumes:
-      - ${UPLOAD_LOCATION}:/usr/src/app/upload
       - geocoding:/usr/src/app/.reverse-geocoding-dump
+      - type: volume
+        source: library
+        target: /usr/src/app/upload
+        volume:
+          nocopy: true
     env_file:
       - .env
     devices:
@@ -89,3 +97,8 @@ volumes:
   pgdata:
   model-cache:
   geocoding:
+  library:
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.75,nolock,soft,rw
+      device: :/mnt/user/images/immich
