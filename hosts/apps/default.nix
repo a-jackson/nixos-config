@@ -65,6 +65,24 @@
     };
   };
 
+  virtualisation.oci-containers.containers = {
+    # sudo docker run -it -p 3000:3000 -v ./space:/space zefhemel/silverbullet
+    silverbullet = {
+      image = "zefhemel/silverbullet";
+      imageFile = pkgs.dockerTools.pullImage {
+        imageName = "zefhemel/silverbullet";
+        imageDigest = "sha256:8926cee41083c860f03f54c3103a92e6b0d81b16dc49f71ecaeb917c555667f5";
+        sha256 = "sha256-HnREbkt+rmz1D04UeU66X1pipv2GXOptQ/l1HoBsLDE=";
+      };
+      ports = [
+        "3001:3000"
+      ];
+      volumes = [
+        "silverbullet:/space"
+      ];
+    };
+  };
+
   environment = {
     systemPackages = with pkgs; [
       nfs-utils
