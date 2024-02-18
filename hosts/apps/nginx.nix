@@ -31,17 +31,17 @@ in
           };
         in
         {
-          "jellyfin.${public_domain}" = host public_domain "http://localhost:8096";
-          "requests.${public_domain}" = host public_domain "http://localhost:5055";
-          "audiobooks.${internal_domain}" = host internal_domain "http://triton:13378";
-          "bazarr.${internal_domain}" = host internal_domain "http://localhost:6767";
-          "radarr.${internal_domain}" = host internal_domain "http://localhost:7878";
-          "sonarr.${internal_domain}" = host internal_domain "http://localhost:8989";
-          "sabnzbd.${internal_domain}" = host internal_domain "http://localhost:8181";
-          "pics.${internal_domain}" = host internal_domain "http://localhost:2283";
-          "paperless.${internal_domain}" = host internal_domain "http://localhost:8000";
-          "prometheus.${internal_domain}" = host internal_domain "http://localhost:${toString config.services.prometheus.port}";
-          "grafana.${internal_domain}" = host internal_domain "http://localhost:${toString config.services.grafana.settings.server.http_port}";
+          "jellyfin.${public_domain}" = host public_domain "http://127.0.0.1:8096";
+          "requests.${public_domain}" = host public_domain "http://127.0.0.1:5055";
+          "audiobooks.${internal_domain}" = host internal_domain "http://192.168.1.75:13378";
+          "bazarr.${internal_domain}" = host internal_domain "http://127.0.0.1:6767";
+          "radarr.${internal_domain}" = host internal_domain "http://127.0.0.1:7878";
+          "sonarr.${internal_domain}" = host internal_domain "http://127.0.0.1:8989";
+          "sabnzbd.${internal_domain}" = host internal_domain "http://127.0.0.1:8181";
+          "pics.${internal_domain}" = host internal_domain "http://127.0.0.1:2283";
+          "paperless.${internal_domain}" = host internal_domain "http://127.0.0.1:8000";
+          "prometheus.${internal_domain}" = host internal_domain "http://127.0.0.1:${toString config.services.prometheus.port}";
+          "grafana.${internal_domain}" = host internal_domain "http://127.0.0.1:${toString config.services.grafana.settings.server.http_port}";
         };
     };
   };

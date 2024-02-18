@@ -27,6 +27,9 @@
       address = "192.168.1.1";
       interface = "eno1";
     };
+    nameservers = [
+      "127.0.0.1"
+    ];
 
     firewall = {
       allowedTCPPorts = [ 443 ];
