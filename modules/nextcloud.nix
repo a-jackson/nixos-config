@@ -71,61 +71,8 @@ in
       enable = true;
       virtualHosts = {
         "cloud.andrewjackson.dev" = {
-          default = true;
           forceSSL = true;
           useACMEHost = "andrewjackson.dev";
-        };
-        "office.andrewjackson.dev" = {
-          forceSSL = true;
-          useACMEHost = "andrewjackson.dev";
-          locations = {
-            # static files
-            "^~ /browser" = {
-              proxyPass = "http://localhost:9980";
-              extraConfig = ''
-                proxy_set_header Host $host;
-              '';
-            };
-            # WOPI discovery URL
-            "^~ /hosting/discovery" = {
-              proxyPass = "http://localhost:9980";
-              extraConfig = ''
-                proxy_set_header Host $host;
-              '';
-            };
-
-            # Capabilities
-            "^~ /hosting/capabilities" = {
-              proxyPass = "http://localhost:9980";
-              extraConfig = ''
-                proxy_set_header Host $host;
-              '';
-            };
-
-            # download, presentation, image upload and websocket
-            "~ ^/(c|l)ool" = {
-              proxyPass = "http://localhost:9980";
-              proxyWebsockets = true;
-              extraConfig = ''
-                proxy_set_header Upgrade $http_upgrade;
-                proxy_set_header Connection "Upgrade";
-                proxy_set_header Host $host;
-                proxy_read_timeout 36000s;
-              '';
-            };
-
-            # Admin Console websocket
-            "^~ /cool/adminws" = {
-              proxyPass = "http://localhost:9980";
-              proxyWebsockets = true;
-              extraConfig = ''
-                proxy_set_header Upgrade $http_upgrade;
-                proxy_set_header Connection "Upgrade";
-                proxy_set_header Host $host;
-                proxy_read_timeout 36000s;
-              '';
-            };
-          };
         };
       };
     };
@@ -138,6 +85,7 @@ in
       hostName = "cloud.andrewjackson.dev";
       configureRedis = true;
       extraApps = cfg.apps;
+      maxUploadSize = "2G";
       caching = {
         apcu = true;
       };
@@ -165,26 +113,6 @@ in
         nextcloud-occ db:add-missing-indices -n
         nextcloud-occ db:convert-filecache-bigint -n
       '';
-    };
-
-    virtualisation.oci-containers = {
-      # Since 22.05, the default driver is podman but it doesn't work
-      # with podman. It would however be nice to switch to podman.
-      backend = "docker";
-      containers.collabora = {
-        image = "collabora/code";
-        imageFile = pkgs.dockerTools.pullImage {
-          imageName = "collabora/code";
-          imageDigest = "sha256:46534fe0ed6208797c6711f29d5e85a8a3e554c9debbfe7ff0587b1f2710465e";
-          sha256 = "sha256-MHs7xwmlnmIdInyvXfiLb+NotxAEG8XNh41aSzKgcnc=";
-        };
-        ports = [ "9980:9980" ];
-        environment = {
-          aliasgroup1 = "https://cloud.andrewjackson.dev:443";
-          extra_params = "--o:ssl.enable=false --o:ssl.termination=true";
-        };
-        extraOptions = [ "--cap-add" "MKNOD" ];
-      };
     };
   };
 }
