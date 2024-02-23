@@ -7,11 +7,7 @@ services:
     command: [ "start.sh", "immich" ]
     user: "${PUID}:${PGID}"
     volumes:
-      - type: volume
-        source: library
-        target: /usr/src/app/upload
-        volume:
-          nocopy: true
+      - ${UPLOAD_LOCATION}:/usr/src/app/upload
     env_file:
       - .env
     ports:
@@ -27,12 +23,8 @@ services:
     command: [ "start.sh", "microservices" ]
     user: "${PUID}:${PGID}"
     volumes:
+      - ${UPLOAD_LOCATION}:/usr/src/app/upload
       - geocoding:/usr/src/app/.reverse-geocoding-dump
-      - type: volume
-        source: library
-        target: /usr/src/app/upload
-        volume:
-          nocopy: true
     env_file:
       - .env
     devices:
@@ -63,7 +55,7 @@ services:
 
   database:
     container_name: immich_postgres
-    image: tensorchord/pgvecto-rs:pg14-v0.1.11
+    image: tensorchord/pgvecto-rs:pg14-v0.2.0
     env_file:
       - .env
     environment:
@@ -97,8 +89,3 @@ volumes:
   pgdata:
   model-cache:
   geocoding:
-  library:
-    driver_opts:
-      type: nfs
-      o: addr=192.168.1.75,nolock,soft,rw,nfsvers=4
-      device: :/mnt/user/images/immich
