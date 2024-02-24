@@ -1,4 +1,4 @@
-{ config, leng, ... }:
+{ config, ... }:
 let
   hosts = builtins.attrNames config.services.nginx.virtualHosts;
 in
@@ -24,6 +24,11 @@ in
           isReadOnly = false;
         };
       };
+      forwardPorts = [{
+        containerPort = 3500;
+        hostPort = 3501;
+        protocol = "tcp";
+      }];
       autoStart = true;
       ephemeral = true;
       enableTun = true;
@@ -32,12 +37,11 @@ in
       localAddress = "10.100.0.2";
       config = { lib, ... }: {
         imports = [
-          leng.nixosModules.default
-          ./leng.nix
+          ./adguardhome.nix
         ];
 
         services = {
-          leng = {
+          adguardhome = {
             enable = true;
             virtualHosts = {
               target = "100.92.22.51";

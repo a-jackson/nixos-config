@@ -1,11 +1,10 @@
-{ pkgs, config, leng, ... }: {
+{ pkgs, config, ... }: {
   imports = [
-    leng.nixosModules.default
     ./hardware-configuration.nix
     ../common
+    ./adguardhome.nix
     ./containers.nix
     ./docker.nix
-    ./leng.nix
     ./monitoring.nix
     ./multimedia.nix
     ./nextcloud.nix
@@ -39,7 +38,7 @@
   rootDiskLabel = "server";
 
   services = {
-    leng = {
+    adguardhome = {
       enable = true;
       virtualHosts = {
         target = "192.168.1.205";
