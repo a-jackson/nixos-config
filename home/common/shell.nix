@@ -67,12 +67,21 @@
       plugins = with pkgs;
         [
           tmuxPlugins.better-mouse-mode
+          tmuxPlugins.sensible
         ];
       extraConfig = ''
     '';
     };
 
     zellij.enable = true;
+    zoxide = {
+      enable = true;
+      options = [
+        "--cmd cd"
+      ];
+    };
+    fzf.enable = true;
+    htop.enable = true;
   };
 
   services.gpg-agent.enable = true;

@@ -33,7 +33,7 @@ in
         {
           "jellyfin.${public_domain}" = host public_domain "http://127.0.0.1:8096";
           "requests.${public_domain}" = host public_domain "http://127.0.0.1:5055";
-          "audiobooks.${internal_domain}" = host internal_domain "http://192.168.1.75:13378";
+          "audiobooks.${internal_domain}" = host internal_domain "http://127.0.0.1:13378";
           "bazarr.${internal_domain}" = host internal_domain "http://127.0.0.1:6767";
           "radarr.${internal_domain}" = host internal_domain "http://127.0.0.1:7878";
           "sonarr.${internal_domain}" = host internal_domain "http://127.0.0.1:8989";

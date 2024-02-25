@@ -3,6 +3,7 @@
     ./hardware-configuration.nix
     ../common
     ./adguardhome.nix
+    ./audiobookshelf.nix
     ./containers.nix
     ./docker.nix
     ./monitoring.nix
