@@ -51,6 +51,7 @@
       daily = {
         paths = [
           "/persist"
+          "/data/images"
         ];
       };
     };
@@ -87,6 +88,12 @@
     systemPackages = with pkgs; [
       nfs-utils
     ];
+  };
+
+  fileSystems."/data/images" = {
+    device = "/dev/disk/by-label/storage";
+    fsType = "btrfs";
+    options = [ "subvol=images" "compress=zstd" ];
   };
 
   services.rpcbind.enable = true;
