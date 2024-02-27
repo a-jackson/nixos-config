@@ -43,6 +43,10 @@ in
           "prometheus.${internal_domain}" = host internal_domain "http://127.0.0.1:${toString config.services.prometheus.port}";
           "grafana.${internal_domain}" = host internal_domain "http://127.0.0.1:${toString config.services.grafana.settings.server.http_port}";
           "notes.${internal_domain}" = host internal_domain "http://127.0.0.1:3001";
+          "cameras.${internal_domain}" = {
+            forceSSL = true;
+            useACMEHost = internal_domain;
+          };
         };
     };
   };

@@ -16,6 +16,16 @@
     sopsFile = ./secrets.yaml;
   };
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      frigate = prev.frigate.overrideAttrs (o: {
+        patches = (o.patches or [ ]) ++ [
+          ./patches/frigate/0001-fix-config-check-read-access-to-run-secrets.patch
+        ];
+      });
+    })
+  ];
+
   networking = {
     interfaces = {
       eno1.ipv4.addresses = [{
@@ -63,6 +73,17 @@
         "jellyfin.andrewjackson.dev"
       ];
       apiTokenFile = config.sops.secrets.cloudflare_apikey.path;
+    };
+
+    frigate = {
+      enable = true;
+      hostname = "cameras.ajackson.dev";
+      settings.cameras = {
+        gp_top.ffmpeg.inputs = [{
+          path = "rtsp://192.168.1.15:8554/unicast";
+          roles = [ "detect" "record" ];
+        }];
+      };
     };
   };
 
