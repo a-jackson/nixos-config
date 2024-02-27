@@ -14,6 +14,7 @@
   home.packages = with pkgs; [
     awscli2
     terraform
+    terraform-ls
     omnisharp-roslyn
     tflint
     packer

@@ -82,6 +82,7 @@
     };
     fzf.enable = true;
     htop.enable = true;
+    neovim.enable = true;
   };
 
   services.gpg-agent.enable = true;
