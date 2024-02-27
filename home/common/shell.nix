@@ -93,5 +93,8 @@
     sops
     nixpkgs-fmt
     jq
+    gcc
+    nodejs_20
+    python3
   ];
 }
