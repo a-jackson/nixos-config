@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ abe, pkgs, config, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../common
@@ -10,6 +10,7 @@
     ./multimedia.nix
     ./nextcloud.nix
     ./nginx.nix
+    abe.nixosModules.default
   ];
 
   sops.secrets.cloudflare_apikey = {
@@ -47,8 +48,36 @@
   };
 
   rootDiskLabel = "server";
-
+  systemd.tmpfiles.rules = [ 
+    "d /data/audio/books 0770 ${config.services.audiobookshelf.user} ${config.services.audiobookshelf.group} - -"
+    "d /data/audio/aax 0700 ${config.services.audiobookshelf.user} ${config.services.audiobookshelf.group} - -"
+  ];
   services = {
+    audiobook-extractor = {
+      enable = true;
+      user = config.services.audiobookshelf.user;
+      group = config.services.audiobookshelf.group;
+      profiles.andrew = {
+        destinationDir = "/data/audio/books";
+        completeDir = "/data/audio/aax";
+        tempDir = "/tmp/abe-andrew";
+        startAt = "Mon *-*-* 06:00:00";
+      };
+      profiles.gemma = {
+        destinationDir = "/data/audio/books";
+        completeDir = "/data/audio/aax";
+        tempDir = "/tmp/abe-gemma";
+        startAt = "Tue *-*-* 06:00:00";
+      };
+    };
+    audiobookshelf = {
+      enable = true;
+      host = "0.0.0.0";
+      openFirewall = true;
+      port = 51234;
+      group = "multimedia";
+    };
+
     adguardhome = {
       enable = true;
       virtualHosts = {
@@ -115,6 +144,11 @@
     device = "/dev/disk/by-label/storage";
     fsType = "btrfs";
     options = [ "subvol=images" "compress=zstd" ];
+  };
+  fileSystems."/data/audio" = {
+    device = "/dev/disk/by-label/storage";
+    fsType = "btrfs";
+    options = [ "subvol=audio" "compress=zstd" ];
   };
 
   services.rpcbind.enable = true;

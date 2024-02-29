@@ -22,9 +22,13 @@
         nixpkgs-stable.follows = "nixpkgs";
       };
     };
+
+    abe = {
+      url = "github:a-jackson/audiobook-extractor";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, impermanence, sops-nix }@inputs:
+  outputs = { self, nixpkgs, home-manager, impermanence, sops-nix, abe }@inputs:
     let
       systemConfig = hostname: system: nixpkgs.lib.nixosSystem {
         inherit system;
