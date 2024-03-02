@@ -4,6 +4,7 @@
     ./sops.nix
     ./user.nix
     ./auto-upgrade.nix
+    ./nvim.nix
     ../../modules
     impermanence.nixosModules.impermanence
   ];
@@ -18,6 +19,10 @@
     firewall.enable = true;
     networkmanager.enable = true;
   };
+
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+  ];
 
   services.tailscale.enable = true;
   environment.persistence."/persist" = {

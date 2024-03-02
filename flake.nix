@@ -26,9 +26,14 @@
     abe = {
       url = "github:a-jackson/audiobook-extractor";
     };
+
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, impermanence, sops-nix, abe }@inputs:
+  outputs = { self, nixpkgs, home-manager, impermanence, sops-nix, abe, nixvim }@inputs:
     let
       systemConfig = hostname: system: nixpkgs.lib.nixosSystem {
         inherit system;
