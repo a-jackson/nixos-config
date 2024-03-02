@@ -16,6 +16,5 @@
     options.wrap = false;
     options.guifont = "FiraCode Nerd Font:h12";
     options.hlsearch = false;
-
   };
 }

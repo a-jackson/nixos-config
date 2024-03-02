@@ -8,6 +8,11 @@
       options.desc = "Explorer";
     }
     {
+      key = "<leader>o";
+      action = "<Cmd>Neotree focus<CR>";
+      options.desc = "Explorer focus";
+    }
+    {
       key = "<leader>q";
       action = "<Cmd>confirm q<Cr>";
       options.desc = "Quit";
