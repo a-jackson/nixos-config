@@ -1,4 +1,11 @@
-{ pkgs, lib, ... }:
+{ inputs, pkgs, lib, ... }:
+let
+  nixvim' = inputs.nixvim.legacyPackages.${pkgs.system};
+  nvim = nixvim'.makeNixvimWithModule {
+    inherit pkgs;
+    module = import ../hosts/common/nixvim;
+  };
+in
 {
   imports = [
     ./common/shell.nix
@@ -23,6 +30,8 @@
       sdk_7_0
       sdk_8_0
     ])
+  ] ++ [
+    nvim
   ];
 
   programs = {
