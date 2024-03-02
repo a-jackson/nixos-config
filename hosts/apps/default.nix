@@ -10,6 +10,7 @@
     ./multimedia.nix
     ./nextcloud.nix
     ./nginx.nix
+    ./paperless.nix
     abe.nixosModules.default
   ];
 
