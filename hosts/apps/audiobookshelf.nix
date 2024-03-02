@@ -1,20 +1,36 @@
 { config, pkgs, ... }:
+let 
+user = config.services.audiobookshelf.user;
+group = config.homelab.multimedia.group;
+in
 {
-  virtualisation.oci-containers.containers.audiobookshelf = {
-    image = "ghcr.io/advplyr/audiobookshelf";
-    imageFile = pkgs.dockerTools.pullImage {
-      imageName = "ghcr.io/advplyr/audiobookshelf";
-      imageDigest = "sha256:34bc1414a7a65f3f1e12f3e03195561732cc740792d1dea1858d483006ceba1e";
-      sha256 = "sha256-LtYw4ND8WS97p9qJLm03G6P4nQ/dACwoERrcsfNQvj0=";
+  systemd.tmpfiles.rules = [ 
+    "d /data/audio/books 0770 ${user} ${group} - -"
+    "d /data/audio/aax 0700 ${user} ${group} - -"
+  ];
+
+  services = {
+    audiobook-extractor = {
+      enable = true;
+      user = user;
+      group = group;
+      profiles.andrew = {
+        destinationDir = "/data/audio/books";
+        completeDir = "/data/audio/aax";
+        tempDir = "/tmp/abe-andrew";
+        startAt = "Mon *-*-* 06:00:00";
+      };
+      profiles.gemma = {
+        destinationDir = "/data/audio/books";
+        completeDir = "/data/audio/aax";
+        tempDir = "/tmp/abe-gemma";
+        startAt = "Tue *-*-* 06:00:00";
+      };
     };
-    ports = [
-      "13378:80"
-    ];
-    volumes = [
-      "/mnt/user/audio/books/Audiobook:/audiobooks"
-      "/mnt/user/audio/podcasts:/podcasts"
-      "audiobookshelf_config:/config"
-      "audiobookshelf_metadata:/metadata"
-    ];
+    audiobookshelf = {
+      enable = true;
+      port = 13378;
+      inherit group;
+    };
   };
 }
