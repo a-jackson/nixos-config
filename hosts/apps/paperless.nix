@@ -1,9 +1,4 @@
 { config, ... }: {
-  systemd.tmpfiles.rules = [
-    "d /var/tmp/paperless 0777 paperless paperless - -"
-    "d /var/tmp/paperless-scratch 0777 paperless paperless - - "
-  ];
-
   services = {
     paperless = {
       enable = true;
@@ -12,8 +7,6 @@
       settings = {
         PAPERLESS_FILENAME_FORMAT = "{created_year}/{correspondent}/{title}";
         PAPERLESS_CONSUMER_RECURSIVE = "true";
-        PAPERLESS_CONVERT_TMPDIR="/var/tmp/paperless";
-        PAPERLESS_SCRATCH_DIR="/var/tmp/paperless-scratch";
       };
     };
 
@@ -43,3 +36,4 @@
     };
   };
 }
+
