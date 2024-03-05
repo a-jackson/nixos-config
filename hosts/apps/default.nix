@@ -14,9 +14,7 @@
     abe.nixosModules.default
   ];
 
-  sops.secrets.cloudflare_apikey = {
-    sopsFile = ./secrets.yaml;
-  };
+  sops.secrets.cloudflare_apikey = { sopsFile = ./secrets.yaml; };
 
   nixpkgs.overlays = [
     (final: prev: {
@@ -39,13 +37,9 @@
       address = "192.168.1.1";
       interface = "eno1";
     };
-    nameservers = [
-      "127.0.0.1"
-    ];
+    nameservers = [ "127.0.0.1" ];
 
-    firewall = {
-      allowedTCPPorts = [ 443 ];
-    };
+    firewall = { allowedTCPPorts = [ 443 ]; };
   };
 
   rootDiskLabel = "server";
@@ -59,21 +53,11 @@
       };
     };
 
-    restic_backups = {
-      daily = {
-        paths = [
-          "/persist"
-          "/data/images"
-        ];
-      };
-    };
+    restic_backups = { daily = { paths = [ "/persist" "/data/images" ]; }; };
 
     cfdyndns = {
       enable = true;
-      records = [
-        "requests.andrewjackson.dev"
-        "jellyfin.andrewjackson.dev"
-      ];
+      records = [ "requests.andrewjackson.dev" "jellyfin.andrewjackson.dev" ];
       apiTokenFile = config.sops.secrets.cloudflare_apikey.path;
     };
 
@@ -81,10 +65,13 @@
       enable = true;
       hostname = "cameras.ajackson.dev";
       settings.cameras = {
-        gp_top.ffmpeg.inputs = [{
-          path = "rtsp://192.168.1.15:8554/unicast";
-          roles = [ "detect" "record" ];
-        }];
+        gp_top = {
+          ffmpeg.inputs = [{
+            path = "rtsp://192.168.1.15:8554/unicast";
+            roles = [ "detect" "record" ];
+          }];
+          detect.enabled = false;
+        };
       };
     };
   };
@@ -95,23 +82,16 @@
       image = "zefhemel/silverbullet";
       imageFile = pkgs.dockerTools.pullImage {
         imageName = "zefhemel/silverbullet";
-        imageDigest = "sha256:8926cee41083c860f03f54c3103a92e6b0d81b16dc49f71ecaeb917c555667f5";
+        imageDigest =
+          "sha256:8926cee41083c860f03f54c3103a92e6b0d81b16dc49f71ecaeb917c555667f5";
         sha256 = "sha256-HnREbkt+rmz1D04UeU66X1pipv2GXOptQ/l1HoBsLDE=";
       };
-      ports = [
-        "3001:3000"
-      ];
-      volumes = [
-        "silverbullet:/space"
-      ];
+      ports = [ "3001:3000" ];
+      volumes = [ "silverbullet:/space" ];
     };
   };
 
-  environment = {
-    systemPackages = with pkgs; [
-      nfs-utils
-    ];
-  };
+  environment = { systemPackages = with pkgs; [ nfs-utils ]; };
 
   fileSystems."/data/images" = {
     device = "/dev/disk/by-label/storage";
@@ -129,9 +109,7 @@
     let
       tritonMount = folder: {
         type = "nfs";
-        mountConfig = {
-          Options = "noatime";
-        };
+        mountConfig = { Options = "noatime"; };
         what = "192.168.1.75:/mnt/user/${folder}";
         where = "/mnt/user/${folder}";
       };
@@ -146,9 +124,7 @@
     let
       tritonMount = folder: {
         wantedBy = [ "multi-user.target" ];
-        automountConfig = {
-          TimeoutIdleSec = "600";
-        };
+        automountConfig = { TimeoutIdleSec = "600"; };
         where = "/mnt/user/${folder}";
       };
     in
