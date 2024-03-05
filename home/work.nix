@@ -30,6 +30,13 @@ in
       sdk_7_0
       sdk_8_0
     ])
+    (python312.withPackages (ps: with ps; [
+      boto3
+      boto3-stubs
+      mypy-boto3-s3
+      mypy-boto3-dynamodb
+      mypy-boto3-ssm
+    ]))
   ] ++ [
     nvim
   ];

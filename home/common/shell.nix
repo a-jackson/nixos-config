@@ -95,6 +95,6 @@
     jq
     gcc
     nodejs_20
-    python3
+    # (python312.withPackages (ps: with ps; []))
   ];
 }
