@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ pkgs, lib, config, ... }: {
   services = {
     paperless = {
       enable = true;
@@ -7,6 +7,7 @@
       settings = {
         PAPERLESS_FILENAME_FORMAT = "{created_year}/{correspondent}/{title}";
         PAPERLESS_CONSUMER_RECURSIVE = "true";
+        LD_LIBRARY_PATH = "${lib.getLib pkgs.mkl}/lib";
       };
     };
 
