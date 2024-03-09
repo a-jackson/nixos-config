@@ -21,6 +21,9 @@
         localtrim = "!f() { git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done; }; f";
         pf = "push --force-with-lease";
       };
+      extraConfig = {
+        credential.helper = "store";
+      };
     };
 
     gh = {
@@ -95,6 +98,7 @@
     jq
     gcc
     nodejs_20
+    tea
     # (python312.withPackages (ps: with ps; []))
   ];
 }
