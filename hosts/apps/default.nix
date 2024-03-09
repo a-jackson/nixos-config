@@ -6,6 +6,7 @@
     ./audiobookshelf.nix
     ./containers.nix
     ./docker.nix
+    ./forgejo.nix
     ./monitoring.nix
     ./multimedia.nix
     ./nextcloud.nix

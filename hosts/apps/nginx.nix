@@ -47,6 +47,7 @@ in
             forceSSL = true;
             useACMEHost = internal_domain;
           };
+          "git.${internal_domain}" = host internal_domain "http://127.0.0.1:${toString config.services.forgejo.settings.server.HTTP_PORT}";
         };
     };
   };
