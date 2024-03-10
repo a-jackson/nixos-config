@@ -85,6 +85,7 @@
         laptop = systemConfig "laptop" "x86_64-linux";
         apps = systemConfig "apps" "x86_64-linux";
         desktop = systemConfig "desktop" "x86_64-linux";
+        cloud = systemConfig "cloud" "aarch64-linux";
       };
 
       homeConfigurations = {
