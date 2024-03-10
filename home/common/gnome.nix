@@ -5,7 +5,7 @@
       favorite-apps = [
         "firefox.desktop"
         "codium.desktop"
-        "org.gnome.Console.desktop"
+        "kitty.desktop"
       ];
       welcome-dialog-last-shown-version = "44.3";
     };
@@ -28,7 +28,10 @@
   };
 
   services.kdeconnect.enable = true;
-
+  programs.kitty = {
+    enable = true;
+    font.name = "Fira Code";
+  };
 
   xdg.userDirs = {
     enable = true;
