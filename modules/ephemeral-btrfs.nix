@@ -30,8 +30,12 @@ in
     type = types.str;
     default = config.networking.hostName;
   };
+  options.ephemeral-btrs = mkOption {
+    type = types.bool;
+    default = true;
+  };
 
-  config = {
+  config = lib.mkIf config.ephemeral-btrs {
     boot.initrd = {
       supportedFilesystems = [ "btrfs" ];
       postDeviceCommands = lib.mkIf (!phase1Systemd) (lib.mkBefore wipeScript);

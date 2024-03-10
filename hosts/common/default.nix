@@ -1,15 +1,22 @@
-{ pkgs, nixpkgs, impermanence, ... }:
+{ pkgs, nixpkgs, lib, config, ... }:
 {
   imports = [
     ./sops.nix
     ./user.nix
     ./auto-upgrade.nix
     ./nvim.nix
+    ./impermanence.nix
     ../../modules
-    impermanence.nixosModules.impermanence
   ];
+  options.homelab = with lib; {
+    systemd-boot = mkOption {
+      type = types.bool;
+      default = true;
+    };
+  };
 
-  boot.loader = {
+  config = {
+    boot.loader = lib.mkIf config.homelab.systemd-boot {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
@@ -25,19 +32,6 @@
   ];
 
   services.tailscale.enable = true;
-  environment.persistence."/persist" = {
-    directories = [
-      "/etc/ssh"
-      "/var/lib"
-      "/var/log"
-      "/var/db/sudo/lectured"
-      "/etc/NetworkManager"
-    ];
-    files = [
-      "/etc/machine_id"
-      "/etc/nix/id_rsa"
-    ];
-  };
 
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
@@ -71,4 +65,5 @@
 
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "23.05";
+};
 }
