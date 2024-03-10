@@ -56,12 +56,6 @@
 
     restic_backups = { daily = { paths = [ "/persist" "/data/images" ]; }; };
 
-    cfdyndns = {
-      enable = true;
-      records = [ "requests.andrewjackson.dev" "jellyfin.andrewjackson.dev" ];
-      apiTokenFile = config.sops.secrets.cloudflare_apikey.path;
-    };
-
     frigate = {
       enable = true;
       hostname = "cameras.ajackson.dev";
