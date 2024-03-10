@@ -1,10 +1,6 @@
 { lib, config, ... }:
 let
   cfg = config.homelab.multimedia;
-
-  sonarr-overlay = final: prev: {
-    sonarr = final.callPackage ../../packages/sonarr { };
-  };
 in
 {
   options.homelab.multimedia = with lib; {
@@ -15,8 +11,6 @@ in
   };
 
   config = {
-    nixpkgs.overlays = [ sonarr-overlay ];
-
     users.groups."${cfg.group}" = { };
     users.users.andrew.extraGroups = [ cfg.group ];
 
