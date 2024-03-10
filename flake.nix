@@ -53,6 +53,7 @@
           hostname = "cloud";
           system = "aarch64-linux";
         };
+        nas = libx.mkSystem { hostname = "nas"; };
       };
 
       homeConfigurations = {
@@ -60,6 +61,7 @@
         "andrew@desktop" = libx.mkHome { type = "desktop"; };
         "andrew@work" = libx.mkHome { type = "work"; };
         "andrew@apps" = libx.mkHome;
+        "andrew@nas" = libx.mkHome;
         "andrew@cloud" = libx.mkHome { system = "aarch64-linux"; };
       };
     };
