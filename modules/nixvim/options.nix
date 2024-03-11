@@ -1,7 +1,7 @@
 { config, lib, ... }: {
   config = lib.mkIf config.homelab.nvim.enable {
     programs.nixvim = {
-      colorschemes.tokyonight.enable = true;
+      colorschemes.kanagawa.enable = true;
       globals.mapleader = " ";
       clipboard.providers.xclip.enable = true;
       clipboard.register = "unnamedplus";

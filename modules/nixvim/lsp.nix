@@ -63,7 +63,11 @@
               };
             };
 
-            snippet.expand = "luasnip";
+            snippet.expand = ''
+              function(args)
+                require('luasnip').lsp_expand(args.body)
+              end
+            '';
 
             mapping = {
               "<CR>" = "cmp.mapping.confirm({ select = false })";
