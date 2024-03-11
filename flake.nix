@@ -47,6 +47,9 @@
       };
       homeConfig = username: hostname: system: home-manager.lib.homeManagerConfiguration {
         modules = [
+          {
+            imports = [ nixvim.homeManagerModules.nixvim ];
+          }
           ./home/${hostname}.nix
           {
             home = {

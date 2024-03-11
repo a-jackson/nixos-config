@@ -86,6 +86,7 @@
     fzf.enable = true;
     htop.enable = true;
     direnv.enable = true;
+    ripgrep.enable = true;
   };
 
   services.gpg-agent.enable = true;

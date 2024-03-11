@@ -1,5 +1,6 @@
 { ... }:{
   imports = [
+    ./nixvim
     ./ephemeral-btrfs.nix
     ./mergerfs.nix
     ./monitoring.nix
