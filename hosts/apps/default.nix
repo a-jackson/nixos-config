@@ -78,8 +78,8 @@
       imageFile = pkgs.dockerTools.pullImage {
         imageName = "zefhemel/silverbullet";
         imageDigest =
-          "sha256:8926cee41083c860f03f54c3103a92e6b0d81b16dc49f71ecaeb917c555667f5";
-        sha256 = "sha256-HnREbkt+rmz1D04UeU66X1pipv2GXOptQ/l1HoBsLDE=";
+          "sha256:575116ebe09ed4f9ec9d8077ddd6e1015036ef736ae6d0ec61715636b603f348";
+        sha256 = "sha256-Kx1I7ttjGQ1wYk4YcnVj/AmDSUI1f9o9IHALMyQUbys=";
       };
       ports = [ "3001:3000" ];
       volumes = [ "silverbullet:/space" ];
