@@ -1,17 +1,13 @@
 { lib, config, ... }:
 with lib;
-let
-  cfg = config.services.restic_backups;
-in
-{
+let cfg = config.services.restic_backups;
+in {
   options = {
     services.restic_backups = mkOption {
       default = { };
       type = types.attrsOf (types.submodule ({ config, name, ... }: {
         options = {
-          paths = mkOption {
-            type = types.listOf types.str;
-          };
+          paths = mkOption { type = types.listOf types.str; };
           exclude = mkOption {
             type = types.listOf types.str;
             default = [ ];
@@ -39,6 +35,12 @@ in
 
           paths = backupCfg.paths;
           exclude = backupCfg.exclude;
+
+          timerConfig = {
+            OnCalendar = "daily";
+            Persistent = true;
+            RandomizedDelaySec = "1h";
+          };
 
           pruneOpts = [
             "--keep-daily 7"
