@@ -241,6 +241,10 @@
       extraConfigLua = ''
         local cmp=require('cmp')
         cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done { tex = false })
+        vim.api.nvim_create_autocmd({"BufWritePre"}, {
+          pattern = {"*.tf", "*.tfvars"},
+          callback = function() vim.lsp.buf.format() end,
+        })
       '';
     };
   };
