@@ -1,2 +1,5 @@
-{ pkgs, ... }:
-{ homelab.nvim.enable = true; }
+{ pkgs, nixvim, ... }: {
+
+  imports = [ nixvim.nixosModules.nixvim ];
+  homelab.nvim.enable = true;
+}
