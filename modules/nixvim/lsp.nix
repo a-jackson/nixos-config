@@ -1,251 +1,160 @@
 { config, lib, ... }: {
   config = lib.mkIf config.homelab.nvim.enable {
     programs.nixvim = {
-      plugins.markdown-preview.enable = true;
-      plugins.nvim-autopairs.enable = true;
-      plugins = {
-        none-ls = {
-          enable = true;
-          sources.formatting.prettier.enable = true;
-          sources.formatting.prettier.disableTsServerFormatter = true;
-          sources.formatting.black.enable = true;
-          sources.formatting.nixfmt.enable = true;
-
-        };
-        luasnip.enable = true;
-        luasnip.fromVscode = [{ }];
-        friendly-snippets.enable = true;
-
-        cmp_luasnip.enable = true;
-
-        lspkind.enable = true;
-        lspkind.mode = "symbol";
-        cmp = {
-          enable = true;
-          settings = {
-            sources = [
-              {
-                name = "nvim_lsp";
-                priority = 1000;
-              }
-              {
-                name = "luasnip";
-                priority = 750;
-              }
-              {
-                name = "buffer";
-                priority = 500;
-                option.get_bufnrs.__raw = "vim.api.nvim_list_bufs";
-              }
-              {
-                name = "path";
-                priority = 250;
-              }
-            ];
-
-            window = {
-              completion = {
-                border = "rounded";
-                winhighlight =
-                  "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None";
-                scrolloff = 0;
-                colOffset = 0;
-                sidePadding = 1;
-                scrollbar = true;
-              };
-              documentation = {
-                maxHeight = "math.floor(40 * (40 / vim.o.lines))";
-                maxWidth =
-                  "math.floor((40 * 2) * (vim.o.columns / (40 * 2 * 16 / 9)))";
-                border = "rounded";
-                winhighlight =
-                  "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None";
-              };
+      plugins =
+        {
+          fidget.enable = true;
+          lsp = {
+            enable = true;
+            servers = {
+              eslint.enable = true;
+              tsserver.enable = true;
+              cssls.enable = true;
+              bashls.enable = true;
+              html.enable = true;
+              emmet_ls.enable = true;
+              pyright.enable = true;
+              nixd.enable = true;
+            } // lib.optionalAttrs config.homelab.nvim.terraform {
+              terraformls.enable = true;
+            } // lib.optionalAttrs config.homelab.nvim.csharp {
+              csharp-ls.enable = true;
             };
 
-            snippet.expand = ''
-              function(args)
-                require('luasnip').lsp_expand(args.body)
+            keymaps = {
+              lspBuf =
+                let
+                  map = action: desc: {
+                    inherit action desc;
+                  };
+                in
+                {
+                  "<leader>rn" = map "rename" "[R]e[n]ame";
+                  "<leader>ca" = map "code_action" "[C]ode [A]ction";
+                  "K" = map "hover" "Hover Documentation";
+                  "gD" = map "declaration" "[G]oto [D]eclaration";
+                };
+            };
+
+            onAttach = ''
+              if client and client.server_capabilities.documentHighlightProvider then
+                vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+                  buffer = bufnr,
+                  callback = vim.lsp.buf.document_highlight,
+                })
+
+                vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+                  buffer = bufnr,
+                  callback = vim.lsp.buf.clear_references,
+                })
               end
             '';
+          };
 
-            mapping = {
-              "<CR>" = "cmp.mapping.confirm({ select = false })";
-              "<C-u>" =
-                ''cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" })'';
-              "<C-d>" =
-                ''cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" })'';
-              "<C-Space>" = "cmp.mapping.complete()";
-              "<S-Tab>" =
-                "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-              "<Tab>" =
-                "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
-            };
+          lspkind = {
+            enable = true;
+            mode = "symbol";
           };
-        };
-        cmp-nvim-lsp.enable = true;
-        lsp = {
-          enable = true;
-          servers = {
-            eslint.enable = true;
-            tsserver = {
-              enable = true;
-              extraOptions = { single_file_support = false; };
-              rootDir =
-                ''require('lspconfig').util.root_pattern("package.json")'';
-            };
-            cssls.enable = true;
-            bashls.enable = true;
-            html.enable = true;
-            emmet_ls.enable = true;
-            pyright.enable = true;
-            nixd.enable = true;
-          } // lib.optionalAttrs config.homelab.nvim.terraform {
-            terraformls.enable = true;
-          } // lib.optionalAttrs config.homelab.nvim.csharp {
-            csharp-ls.enable = true;
-          };
-        };
-      };
-      keymaps = [
-        {
-          key = "<leader>la";
-          action = "function() vim.lsp.buf.code_action() end";
-          options.desc = "Code action";
-          lua = true;
-          mode = "v";
-        }
-        {
-          key = "<leader>la";
-          action = "function() vim.lsp.buf.code_action() end";
-          options.desc = "Code action";
-          lua = true;
-          mode = "n";
-        }
-        {
-          key = "gd";
-          action =
-            ''function() require("telescope.builtin").lsp_definitions() end'';
-          options.desc = "Go to definition";
-          lua = true;
-          mode = "n";
-        }
-        {
-          key = "gr";
-          action =
-            ''function() require("telescope.builtin").lsp_references() end'';
-          options.desc = "References of current symbol";
-          lua = true;
-          mode = "n";
-        }
-        {
-          key = "<leader>lR";
-          action =
-            ''function() require("telescope.builtin").lsp_references() end'';
-          options.desc = "Search references";
-          lua = true;
-          mode = "n";
-        }
-        {
-          key = "<leader>lr";
-          action = "function() vim.lsp.buf.rename() end";
-          options.desc = "Rename current symbol";
-          lua = true;
-          mode = "n";
-        }
-        {
-          key = "<leader>lh";
-          action = "function() vim.lsp.buf.signature_help() end";
-          options.desc = "Signature help";
-          lua = true;
-          mode = "n";
-        }
-        {
-          key = "gy";
-          action = ''
-            function() require("telescope.builtin").lsp_type_definitions() end'';
-          options.desc = "Definition of current type";
-          lua = true;
-          mode = "n";
-        }
-        {
-          key = "<leader>lG";
-          action = ''
-            function()
-              vim.ui.input({ prompt = "Symbol Query:" }, function(query)
-                if query then
-                  -- word under cursor if given query is empty
-                  if query == "" then query = vim.fn.expand "<cword>" end
-                  require("telescope.builtin").lsp_workspace_symbols {
-                    query = query,
-                    prompt_title = ("Find word (%s)"):format(query),
-                  }
+
+          cmp-nvim-lsp.enable = true;
+
+          cmp = {
+            enable = true;
+            settings = {
+              sources = [
+                {
+                  name = "nvim_lsp";
+                  priority = 1000;
+                }
+                {
+                  name = "luasnip";
+                  priority = 750;
+                }
+                {
+                  name = "buffer";
+                  priority = 500;
+                  option.get_bufnrs.__raw = "vim.api.nvim_list_bufs";
+                }
+                {
+                  name = "path";
+                  priority = 250;
+                }
+              ];
+              snippet.expand = ''
+                function(args)
+                  require('luasnip').lsp_expand(args.body)
                 end
-              end)
-            end
-          '';
-          options.desc = "Search workspace symbols";
-          lua = true;
-          mode = "n";
-        }
-        {
-          key = "K";
-          action = "function () vim.lsp.buf.hover() end";
-          options.desc = "Hover symbol details";
-          lua = true;
-          mode = "n";
-        }
-        {
-          key = "<leader>lr";
-          action = "function () vim.lsp.buf.rename() end";
-          options.desc = "Rename using lsp";
-          lua = true;
-          mode = "n";
-        }
-        {
-          key = "<leader>ld";
-          action = "function() vim.diagnostic.open_float() end";
-          options.desc = "Hover diagnostics";
-          lua = true;
-          mode = "n";
-        }
-        {
-          key = "[d";
-          action = "function() vim.diagnostic.goto_prev() end";
-          options.desc = "Previous diagnostic";
-          lua = true;
-          mode = "n";
-        }
-        {
-          key = "]d";
-          action = "function() vim.diagnostic.goto_next() end";
-          options.desc = "Next diagnostic";
-          lua = true;
-          mode = "n";
-        }
-        {
-          key = "gl";
-          action = "function() vim.diagnostic.open_float() end";
-          options.desc = "Hover diagnostics";
-          lua = true;
-          mode = "n";
-        }
-        {
-          key = "<leader>lf";
-          action = "function () vim.lsp.buf.format() end";
-          options.desc = "Format using lsp";
-          lua = true;
-          mode = "n";
-        }
-      ];
-      extraConfigLua = ''
-        local cmp=require('cmp')
-        cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done { tex = false })
-        vim.api.nvim_create_autocmd({"BufWritePre"}, {
-          pattern = {"*.tf", "*.tfvars"},
-          callback = function() vim.lsp.buf.format() end,
-        })
-      '';
+              '';
+              mapping = {
+                "<C-y>" = "cmp.mapping.confirm({ select = false })";
+                "<C-Space>" = "cmp.mapping.complete()";
+                "<C-p>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+                "<C-n>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+                "<C-l>" = ''
+                  cmp.mapping(function()
+                    if luasnip.expand_or_locally_jumpable() then
+                      luasnip.expand_or_jump()
+                    end
+                  end, { 'i', 's' })
+                '';
+                "<C-h>" = ''
+                  cmp.mapping(function()
+                    if luasnip.locally_jumpable(-1) then
+                      luasnip.jump(-1)
+                    end
+                  end, { 'i', 's' })
+                '';
+                  };
+              };
+            };
+
+            conform-nvim = {
+              enable = true;
+              formatOnSave = {
+                timeoutMs = 500;
+                lspFallback = true;
+              };
+            };
+
+            cmp-path.enable = true;
+
+            none-ls = {
+              enable = true;
+              sources.formatting.prettier.enable = true;
+              sources.formatting.prettier.disableTsServerFormatter = true;
+              sources.formatting.black.enable = true;
+              sources.formatting.nixfmt.enable = true;
+
+            };
+            luasnip.enable = true;
+            luasnip.fromVscode = [{ }];
+            friendly-snippets.enable = true;
+
+            cmp_luasnip.enable = true;
+          };
+
+          keymaps =
+            let
+              lspKeymap = key: action: desc: {
+                inherit key;
+                options.desc = desc;
+                lua = true;
+                mode = "n";
+                action = ''
+                  function()
+                    require('telescope.builtin').${action}()
+                  end
+                '';
+              };
+            in
+            [
+              (lspKeymap "gd" "lsp_definitions" "[G]oto [D]efinition")
+              (lspKeymap "gr" "lsp_references" "[G]oto [R]eferences")
+              (lspKeymap "gI" "lsp_implementations" "[G]oto [I]mplementation")
+              (lspKeymap "<leader>D" "lsp_type_definitions" "Type [D]efinition")
+              (lspKeymap "<leader>ds" "lsp_document_symbols" "[D]ocument [S]ymbols")
+              (lspKeymap "<leader>ws" "lsp_dynamic_workspace_symbols" "[W]orkspace [S]ymbols")
+            ];
+        };
     };
-  };
-}
+  }

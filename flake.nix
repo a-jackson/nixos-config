@@ -2,18 +2,14 @@
   description = "System config";
 
   inputs = {
-    nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-unstable";
-    };
+    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-unstable"; };
 
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    impermanence = {
-      url = "github:nix-community/impermanence";
-    };
+    impermanence = { url = "github:nix-community/impermanence"; };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -23,9 +19,7 @@
       };
     };
 
-    abe = {
-      url = "github:a-jackson/audiobook-extractor";
-    };
+    abe = { url = "github:a-jackson/audiobook-extractor"; };
 
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -33,55 +27,38 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, impermanence, sops-nix, abe, nixvim }@inputs:
+  outputs =
+    { self, nixpkgs, home-manager, impermanence, sops-nix, abe, nixvim }@inputs:
     let
-      systemConfig = hostname: system: nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = inputs;
-        modules = [
-          ./hosts/${hostname}
-          {
-            networking.hostName = hostname;
-          }
-        ];
-      };
-      homeConfig = username: hostname: system: home-manager.lib.homeManagerConfiguration {
-        modules = [
-          {
-            imports = [ nixvim.homeManagerModules.nixvim ];
-          }
-          ./home/${hostname}.nix
-          {
-            home = {
-              username = nixpkgs.lib.mkDefault "${username}";
-              homeDirectory = nixpkgs.lib.mkDefault "/home/${username}";
-              stateVersion = "23.05";
-            };
-          }
-        ];
-        pkgs = nixpkgs.legacyPackages.${system};
-        extraSpecialArgs = { inherit inputs; };
-      };
+      systemConfig = hostname: system:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = inputs;
+          modules = [ ./hosts/${hostname} { networking.hostName = hostname; } ];
+        };
+      homeConfig = username: hostname: system:
+        home-manager.lib.homeManagerConfiguration {
+          modules = [
+            { imports = [ nixvim.homeManagerModules.nixvim ]; }
+            ./home/${hostname}.nix
+            {
+              home = {
+                username = nixpkgs.lib.mkDefault "${username}";
+                homeDirectory = nixpkgs.lib.mkDefault "/home/${username}";
+                stateVersion = "23.05";
+              };
+            }
+          ];
+          pkgs = nixpkgs.legacyPackages.${system};
+          extraSpecialArgs = { inherit inputs; };
+        };
       shell = (system:
         let
           overlays = [ ];
-          pkgs = import nixpkgs {
-            inherit system overlays;
-          };
-          buildInputs = with pkgs; [
-            sops
-            ssh-to-age
-            gnupg
-            pinentry
-          ];
+          pkgs = import nixpkgs { inherit system overlays; };
+          buildInputs = with pkgs; [ sops ssh-to-age gnupg pinentry ];
         in
-        with pkgs;
-        {
-          default = mkShell {
-            inherit buildInputs;
-          };
-        }
-      );
+        with pkgs; { default = mkShell { inherit buildInputs; }; });
     in
     {
       nixosConfigurations = {
