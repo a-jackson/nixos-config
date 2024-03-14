@@ -12,12 +12,7 @@ let
   };
 in
 {
-  imports = [
-    ./lsp.nix
-    ./telescope.nix
-    ./terminal.nix
-    ./telescope.nix
-  ];
+  imports = [ ./lsp.nix ./telescope.nix ./terminal.nix ./telescope.nix ];
 
   options.homelab.nvim = with lib; {
     enable = mkOption {
@@ -92,10 +87,14 @@ in
       keymaps = [
         (keymap "<Esc>" "<cmd>nohlsearch<CR>" "Clear search hightlight" "n")
 
-        (luaKeymap "[d" "function() vim.diagnostic.goto_prev() end" "Go to previous [D]iagnostic message" "n")
-        (luaKeymap "]d" "function() vim.diagnostic.goto_next() end" "Go to next [D]iagnostic message" "n")
-        (luaKeymap "<leader>e" "function() vim.diagnostic.open_float() end" "Show diagnostic [E]rror messages" "n")
-        (luaKeymap "<leader>q" "function() vim.diagnostic.setloclist() end" "Open diagnostic [Q]uickfix list" "n")
+        (luaKeymap "[d" "function() vim.diagnostic.goto_prev() end"
+          "Go to previous [D]iagnostic message" "n")
+        (luaKeymap "]d" "function() vim.diagnostic.goto_next() end"
+          "Go to next [D]iagnostic message" "n")
+        (luaKeymap "<leader>e" "function() vim.diagnostic.open_float() end"
+          "Show diagnostic [E]rror messages" "n")
+        (luaKeymap "<leader>q" "function() vim.diagnostic.setloclist() end"
+          "Open diagnostic [Q]uickfix list" "n")
 
         (keymap "<Esc><Esc>" "<C-\\><C-n>" "Exit terminal mode" "t")
 
@@ -109,30 +108,27 @@ in
         (keymap "<C-Left>" "<C-w>>" "Resize window left" "n")
         (keymap "<C-Right>" "<C-w><" "Resize window right" "n")
 
-        (keymap "<leader>f" "<Cmd>Neotree toggle reveal<CR>" "[F]ile tree toggle" "n")
+        (keymap "<leader>f" "<Cmd>Neotree toggle reveal<CR>"
+          "[F]ile tree toggle" "n")
         (keymap "<leader>c" "<Cmd>bdelete<CR>" "[C]lose buffer" "n")
         (keymap "H" "<Cmd>bprevious<CR>" "Previous buffer" "n")
         (keymap "L" "<Cmd>bnext<CR>" "Next buffer" "n")
       ];
 
-      autoGroups = {
-        kickstart-highlight-yank = {
-          clear = true;
-        };
-      };
+      autoGroups = { kickstart-highlight-yank = { clear = true; }; };
 
       autoCmd = [{
         event = [ "TextYankPost" ];
         desc = "Highlight when yanking (copying) text";
         group = "kickstart-highlight-yank";
-        callback = {
-          __raw = "function() vim.highlight.on_yank() end";
-        };
+        callback = { __raw = "function() vim.highlight.on_yank() end"; };
       }];
 
       plugins = {
         comment-nvim.enable = true;
         gitsigns.enable = true;
+        markdown-preview.enable = true;
+
         which-key = {
           enable = true;
           registrations = {
@@ -146,11 +142,7 @@ in
 
         mini = {
           enable = true;
-          modules = {
-            statusline = {
-              use_icons = true;
-            };
-          };
+          modules = { statusline = { use_icons = true; }; };
         };
 
         auto-session = {
@@ -160,7 +152,16 @@ in
 
         neo-tree = {
           enable = true;
-          filesystem.filteredItems.visible = true;
+          filesystem = {
+            followCurrentFile.enabled = true;
+            filteredItems = {
+              showHiddenCount = true;
+              hideDotfiles = false;
+              hideGitignored = true;
+              hideByName = [ ".git" ];
+              visible = true;
+            };
+          };
         };
 
         bufferline.enable = true;
@@ -176,18 +177,14 @@ in
           };
         };
 
-        lualine = {
-          enable = true;
-        };
+        lualine = { enable = true; };
       };
 
       extraConfigVim = ''
         let g:auto_session_pre_save_cmds = ["Neotree close"]
       '';
 
-      extraPlugins = with pkgs.vimPlugins; [
-        nvim-web-devicons
-      ];
+      extraPlugins = with pkgs.vimPlugins; [ nvim-web-devicons ];
     };
   };
 }
