@@ -13,7 +13,7 @@
             html.enable = true;
             emmet_ls.enable = true;
             pyright.enable = true;
-            nixd.enable = true;
+            # nixd.enable = true;
           } // lib.optionalAttrs config.homelab.nvim.terraform {
             terraformls.enable = true;
           } // lib.optionalAttrs config.homelab.nvim.csharp {

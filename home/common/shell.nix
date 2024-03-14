@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   programs = {
     git = {
       enable = true;
@@ -15,15 +14,16 @@
         branches = "branch --all";
         hist = "log --decorate --oneline --graph";
         nuke = "clean -dfx";
-        fixup = "!sh -c '(git diff-files --quiet || (echo Unstaged changes, please commit or stash with --keep-index; exit 1)) && COMMIT=$(git rev-parse $1) && git commit --fixup=$COMMIT && git -c sequence.editor=: rebase -i --autosquash $COMMIT~1' -";
-        pu = "!f() { BRANCH=$(git head) && git push --set-upstream origin $BRANCH; }; f";
+        fixup =
+          "!sh -c '(git diff-files --quiet || (echo Unstaged changes, please commit or stash with --keep-index; exit 1)) && COMMIT=$(git rev-parse $1) && git commit --fixup=$COMMIT && git -c sequence.editor=: rebase -i --autosquash $COMMIT~1' -";
+        pu =
+          "!f() { BRANCH=$(git head) && git push --set-upstream origin $BRANCH; }; f";
         head = "rev-parse --abbrev-ref HEAD";
-        localtrim = "!f() { git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done; }; f";
+        localtrim =
+          "!f() { git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done; }; f";
         pf = "push --force-with-lease";
       };
-      extraConfig = {
-        credential.helper = "store";
-      };
+      extraConfig = { credential.helper = "store"; };
     };
 
     gh = {
@@ -31,9 +31,7 @@
       settings = {
         git_protocol = "ssh";
         prompt = "enabled";
-        aliases = {
-          co = "pr checkout";
-        };
+        aliases = { co = "pr checkout"; };
       };
     };
 
@@ -53,35 +51,26 @@
       enableFishIntegration = true;
     };
 
-    ssh = {
-      enable = true;
-    };
+    ssh = { enable = true; };
 
-    gpg = {
-      enable = true;
-    };
-
+    gpg = { enable = true; };
 
     tmux = {
       enable = true;
       shell = "${pkgs.fish}/bin/fish";
       terminal = "tmux-256color";
       historyLimit = 100000;
-      plugins = with pkgs;
-        [
-          tmuxPlugins.better-mouse-mode
-          tmuxPlugins.sensible
-        ];
-      extraConfig = ''
-    '';
+      plugins = with pkgs; [
+        tmuxPlugins.better-mouse-mode
+        tmuxPlugins.sensible
+      ];
+      extraConfig = "";
     };
 
     zellij.enable = true;
     zoxide = {
       enable = true;
-      options = [
-        "--cmd cd"
-      ];
+      options = [ "--cmd cd" ];
     };
     fzf.enable = true;
     htop.enable = true;
@@ -90,7 +79,7 @@
   };
 
   services.gpg-agent.enable = true;
-  services.gpg-agent.pinentryFlavor = "curses";
+  # services.gpg-agent.pinentryFlavor = "curses";
 
   home.packages = with pkgs; [
     home-manager
