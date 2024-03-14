@@ -10,8 +10,7 @@ let
     options.desc = desc;
     lua = true;
   };
-in
-{
+in {
   imports = [ ./lsp.nix ./telescope.nix ./terminal.nix ./telescope.nix ];
 
   options.homelab.nvim = with lib; {
@@ -32,8 +31,6 @@ in
   config = lib.mkIf config.homelab.nvim.enable {
     programs.nixvim = {
       enable = true;
-
-      colorschemes.kanagawa.enable = true;
 
       globals = {
         mapleader = " ";
@@ -184,7 +181,15 @@ in
         let g:auto_session_pre_save_cmds = ["Neotree close"]
       '';
 
-      extraPlugins = with pkgs.vimPlugins; [ nvim-web-devicons ];
+      extraPlugins = with pkgs.vimPlugins; [ nvim-web-devicons onedark-nvim ];
+
+      extraConfigLua = ''
+        require('nvim-web-devicons').setup()
+        require('onedark').setup({
+          style = 'deep'
+        })
+        require('onedark').load()
+      '';
     };
   };
 }
