@@ -91,4 +91,6 @@
     tea
     # (python312.withPackages (ps: with ps; []))
   ];
+
+  home.sessionVariables = { EDITOR = "nvim"; };
 }
