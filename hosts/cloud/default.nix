@@ -7,6 +7,7 @@ in {
     impermanence.enable = false;
     systemd-boot = false;
     sops.keyPath = "/etc/ssh/ssh_host_ed25519_key";
+    homelab.monitoring.enable = true;
   };
 
   boot.tmp.cleanOnBoot = true;
@@ -24,24 +25,22 @@ in {
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
 
-      virtualHosts =
-        let
-          host = acmeHost: proxyPass: {
-            forceSSL = true;
-            useACMEHost = acmeHost;
-            locations."/" = {
-              proxyPass = proxyPass;
-              proxyWebsockets = true;
-              extraConfig = ''
-                client_max_body_size 0;
-              '';
-            };
+      virtualHosts = let
+        host = acmeHost: proxyPass: {
+          forceSSL = true;
+          useACMEHost = acmeHost;
+          locations."/" = {
+            proxyPass = proxyPass;
+            proxyWebsockets = true;
+            extraConfig = ''
+              client_max_body_size 0;
+            '';
           };
-        in
-        {
-          "jellyfin.${public_domain}" = host public_domain "http://apps:8096";
-          "requests.${public_domain}" = host public_domain "http://apps:5055";
         };
+      in {
+        "jellyfin.${public_domain}" = host public_domain "http://apps:8096";
+        "requests.${public_domain}" = host public_domain "http://apps:5055";
+      };
     };
   };
   security.acme = {
