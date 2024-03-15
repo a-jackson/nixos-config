@@ -13,6 +13,7 @@
             html.enable = true;
             emmet_ls.enable = true;
             pyright.enable = true;
+            nil_ls.enable = true;
             # nixd.enable = true;
             marksman.enable = true;
           } // lib.optionalAttrs config.homelab.nvim.terraform {
@@ -22,14 +23,13 @@
           };
 
           keymaps = {
-            lspBuf =
-              let map = action: desc: { inherit action desc; };
-              in {
-                "<leader>rn" = map "rename" "[R]e[n]ame";
-                "<leader>ca" = map "code_action" "[C]ode [A]ction";
-                "K" = map "hover" "Hover Documentation";
-                "gD" = map "declaration" "[G]oto [D]eclaration";
-              };
+            lspBuf = let map = action: desc: { inherit action desc; };
+            in {
+              "<leader>rn" = map "rename" "[R]e[n]ame";
+              "<leader>ca" = map "code_action" "[C]ode [A]ction";
+              "K" = map "hover" "Hover Documentation";
+              "gD" = map "declaration" "[G]oto [D]eclaration";
+            };
           };
 
           onAttach = ''
@@ -125,35 +125,33 @@
         };
 
         luasnip.enable = true;
-        luasnip.fromVscode = [{ }];
+        luasnip.fromVscode = [ { } ];
         friendly-snippets.enable = true;
 
         cmp_luasnip.enable = true;
       };
 
-      keymaps =
-        let
-          lspKeymap = key: action: desc: {
-            inherit key;
-            options.desc = desc;
-            lua = true;
-            mode = "n";
-            action = ''
-              function()
-                require('telescope.builtin').${action}()
-              end
-            '';
-          };
-        in
-        [
-          (lspKeymap "gd" "lsp_definitions" "[G]oto [D]efinition")
-          (lspKeymap "gr" "lsp_references" "[G]oto [R]eferences")
-          (lspKeymap "gI" "lsp_implementations" "[G]oto [I]mplementation")
-          (lspKeymap "<leader>D" "lsp_type_definitions" "Type [D]efinition")
-          (lspKeymap "<leader>ds" "lsp_document_symbols" "[D]ocument [S]ymbols")
-          (lspKeymap "<leader>ws" "lsp_dynamic_workspace_symbols"
-            "[W]orkspace [S]ymbols")
-        ];
+      keymaps = let
+        lspKeymap = key: action: desc: {
+          inherit key;
+          options.desc = desc;
+          lua = true;
+          mode = "n";
+          action = ''
+            function()
+              require('telescope.builtin').${action}()
+            end
+          '';
+        };
+      in [
+        (lspKeymap "gd" "lsp_definitions" "[G]oto [D]efinition")
+        (lspKeymap "gr" "lsp_references" "[G]oto [R]eferences")
+        (lspKeymap "gI" "lsp_implementations" "[G]oto [I]mplementation")
+        (lspKeymap "<leader>D" "lsp_type_definitions" "Type [D]efinition")
+        (lspKeymap "<leader>ds" "lsp_document_symbols" "[D]ocument [S]ymbols")
+        (lspKeymap "<leader>ws" "lsp_dynamic_workspace_symbols"
+          "[W]orkspace [S]ymbols")
+      ];
     };
   };
 }
