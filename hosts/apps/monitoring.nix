@@ -14,6 +14,7 @@
           job_name = name;
           static_configs = [{
             targets = [ "${host}:${smartctl_port}" "${host}:${node_port}" ];
+            labels = { host = name; };
           }];
         };
       in [ (target "apps" "127.0.0.1") (target "cloud" "cloud") ];
