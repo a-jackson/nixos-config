@@ -5,19 +5,18 @@
     prometheus = {
       enable = true;
 
-      scrapeConfigs = [{
-        job_name = "apps";
-        static_configs = [{
-          targets = [
-            "127.0.0.1:${
-              toString config.services.prometheus.exporters.smartctl.port
-            }"
-            "127.0.0.1:${
-              toString config.services.prometheus.exporters.node.port
-            }"
-          ];
-        }];
-      }];
+      scrapeConfigs = let
+        exporters = config.services.prometheus.exporters;
+        smartctl_port = toString exporters.smartctl.port;
+        node_port = toString exporters.node.port;
+
+        target = name: host: {
+          job_name = name;
+          static_configs = [{
+            targets = [ "${host}:${smartctl_port}" "${host}:${node_port}" ];
+          }];
+        };
+      in [ (target "apps" "127.0.0.1") (target "cloud" "cloud") ];
     };
 
     grafana = {
