@@ -1,0 +1,7 @@
+{
+  "silverbullet": {
+    "image": "docker.io/zefhemel/silverbullet",
+    "imageDigest": "sha256:a9bd3e0b2f0c2e875c347823d2a82dd32e4f298cb22b0592198f99010714dbcb",
+    "sha256": "1jnvdb1w1lppk5r8aswga07qwd7mgfvzk35j61ldjb54jdwypsv5"
+  }
+}

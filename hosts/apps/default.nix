@@ -71,20 +71,20 @@
     };
   };
 
-  virtualisation.oci-containers.containers = {
-    # sudo docker run -it -p 3000:3000 -v ./space:/space zefhemel/silverbullet
-    silverbullet = {
-      image = "zefhemel/silverbullet";
-      imageFile = pkgs.dockerTools.pullImage {
-        imageName = "zefhemel/silverbullet";
-        imageDigest =
-          "sha256:575116ebe09ed4f9ec9d8077ddd6e1015036ef736ae6d0ec61715636b603f348";
-        sha256 = "sha256-Kx1I7ttjGQ1wYk4YcnVj/AmDSUI1f9o9IHALMyQUbys=";
+  virtualisation.oci-containers.containers =
+    let images = builtins.fromJSON (builtins.readFile ../../images.json);
+    in {
+      silverbullet = {
+        image = images.silverbullet.image;
+        imageFile = pkgs.dockerTools.pullImage {
+          imageName = images.silverbullet.image;
+          imageDigest = images.silverbullet.imageDigest;
+          sha256 = images.silverbullet.sha256;
+        };
+        ports = [ "3001:3000" ];
+        volumes = [ "silverbullet:/space" ];
       };
-      ports = [ "3001:3000" ];
-      volumes = [ "silverbullet:/space" ];
     };
-  };
 
   environment = { systemPackages = with pkgs; [ nfs-utils ]; };
 
@@ -100,33 +100,29 @@
   };
 
   services.rpcbind.enable = true;
-  systemd.mounts =
-    let
-      tritonMount = folder: {
-        type = "nfs";
-        mountConfig = { Options = "noatime"; };
-        what = "192.168.1.75:/mnt/user/${folder}";
-        where = "/mnt/user/${folder}";
-      };
-    in
-    [
-      (tritonMount "video")
-      (tritonMount "images")
-      (tritonMount "appdata")
-      (tritonMount "audio")
-    ];
-  systemd.automounts =
-    let
-      tritonMount = folder: {
-        wantedBy = [ "multi-user.target" ];
-        automountConfig = { TimeoutIdleSec = "600"; };
-        where = "/mnt/user/${folder}";
-      };
-    in
-    [
-      (tritonMount "video")
-      (tritonMount "images")
-      (tritonMount "appdata")
-      (tritonMount "audio")
-    ];
+  systemd.mounts = let
+    tritonMount = folder: {
+      type = "nfs";
+      mountConfig = { Options = "noatime"; };
+      what = "192.168.1.75:/mnt/user/${folder}";
+      where = "/mnt/user/${folder}";
+    };
+  in [
+    (tritonMount "video")
+    (tritonMount "images")
+    (tritonMount "appdata")
+    (tritonMount "audio")
+  ];
+  systemd.automounts = let
+    tritonMount = folder: {
+      wantedBy = [ "multi-user.target" ];
+      automountConfig = { TimeoutIdleSec = "600"; };
+      where = "/mnt/user/${folder}";
+    };
+  in [
+    (tritonMount "video")
+    (tritonMount "images")
+    (tritonMount "appdata")
+    (tritonMount "audio")
+  ];
 }
