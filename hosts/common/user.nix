@@ -1,25 +1,19 @@
-{ pkgs, home-manager, impermanence, config, lib, ... }:
-{
-  imports = [
-    home-manager.nixosModules.home-manager
-  ];
+{ pkgs, home-manager, impermanence, config, lib, ... }: {
+  imports = [ home-manager.nixosModules.home-manager ];
 
-  sops.secrets.password = {
-    neededForUsers = true;
-  };
+  sops.secrets.password = { neededForUsers = true; };
 
   users = {
     users.andrew = {
       isNormalUser = true;
       shell = pkgs.fish;
       extraGroups = [ "wheel" ];
-      packages = with pkgs; [
-      ];
       hashedPasswordFile = config.sops.secrets.password.path;
     };
 
     mutableUsers = false;
     users.root.hashedPasswordFile = config.sops.secrets.password.path;
+    users.root.shell = pkgs.fish;
   };
 
   programs = {
@@ -33,11 +27,9 @@
     };
   };
 
-  home-manager.users.andrew =
-    let
-      hostname = config.networking.hostName;
-    in
-    {
+  home-manager.users = let hostname = config.networking.hostName;
+  in {
+    andrew = {
       imports = [
         ../../home/${hostname}.nix
         {
@@ -49,4 +41,8 @@
         }
       ];
     };
+    root = {
+      imports = [ ../../home/common { home = { stateVersion = "23.05"; }; } ];
+    };
+  };
 }
