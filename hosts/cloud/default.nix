@@ -7,7 +7,7 @@ in {
     impermanence.enable = false;
     systemd-boot = false;
     sops.keyPath = "/etc/ssh/ssh_host_ed25519_key";
-    homelab.monitoring.enable = true;
+    monitoring.enable = true;
   };
 
   boot.tmp.cleanOnBoot = true;
