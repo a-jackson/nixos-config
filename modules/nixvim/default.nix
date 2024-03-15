@@ -186,7 +186,7 @@ in {
       extraConfigLua = ''
         require('nvim-web-devicons').setup()
         require('onedark').setup({
-          style = 'deep'
+          style = 'darker'
         })
         require('onedark').load()
       '';
