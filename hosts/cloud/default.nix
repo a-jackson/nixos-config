@@ -40,7 +40,13 @@ in {
       in {
         "jellyfin.${public_domain}" = host public_domain "http://apps:8096";
         "requests.${public_domain}" = host public_domain "http://apps:5055";
+        "notify.${public_domain}" = host public_domain "http://apps:8000";
       };
+    };
+
+    gotify = {
+      enable = true;
+      port = 8000;
     };
   };
   security.acme = {
