@@ -110,6 +110,8 @@ in {
         (keymap "<leader>c" "<Cmd>bdelete<CR>" "[C]lose buffer" "n")
         (keymap "H" "<Cmd>bprevious<CR>" "Previous buffer" "n")
         (keymap "L" "<Cmd>bnext<CR>" "Next buffer" "n")
+
+        (keymap "<leader>hh" "<Cmd>Neogit<CR>" "Neogit" "n")
       ];
 
       autoGroups = { kickstart-highlight-yank = { clear = true; }; };
@@ -123,7 +125,38 @@ in {
 
       plugins = {
         comment-nvim.enable = true;
-        gitsigns.enable = true;
+
+        gitsigns = {
+          enable = true;
+          signs = {
+            add.text = "+";
+            change.text = "~";
+            delete.text = "-";
+          };
+          onAttach.function = ''
+            function(bufnr) 
+              local gs = require('gitsigns')
+
+              local function map(mode, l, r, desc)
+                vim.keymap.set(mode, l, r, { desc = desc, buffer = bufnr })
+              end
+
+              -- Actions
+              map('n', '<leader>hS', gs.stage_buffer, '[S]tage buffer')
+              map('n', '<leader>hs', gs.stage_hunk, '[S]stage hunk')
+              map('n', '<leader>hu', gs.undo_stage_hunk, '[U]ndo stage hunk')
+              map('n', '<leader>hR', gs.reset_buffer, '[R]eset buffer')
+              map('n', '<leader>hp', gs.preview_hunk, '[P]review hunk')
+              map('n', '<leader>hb', function() gs.blame_line{full=true} end, '[B]lame line')
+              map('n', '<leader>tb', gs.toggle_current_line_blame, '[T]oggle [B]lame')
+              map('n', '<leader>hd', gs.diffthis, '[D]iff')
+              map('n', '<leader>td', gs.toggle_deleted, '[T]oggle [D]eleted')
+            end
+          '';
+        };
+
+        neogit = { enable = true; };
+
         markdown-preview.enable = true;
 
         which-key = {
@@ -134,6 +167,7 @@ in {
             "<leader>s" = "[S]earch";
             "<leader>w" = "[W]orkspace";
             "<leader>t" = "[T]erminal";
+            "<leader>h" = "Git";
           };
         };
 
