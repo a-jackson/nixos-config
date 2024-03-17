@@ -1,4 +1,5 @@
 { pkgs, ... }: {
+
   programs = {
     git = {
       enable = true;
@@ -57,7 +58,7 @@
 
     tmux = {
       enable = true;
-      shell = "${pkgs.fish}/bin/fish";
+      # shell = "${pkgs.fish}/bin/fish";
       terminal = "tmux-256color";
       historyLimit = 100000;
       prefix = "C-s";
@@ -65,7 +66,38 @@
       sensibleOnTop = false;
       baseIndex = 1;
       clock24 = true;
-      plugins = with pkgs.tmuxPlugins; [ better-mouse-mode catppuccin ];
+      mouse = true;
+      plugins = with pkgs.tmuxPlugins; [
+        better-mouse-mode
+        {
+          plugin = (catppuccin.overrideAttrs (o: {
+            src = pkgs.fetchFromGitHub {
+              owner = "catppuccin";
+              repo = "tmux";
+              rev = "843946e1761c48b408aea6aec48633dcc4b70988";
+              hash = "sha256-EtNKbpTsNvhLAmAbP79G2jcPO9yvya4d41xY6IZOc3o=";
+            };
+          }));
+          extraConfig = ''
+            set -g @catppuccin_window_left_separator "█"
+            set -g @catppuccin_window_right_separator "█ "
+            set -g @catppuccin_window_number_position "right"
+            set -g @catppuccin_window_middle_separator "  █"
+
+            set -g @catppuccin_window_default_fill "number"
+
+            set -g @catppuccin_window_current_fill "number"
+            set -g @catppuccin_window_current_text "#{pane_current_path}"
+
+            set -g @catppuccin_status_modules_right "application session date_time"
+            set -g @catppuccin_status_left_separator  ""
+            set -g @catppuccin_status_right_separator " "
+            set -g @catppuccin_status_right_separator_inverse "yes"
+            set -g @catppuccin_status_fill "all"
+            set -g @catppuccin_status_connect_separator "no"
+          '';
+        }
+      ];
       extraConfig = ''
         bind u split-window -h -c "#{pane_current_path}"
         bind y split-window -v -c "#{pane_current_path}"
@@ -75,21 +107,6 @@
         bind l select-pane -R
 
         set -g status-position top
-        set -g mouse on
-
-        set -g @catppuccin_window_right_separator "█ "
-        set -g @catppuccin_window_number_position "right"
-        set -g @catppuccin_window_middle_separator " | "
-
-        set -g @catppuccin_window_default_fill "none"
-
-        set -g @catppuccin_window_current_fill "all"
-
-        set -g @catppuccin_status_modules_right "application session user host date_time"
-        set -g @catppuccin_status_left_separator "█"
-        set -g @catppuccin_status_right_separator "█"
-
-        set -g @catppuccin_date_time_text "%Y-%m-%d %H:%M:%S"
       '';
     };
 
