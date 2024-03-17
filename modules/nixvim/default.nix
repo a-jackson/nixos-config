@@ -230,14 +230,15 @@ in {
         let g:auto_session_pre_save_cmds = ["Neotree close"]
       '';
 
-      extraPlugins = with pkgs.vimPlugins; [ nvim-web-devicons onedark-nvim ];
+      colorschemes.catppuccin = {
+        enable = true;
+        flavour = "mocha";
+      };
+
+      extraPlugins = with pkgs.vimPlugins; [ nvim-web-devicons ];
 
       extraConfigLua = ''
         require('nvim-web-devicons').setup()
-        require('onedark').setup({
-          style = 'darker'
-        })
-        require('onedark').load()
       '';
     };
   };

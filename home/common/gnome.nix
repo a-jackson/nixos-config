@@ -18,10 +18,34 @@
     };
   };
 
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Catppuccin-Mocha-Compact-Blue-Dark";
+      package = pkgs.catppuccin-gtk.override {
+        accents = [ "blue" ];
+        size = "compact";
+        tweaks = [ "black" ];
+        variant = "mocha";
+      };
+    };
+  };
+
+  xdg.configFile = {
+    "gtk-4.0/assets".source =
+      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+    "gtk-4.0/gtk.css".source =
+      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+    "gtk-4.0/gtk-dark.css".source =
+      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+  };
+
   services.kdeconnect.enable = true;
   programs.kitty = {
     enable = true;
     font.name = "Fira Code";
+    theme = "Catppuccin-Mocha";
+    settings = { hide_window_decorations = "yes"; };
   };
 
   home.packages = with pkgs; [ neovide ];

@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   services = {
     xserver = {
       enable = true;
@@ -33,7 +32,6 @@
     nssmdns4 = true;
     openFirewall = true;
   };
-
 
   services.flatpak.enable = true;
   environment.etc = {
