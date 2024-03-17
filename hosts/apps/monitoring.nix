@@ -4,16 +4,16 @@
   services = {
     prometheus = {
       enable = true;
+      port = config.homelab.ports.prometheus;
 
       scrapeConfigs = let
-        exporters = config.services.prometheus.exporters;
-        smartctl_port = toString exporters.smartctl.port;
-        node_port = toString exporters.node.port;
+        smartctlPort = toString config.homelab.ports.smartctl;
+        nodePort = toString config.homelab.ports.node;
 
         target = name: host: {
           job_name = name;
           static_configs = [{
-            targets = [ "${host}:${smartctl_port}" "${host}:${node_port}" ];
+            targets = [ "${host}:${smartctlPort}" "${host}:${nodePort}" ];
             labels = { host = name; };
           }];
         };
@@ -25,7 +25,7 @@
       settings = {
         server = {
           http_addr = "127.0.0.1";
-          http_port = 3000;
+          http_port = config.homelab.ports.grafana;
           domain = "grafana.ajackson.dev";
         };
       };
@@ -35,7 +35,7 @@
       enable = true;
       configuration = {
         auth_enabled = false;
-        server.http_listen_port = 3100;
+        server.http_listen_port = config.homelab.ports.loki;
 
         ingester = {
           lifecycler = {

@@ -81,7 +81,7 @@
           imageDigest = images.silverbullet.imageDigest;
           sha256 = images.silverbullet.sha256;
         };
-        ports = [ "3001:3000" ];
+        ports = [ "${toString config.homelab.ports.silverbullet}:3000" ];
         volumes = [ "silverbullet:/space" ];
       };
     };

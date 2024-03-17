@@ -2,11 +2,8 @@
 let
   public_domain = "andrewjackson.dev";
   internal_domain = "ajackson.dev";
-in
-{
-  sops.secrets = {
-    cloudflare_credentials = { };
-  };
+in {
+  sops.secrets = { cloudflare_credentials = { }; };
 
   services = {
     nginx = {
@@ -16,47 +13,47 @@ in
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
 
-      virtualHosts =
-        let
-          host = acmeHost: proxyPass: {
+      virtualHosts = let
+        host = acmeHost: port:
+          let proxyPass = "http://127.0.0.1:${toString port}";
+          in {
             forceSSL = true;
             useACMEHost = acmeHost;
             locations."/" = {
               proxyPass = proxyPass;
               proxyWebsockets = true;
               extraConfig = ''
-                  client_max_body_size 0;
+                client_max_body_size 0;
               '';
             };
           };
-        in
-        {
-          "jellyfin.${public_domain}" = host public_domain "http://127.0.0.1:8096";
-          "requests.${public_domain}" = host public_domain "http://127.0.0.1:5055";
-          "audiobooks.${internal_domain}" = host internal_domain "http://127.0.0.1:13378";
-          "bazarr.${internal_domain}" = host internal_domain "http://127.0.0.1:6767";
-          "radarr.${internal_domain}" = host internal_domain "http://127.0.0.1:7878";
-          "sonarr.${internal_domain}" = host internal_domain "http://127.0.0.1:8989";
-          "sabnzbd.${internal_domain}" = host internal_domain "http://127.0.0.1:8181";
-          "pics.${internal_domain}" = host internal_domain "http://127.0.0.1:2283";
-          "paperless.${internal_domain}" = host internal_domain "http://127.0.0.1:8000";
-          "prometheus.${internal_domain}" = host internal_domain "http://127.0.0.1:${toString config.services.prometheus.port}";
-          "grafana.${internal_domain}" = host internal_domain "http://127.0.0.1:${toString config.services.grafana.settings.server.http_port}";
-          "notes.${internal_domain}" = host internal_domain "http://127.0.0.1:3001";
-          "cameras.${internal_domain}" = {
-            forceSSL = true;
-            useACMEHost = internal_domain;
-          };
-          "git.${internal_domain}" = host internal_domain "http://127.0.0.1:${toString config.services.forgejo.settings.server.HTTP_PORT}";
+        ports = config.homelab.ports;
+      in {
+        "jellyfin.${public_domain}" = host public_domain ports.jellyfin;
+        "requests.${public_domain}" = host public_domain ports.jellyseerr;
+        "audiobooks.${internal_domain}" =
+          host internal_domain ports.audiobookshelf;
+        "bazarr.${internal_domain}" = host internal_domain ports.bazarr;
+        "radarr.${internal_domain}" = host internal_domain ports.radarr;
+        "sonarr.${internal_domain}" = host internal_domain ports.sonarr;
+        "sabnzbd.${internal_domain}" = host internal_domain ports.sabnzbd;
+        "pics.${internal_domain}" = host internal_domain ports.immich;
+        "paperless.${internal_domain}" = host internal_domain ports.paperless;
+        "prometheus.${internal_domain}" = host internal_domain ports.prometheus;
+        "grafana.${internal_domain}" = host internal_domain ports.grafana;
+        "notes.${internal_domain}" = host internal_domain ports.silverbullet;
+        "cameras.${internal_domain}" = {
+          forceSSL = true;
+          useACMEHost = internal_domain;
         };
+        "git.${internal_domain}" = host internal_domain ports.forgejo;
+      };
     };
   };
 
   security.acme = {
     acceptTerms = true;
-    defaults = {
-      email = "andrew@a-jackson.co.uk";
-    };
+    defaults = { email = "andrew@a-jackson.co.uk"; };
     certs = {
       "${public_domain}" = {
         extraDomainNames = [ "*.${public_domain}" ];

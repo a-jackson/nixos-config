@@ -1,10 +1,9 @@
-{ config, pkgs, ... }:
-let 
-user = config.services.audiobookshelf.user;
-group = config.homelab.multimedia.group;
-in
-{
-  systemd.tmpfiles.rules = [ 
+{ config, ... }:
+let
+  user = config.services.audiobookshelf.user;
+  group = config.homelab.multimedia.group;
+in {
+  systemd.tmpfiles.rules = [
     "d /data/audio/books 0770 ${user} ${group} - -"
     "d /data/audio/aax 0700 ${user} ${group} - -"
   ];
@@ -29,7 +28,7 @@ in
     };
     audiobookshelf = {
       enable = true;
-      port = 13378;
+      port = config.homelab.ports.audiobookshelf;
       inherit group;
     };
   };

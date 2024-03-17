@@ -1,8 +1,8 @@
 { lib, config, ... }:
 let
   cfg = config.homelab.multimedia;
-in
-{
+  ports = config.homelab.ports;
+in {
   options.homelab.multimedia = with lib; {
     group = mkOption {
       type = types.str;
@@ -14,9 +14,7 @@ in
     users.groups."${cfg.group}" = { };
     users.users.andrew.extraGroups = [ cfg.group ];
 
-    systemd.tmpfiles.rules = [
-      "d /data/media 0770 - ${cfg.group} - -"
-    ];
+    systemd.tmpfiles.rules = [ "d /data/media 0770 - ${cfg.group} - -" ];
 
     services = {
       sonarr = {
@@ -38,7 +36,7 @@ in
       jellyseerr = {
         enable = true;
         openFirewall = true;
-        port = 5055;
+        port = ports.jellyseerr;
       };
       jellyfin = {
         enable = true;

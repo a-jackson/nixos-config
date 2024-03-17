@@ -1,6 +1,8 @@
 { config, lib, ... }:
 with lib;
-let cfg = config.homelab.monitoring;
+let
+  cfg = config.homelab.monitoring;
+  ports = config.homelab.ports;
 in {
   options.homelab.monitoring = { enable = mkEnableOption "Enable monitoring"; };
 
@@ -9,12 +11,14 @@ in {
       smartctl = {
         enable = true;
         openFirewall = true;
+        port = ports.smartctl;
       };
 
       node = {
         enable = true;
         openFirewall = true;
         enabledCollectors = [ "systemd" ];
+        port = ports.node;
       };
     };
 
@@ -25,7 +29,7 @@ in {
     services.promtail = {
       enable = true;
       configuration = {
-        server.http_listen_port = 28183;
+        server.http_listen_port = ports.promtail;
         server.grpc_listen_port = 0;
         positions.filename = "/tmp/positions.yml";
         clients = [{ url = "http://apps:3100/loki/api/v1/push"; }];
