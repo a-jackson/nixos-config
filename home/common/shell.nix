@@ -60,11 +60,37 @@
       shell = "${pkgs.fish}/bin/fish";
       terminal = "tmux-256color";
       historyLimit = 100000;
-      plugins = with pkgs; [
-        tmuxPlugins.better-mouse-mode
-        tmuxPlugins.sensible
-      ];
-      extraConfig = "";
+      prefix = "C-s";
+      keyMode = "vi";
+      sensibleOnTop = false;
+      baseIndex = 1;
+      clock24 = true;
+      plugins = with pkgs.tmuxPlugins; [ better-mouse-mode catppuccin ];
+      extraConfig = ''
+        bind u split-window -h -c "#{pane_current_path}"
+        bind y split-window -v -c "#{pane_current_path}"
+        bind h select-pane -L
+        bind j select-pane -D
+        bind k select-pane -U
+        bind l select-pane -R
+
+        set -g status-position top
+        set -g mouse on
+
+        set -g @catppuccin_window_right_separator "█ "
+        set -g @catppuccin_window_number_position "right"
+        set -g @catppuccin_window_middle_separator " | "
+
+        set -g @catppuccin_window_default_fill "none"
+
+        set -g @catppuccin_window_current_fill "all"
+
+        set -g @catppuccin_status_modules_right "application session user host date_time"
+        set -g @catppuccin_status_left_separator "█"
+        set -g @catppuccin_status_right_separator "█"
+
+        set -g @catppuccin_date_time_text "%Y-%m-%d %H:%M:%S"
+      '';
     };
 
     zellij.enable = true;
