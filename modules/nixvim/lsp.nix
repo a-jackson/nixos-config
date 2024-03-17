@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }: {
+{ config, lib, ... }: {
   config = lib.mkIf config.homelab.nvim.enable {
     programs.nixvim = {
       plugins = {
@@ -16,6 +16,17 @@
             nil_ls.enable = true;
             # nixd.enable = true;
             marksman.enable = true;
+            yamlls = {
+              enable = true;
+              extraOptions.settings = {
+                yaml = {
+                  schemas = {
+                    "https://json.schemastore.org/github-workflow.json" =
+                      "/.github/workflows/*";
+                  };
+                };
+              };
+            };
           } // lib.optionalAttrs config.homelab.nvim.terraform {
             terraformls.enable = true;
           } // lib.optionalAttrs config.homelab.nvim.csharp {
