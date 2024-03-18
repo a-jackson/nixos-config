@@ -11,7 +11,7 @@ let
     lua = true;
   };
 in {
-  imports = [ ./lsp.nix ./telescope.nix ./terminal.nix ./telescope.nix ];
+  imports = [ ./lsp.nix ./telescope.nix ./terminal.nix ./treesitter.nix ];
 
   options.homelab.nvim = with lib; {
     enable = mkOption {
