@@ -157,6 +157,8 @@ in {
 
         neogit = { enable = true; };
 
+        gitlinker.enable = true;
+
         markdown-preview.enable = true;
 
         which-key = {
