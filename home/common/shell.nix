@@ -117,6 +117,9 @@
         bind l select-pane -R
 
         set -g status-position top
+        set -g focus-events on
+        set-option -sa terminal-features ',xterm-256color:RGB'
+        set-option -sg escape-time 10
       '';
     };
 
@@ -142,6 +145,7 @@
     gcc
     nodejs_20
     tea
+    fd
     # (python312.withPackages (ps: with ps; []))
   ];
 
