@@ -64,7 +64,10 @@
 
     ssh = { enable = true; };
 
-    gpg = { enable = true; };
+    gpg = {
+      enable = true;
+      settings = { pinentry-mode = "loopback"; };
+    };
 
     tmux = {
       enable = true;
@@ -134,8 +137,13 @@
     ripgrep.enable = true;
   };
 
-  services.gpg-agent.enable = true;
-  # services.gpg-agent.pinentryFlavor = "curses";
+  services.gpg-agent = {
+    enable = true;
+    pinentryPackage = pkgs.pinentry-tty;
+    extraConfig = ''
+      allow-loopback-pinentry
+    '';
+  };
 
   home.packages = with pkgs; [
     home-manager
