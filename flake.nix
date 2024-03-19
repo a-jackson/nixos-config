@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs = { url = "github:NixOS/nixpkgs/nixos-unstable"; };
 
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,16 +21,20 @@
       };
     };
 
-    abe = { url = "github:a-jackson/audiobook-extractor"; };
+    abe = {
+      url = "github:a-jackson/audiobook-extractor";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
 
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
   };
 
-  outputs =
-    { self, nixpkgs, home-manager, impermanence, sops-nix, abe, nixvim }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, impermanence
+    , sops-nix, abe, nixvim }@inputs:
     let
       systemConfig = hostname: system:
         nixpkgs.lib.nixosSystem {
@@ -57,10 +63,8 @@
           overlays = [ ];
           pkgs = import nixpkgs { inherit system overlays; };
           buildInputs = with pkgs; [ sops ssh-to-age gnupg pinentry ];
-        in
-        with pkgs; { default = mkShell { inherit buildInputs; }; });
-    in
-    {
+        in with pkgs; { default = mkShell { inherit buildInputs; }; });
+    in {
       nixosConfigurations = {
         laptop = systemConfig "laptop" "x86_64-linux";
         apps = systemConfig "apps" "x86_64-linux";
