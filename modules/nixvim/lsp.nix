@@ -56,6 +56,8 @@
               })
             end
           '';
+
+          preConfig = ''vim.lsp.set_log_level("OFF")'';
         };
 
         lspkind = {
@@ -120,7 +122,7 @@
         conform-nvim = {
           enable = true;
           formatOnSave = {
-            timeoutMs = 500;
+            timeoutMs = 1000;
             lspFallback = true;
           };
         };
