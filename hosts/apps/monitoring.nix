@@ -17,7 +17,15 @@
             labels = { host = name; };
           }];
         };
-      in [ (target "apps" "127.0.0.1") (target "cloud" "cloud") ];
+      in [
+        (target "apps" "127.0.0.1")
+        (target "cloud" "cloud")
+        {
+          job_name = "immich";
+          static_configs =
+            [{ targets = [ "127.0.0.1:8081" "127.0.0.1:8083" ]; }];
+        }
+      ];
     };
 
     grafana = {

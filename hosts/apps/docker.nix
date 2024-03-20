@@ -8,17 +8,13 @@
   users.users.andrew.extraGroups = [ "docker" ];
 
   environment = {
-    systemPackages = with pkgs; [
-      docker-compose
-    ];
+    systemPackages = with pkgs; [ docker-compose ];
 
     etc = {
       "docker-compose/immich/docker-compose.yml" = {
         source = ./immich/docker-compose.yml;
       };
-      "docker-compose/immich/.env" = {
-        source = ./immich/.env;
-      };
+      "docker-compose/immich/.env" = { source = ./immich/env; };
     };
   };
 }
