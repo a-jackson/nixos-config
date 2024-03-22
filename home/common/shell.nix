@@ -48,6 +48,8 @@
       '';
     };
 
+    bash.enable = true;
+
     starship = let flavour = "mocha";
     in {
       enable = true;
