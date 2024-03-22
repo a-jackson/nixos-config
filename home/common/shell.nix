@@ -25,6 +25,7 @@
         pf = "push --force-with-lease";
       };
       extraConfig = { credential.helper = "store"; };
+      difftastic.enable = true;
     };
 
     gh = {

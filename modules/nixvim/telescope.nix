@@ -21,10 +21,6 @@
             desc = "[S]earch [K]eymaps";
             action = "keymaps";
           };
-          "<leader>sf" = {
-            desc = "[S]earch [F]iles";
-            action = "find_files";
-          };
           "<leader>ss" = {
             desc = "[S]earch [S]elect Telescope";
             action = "builtin";
@@ -46,7 +42,7 @@
             action = "resume";
           };
           "<leader>s." = {
-            desc = "[S]earch Recent Files (\".\" for repeat)";
+            desc = ''[S]earch Recent Files ("." for repeat)'';
             action = "oldfiles";
           };
           "<leader><leader>" = {
@@ -89,14 +85,28 @@
           key = "<leader>sn";
           action = ''
             function()
-              require('telescope.builtin').find_files { 
-                cwd = vim.fn.stdpath 'config' 
+              require('telescope.builtin').find_files {
+                cwd = vim.fn.stdpath 'config'
               }
             end
           '';
           mode = "n";
           lua = true;
           options.desc = "[S]earch [N]eovim files";
+        }
+        {
+          key = "<leader>sf";
+          action = ''
+            function()
+              require('telescope.builtin').git_files {
+                hidden = true,
+                no_ignore = true,
+              }
+            end
+          '';
+          mode = "n";
+          lua = true;
+          options.desc = "[S]earch [F]iles";
         }
       ];
     };
