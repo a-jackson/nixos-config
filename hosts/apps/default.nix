@@ -45,6 +45,8 @@
 
   rootDiskLabel = "server";
 
+  homelab.restic = { daily = { paths = [ "/persist" "/data/images" ]; }; };
+
   services = {
     adguardhome = {
       enable = true;
@@ -53,8 +55,6 @@
         hosts = builtins.attrNames config.services.nginx.virtualHosts;
       };
     };
-
-    restic_backups = { daily = { paths = [ "/persist" "/data/images" ]; }; };
 
     frigate = {
       enable = true;

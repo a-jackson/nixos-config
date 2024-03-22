@@ -8,6 +8,7 @@ in {
     systemd-boot = false;
     sops.keyPath = "/etc/ssh/ssh_host_ed25519_key";
     monitoring.enable = true;
+    restic = { daily = { paths = [ "/var/lib" ]; }; };
   };
 
   boot.tmp.cleanOnBoot = true;
@@ -16,8 +17,6 @@ in {
   sops.secrets = { cloudflare_credentials = { }; };
 
   services = {
-    restic_backups = { daily = { paths = [ "/var/lib" ]; }; };
-
     nginx = {
       enable = true;
       recommendedGzipSettings = true;

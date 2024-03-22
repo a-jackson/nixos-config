@@ -35,49 +35,21 @@
 
   outputs = { self, nixpkgs, nixpkgs-stable, home-manager, impermanence
     , sops-nix, abe, nixvim }@inputs:
-    let
-      systemConfig = hostname: system:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = inputs;
-          modules = [ ./hosts/${hostname} { networking.hostName = hostname; } ];
-        };
-      homeConfig = username: hostname: system:
-        home-manager.lib.homeManagerConfiguration {
-          modules = [
-            { imports = [ nixvim.homeManagerModules.nixvim ]; }
-            ./home/${hostname}.nix
-            {
-              home = {
-                username = nixpkgs.lib.mkDefault "${username}";
-                homeDirectory = nixpkgs.lib.mkDefault "/home/${username}";
-                stateVersion = "23.05";
-              };
-            }
-          ];
-          pkgs = nixpkgs.legacyPackages.${system};
-          extraSpecialArgs = { inherit inputs; };
-        };
-      shell = (system:
-        let
-          overlays = [ ];
-          pkgs = import nixpkgs { inherit system overlays; };
-          buildInputs = with pkgs; [ sops ssh-to-age gnupg pinentry ];
-        in with pkgs; { default = mkShell { inherit buildInputs; }; });
+    let libx = import ./lib { inherit self inputs; };
     in {
+      inherit libx;
+
       nixosConfigurations = {
-        laptop = systemConfig "laptop" "x86_64-linux";
-        apps = systemConfig "apps" "x86_64-linux";
-        desktop = systemConfig "desktop" "x86_64-linux";
-        cloud = systemConfig "cloud" "aarch64-linux";
+        laptop = libx.systemConfig "laptop" "x86_64-linux";
+        apps = libx.systemConfig "apps" "x86_64-linux";
+        desktop = libx.systemConfig "desktop" "x86_64-linux";
+        cloud = libx.systemConfig "cloud" "aarch64-linux";
       };
 
       homeConfigurations = {
-        "andrew@kerberos" = homeConfig "andrew" "kerberos" "x86_64-linux";
-        "andrew@desktop" = homeConfig "andrew" "desktop" "x86_64-linux";
-        "andrew@work" = homeConfig "andrew" "work" "x86_64-linux";
+        "andrew@kerberos" = libx.homeConfig "andrew" "kerberos" "x86_64-linux";
+        "andrew@desktop" = libx.homeConfig "andrew" "desktop" "x86_64-linux";
+        "andrew@work" = libx.homeConfig "andrew" "work" "x86_64-linux";
       };
-
-      devShells.x86_64-linux = shell "x86_64-linux";
     };
 }

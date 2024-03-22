@@ -1,10 +1,5 @@
-{ ... }:
-{
-  imports = [
-    ./hardware-configuration.nix
-    ../common
-    ../common/de.nix
-  ];
+{ ... }: {
+  imports = [ ./hardware-configuration.nix ../common ../common/de.nix ];
 
   networking.firewall = {
     allowedTCPPorts = [ 22000 ];
@@ -13,14 +8,5 @@
 
   rootDiskLabel = "desktop";
 
-  services = {
-    restic_backups = {
-      daily = {
-        paths = [
-          "/persist"
-          "/home"
-        ];
-      };
-    };
-  };
+  homelab.restic = { daily = { paths = [ "/persist" "/home" ]; }; };
 }

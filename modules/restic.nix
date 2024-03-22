@@ -1,9 +1,9 @@
-{ lib, config, ... }:
+{ lib, pkgs, config, ... }:
 with lib;
-let cfg = config.services.restic_backups;
+let cfg = config.homelab.restic;
 in {
   options = {
-    services.restic_backups = mkOption {
+    homelab.restic = mkOption {
       default = { };
       type = types.attrsOf (types.submodule ({ config, name, ... }: {
         options = {
@@ -24,32 +24,38 @@ in {
       "restic/repo" = { };
     };
 
-    services.restic.backups = (
-      (flip mapAttrs' cfg (name: backupCfg:
-        nameValuePair "${name}" {
-          initialize = true;
+    services.restic.backups = ((flip mapAttrs' cfg (name: backupCfg:
+      nameValuePair "${name}" {
+        initialize = true;
 
-          environmentFile = config.sops.secrets."restic/env".path;
-          repositoryFile = config.sops.secrets."restic/repo".path;
-          passwordFile = config.sops.secrets."restic/password".path;
+        environmentFile = config.sops.secrets."restic/env".path;
+        repositoryFile = config.sops.secrets."restic/repo".path;
+        passwordFile = config.sops.secrets."restic/password".path;
 
-          paths = backupCfg.paths;
-          exclude = backupCfg.exclude;
+        paths = backupCfg.paths;
+        exclude = backupCfg.exclude;
 
-          timerConfig = {
-            OnCalendar = "daily";
-            Persistent = true;
-            RandomizedDelaySec = "1h";
-          };
+        timerConfig = {
+          OnCalendar = "daily";
+          Persistent = true;
+          RandomizedDelaySec = "1h";
+        };
 
-          pruneOpts = [
-            "--keep-daily 7"
-            "--keep-weekly 5"
-            "--keep-monthly 12"
-            "--host ${config.networking.hostName}"
-          ];
-        }))
-    );
+        pruneOpts = [
+          "--keep-daily 7"
+          "--keep-weekly 5"
+          "--keep-monthly 12"
+          "--host ${config.networking.hostName}"
+        ];
+      })));
 
+    systemd.services = ((flip mapAttrs' cfg (name: backupCfg:
+      nameValuePair "restic-backups-${name}" {
+        serviceConfig.ExecStopPost = [
+          (pkgs.writeShellScript "backupsCompleted" ''
+            ${config.homelab.notifications.sendNotification} "${config.networking.hostName} backups" "completed";
+          '')
+        ];
+      })));
   };
 }
