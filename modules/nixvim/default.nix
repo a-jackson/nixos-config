@@ -107,7 +107,8 @@ in {
 
         (keymap "<leader>f" "<Cmd>Neotree toggle reveal<CR>"
           "[F]ile tree toggle" "n")
-        (keymap "<leader>c" "<Cmd>bdelete<CR>" "[C]lose buffer" "n")
+        (keymap "<leader>x" "<Cmd>bdelete<CR>" "Close buffer" "n")
+        (keymap "<leader>X" "<Cmd>%bdelete<CR>" "Close all buffers" "n")
         (keymap "H" "<Cmd>bprevious<CR>" "Previous buffer" "n")
         (keymap "L" "<Cmd>bnext<CR>" "Next buffer" "n")
 
@@ -232,7 +233,8 @@ in {
         };
 
         notify.enable = true;
-        lualine = { enable = true; };
+        lualine.enable = true;
+        surround.enable = true;
       };
 
       extraConfigVim = ''
