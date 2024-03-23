@@ -1,7 +1,7 @@
 { config, ... }:
 let public_domain = "andrewjackson.dev";
 in {
-  imports = [ ./hardware-configuration.nix ./networking.nix ../common ];
+  imports = [ ./hardware-configuration.nix ./networking.nix ];
   ephemeral-btrs = false;
   homelab = {
     impermanence.enable = false;

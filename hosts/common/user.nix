@@ -1,10 +1,10 @@
-{ pkgs, home-manager, impermanence, config, lib, ... }: {
+{ pkgs, home-manager, username, config, lib, ... }: {
   imports = [ home-manager.nixosModules.home-manager ];
 
   sops.secrets.password = { neededForUsers = true; };
 
   users = {
-    users.andrew = {
+    users."${username}" = {
       isNormalUser = true;
       shell = pkgs.fish;
       extraGroups = [ "wheel" ];
@@ -27,15 +27,15 @@
     };
   };
 
-  home-manager.users = let hostname = config.networking.hostName;
+  home-manager.users = let type = config.homelab.homeType;
   in {
-    andrew = {
+    "${username}" = {
       imports = [
-        ../../home/${hostname}.nix
+        ../../home/${type}.nix
         {
           home = {
-            username = lib.mkDefault "andrew";
-            homeDirectory = lib.mkDefault "/home/andrew";
+            inherit username;
+            homeDirectory = lib.mkDefault "/home/${username}";
             stateVersion = "23.05";
           };
         }

@@ -1,4 +1,4 @@
-{ ... }: {
+{ lib, ... }: {
   imports = [
     ./nixvim
     ./ephemeral-btrfs.nix
@@ -10,4 +10,9 @@
     ./restic.nix
     ./ssh.nix
   ];
+
+  options.homelab.homeType = lib.mkOption {
+    type = lib.types.str;
+    default = "headless";
+  };
 }

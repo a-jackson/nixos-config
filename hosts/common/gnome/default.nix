@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ username, pkgs, ... }: {
   services = {
     xserver = {
       enable = true;
@@ -41,5 +41,5 @@
     };
   };
 
-  users.users.andrew.extraGroups = [ "flatpak" ];
+  users.users."${username}".extraGroups = [ "flatpak" ];
 }

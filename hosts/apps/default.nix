@@ -1,7 +1,6 @@
 { abe, pkgs, config, ... }: {
   imports = [
     ./hardware-configuration.nix
-    ../common
     ./adguardhome.nix
     ./audiobookshelf.nix
     ./containers.nix

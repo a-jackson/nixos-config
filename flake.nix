@@ -40,16 +40,27 @@
       inherit libx;
 
       nixosConfigurations = {
-        laptop = libx.systemConfig "laptop" "x86_64-linux";
-        apps = libx.systemConfig "apps" "x86_64-linux";
-        desktop = libx.systemConfig "desktop" "x86_64-linux";
-        cloud = libx.systemConfig "cloud" "aarch64-linux";
+        laptop = libx.mkSystem {
+          hostname = "laptop";
+          desktop = "gnome";
+        };
+        apps = libx.mkSystem { hostname = "apps"; };
+        desktop = libx.mkSystem {
+          hostname = "desktop";
+          desktop = "gnome";
+        };
+        cloud = libx.mkSystem {
+          hostname = "cloud";
+          system = "aarch64-linux";
+        };
       };
 
       homeConfigurations = {
-        "andrew@kerberos" = libx.homeConfig "andrew" "kerberos" "x86_64-linux";
-        "andrew@desktop" = libx.homeConfig "andrew" "desktop" "x86_64-linux";
-        "andrew@work" = libx.homeConfig "andrew" "work" "x86_64-linux";
+        "andrew@laptop" = libx.mkHome { type = "desktop"; };
+        "andrew@desktop" = libx.mkHome { type = "desktop"; };
+        "andrew@work" = libx.mkHome { type = "work"; };
+        "andrew@apps" = libx.mkHome;
+        "andrew@cloud" = libx.mkHome { system = "aarch64-linux"; };
       };
     };
 }
