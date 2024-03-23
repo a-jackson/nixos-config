@@ -53,7 +53,16 @@ in {
       nameValuePair "restic-backups-${name}" {
         serviceConfig.ExecStopPost = [
           (pkgs.writeShellScript "backupsCompleted" ''
-            ${config.homelab.notifications.sendNotification} "${config.networking.hostName} backups" "completed";
+            if [[ "$EXIT_STATUS" != "0" ]]; then
+              logs=$(journalctl -u "restic-backups-${name}.service" --lines 20)
+              title="${config.networking.hostName} backups"
+              message="Backup failed with result '$SERVICE_RESULT'\n\n\`\`\`\n$logs\n\`\`\`\n"
+
+              ${config.homelab.notifications.sendNotification} \
+                --title "$title" \
+                --message "$message" \
+                --markdown
+              fi
           '')
         ];
       })));
