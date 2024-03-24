@@ -9,5 +9,5 @@
   rootDiskLabel = "desktop";
 
   homelab.restic = { daily = { paths = [ "/persist" "/home" ]; }; };
-  homelab.homeType = "desktop";
+  homelab.homeType = "plasma";
 }

@@ -47,7 +47,7 @@
         apps = libx.mkSystem { hostname = "apps"; };
         desktop = libx.mkSystem {
           hostname = "desktop";
-          desktop = "gnome";
+          desktop = "plasma";
         };
         cloud = libx.mkSystem {
           hostname = "cloud";
@@ -57,8 +57,8 @@
       };
 
       homeConfigurations = {
-        "andrew@laptop" = libx.mkHome { type = "desktop"; };
-        "andrew@desktop" = libx.mkHome { type = "desktop"; };
+        "andrew@laptop" = libx.mkHome { type = "gnome"; };
+        "andrew@desktop" = libx.mkHome { type = "plasma"; };
         "andrew@work" = libx.mkHome { type = "work"; };
         "andrew@apps" = libx.mkHome;
         "andrew@nas" = libx.mkHome;

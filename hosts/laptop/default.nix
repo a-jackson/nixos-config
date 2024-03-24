@@ -9,7 +9,7 @@
   rootDiskLabel = "kerberos";
 
   homelab.restic = { daily = { paths = [ "/persist" "/home" ]; }; };
-  homelab.homeType = "desktop";
+  homelab.homeType = "gnome";
 
   virtualisation.docker.enable = true;
   users.users.andrew.extraGroups = [ "docker" ];

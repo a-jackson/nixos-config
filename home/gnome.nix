@@ -1,4 +1,11 @@
 { pkgs, config, ... }: {
+  imports = [
+    ./common
+    ./common/desktop.nix
+    ./common/vscode.nix
+    ./common/firefox.nix
+    ./common/syncthing.nix
+  ];
   dconf.settings = {
     "org/gnome/shell" = {
       favorite-apps = [ "firefox.desktop" "codium.desktop" "kitty.desktop" ];
@@ -17,7 +24,6 @@
       switch-windows-backward = [ "<Shift><Alt>Tab" ];
     };
   };
-
   gtk = {
     enable = true;
     theme = {
@@ -38,28 +44,5 @@
       "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
     "gtk-4.0/gtk-dark.css".source =
       "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
-  };
-
-  services.kdeconnect.enable = true;
-  programs.kitty = {
-    enable = true;
-    font.name = "Fira Code";
-    theme = "Catppuccin-Mocha";
-    settings = { hide_window_decorations = "yes"; };
-  };
-
-  home.packages = with pkgs; [ neovide ];
-
-  xdg.userDirs = {
-    enable = true;
-    createDirectories = true;
-    documents = "${config.home.homeDirectory}/documents";
-    desktop = "${config.home.homeDirectory}/desktop";
-    download = "${config.home.homeDirectory}/downloads";
-    music = null;
-    pictures = null;
-    videos = null;
-    templates = null;
-    publicShare = null;
   };
 }
