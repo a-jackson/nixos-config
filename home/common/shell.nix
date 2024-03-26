@@ -85,6 +85,7 @@
       mouse = true;
       plugins = with pkgs.tmuxPlugins; [
         better-mouse-mode
+        vim-tmux-navigator
         {
           plugin = (catppuccin.overrideAttrs (o: {
             src = pkgs.fetchFromGitHub {

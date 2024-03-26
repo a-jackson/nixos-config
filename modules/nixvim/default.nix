@@ -125,16 +125,16 @@ in {
       }];
 
       plugins = {
-        comment-nvim.enable = true;
+        comment.enable = true;
 
         gitsigns = {
           enable = true;
-          signs = {
+          settings.signs = {
             add.text = "+";
             change.text = "~";
             delete.text = "-";
           };
-          onAttach.function = ''
+          settings.on_attach = ''
             function(bufnr)
               local gs = require('gitsigns')
 
@@ -235,6 +235,7 @@ in {
         notify.enable = true;
         lualine.enable = true;
         surround.enable = true;
+        tmux-navigator.enable = true;
       };
 
       extraConfigVim = ''

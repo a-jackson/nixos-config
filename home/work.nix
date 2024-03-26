@@ -24,6 +24,7 @@
         mypy-boto3-dynamodb
         mypy-boto3-ssm
       ]))
+    openssl
   ];
 
   homelab.nvim = {
