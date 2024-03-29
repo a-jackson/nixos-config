@@ -35,6 +35,7 @@
           http_addr = "127.0.0.1";
           http_port = config.homelab.ports.grafana;
           domain = "grafana.ajackson.dev";
+          root_url = "https://grafana.ajackson.dev";
         };
       };
     };
@@ -80,6 +81,17 @@
           shared_store = "filesystem";
         };
         storage_config.filesystem = { directory = "/var/lib/loki/chunks"; };
+
+        # ruler = {
+        #   storage = {
+        #     type = "local";
+        #     local.directory = "/tmp/rules";
+        #   };
+        #   rule_path = "/tmp/scratch";
+        #   alertmanager_url = "http://localhost";
+        #   ring.kvstore.store = "inmemory";
+        #   enable_api = true;
+        # };
 
         limits_config.reject_old_samples = true;
         limits_config.reject_old_samples_max_age = "168h";
