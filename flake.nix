@@ -31,10 +31,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, home-manager, impermanence
-    , sops-nix, abe, nixvim }@inputs:
+    , sops-nix, abe, nixvim, nixos-generators }@inputs:
     let libx = import ./lib { inherit self inputs; };
     in {
       inherit libx;
@@ -64,5 +69,7 @@
         "andrew@nas" = libx.mkHome;
         "andrew@cloud" = libx.mkHome { system = "aarch64-linux"; };
       };
+
+      imageConfigurations = { "iso" = libx.mkImage { hostname = "iso"; }; };
     };
 }

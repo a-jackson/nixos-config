@@ -1,5 +1,5 @@
 { self, inputs }:
-let inherit (inputs) nixpkgs home-manager nixvim;
+let inherit (inputs) nixpkgs home-manager nixvim nixos-generators;
 in {
   mkSystem =
     { hostname, system ? "x86_64-linux", username ? "andrew", desktop ? null }:
@@ -26,9 +26,9 @@ in {
       extraSpecialArgs = { inherit inputs; };
     };
 
-  mkImage = { hostname, username ? "andrew", system ? "x86_64-linux", format
-    , desktop ? null }:
-    inputs.nixos-generators.nixosGenerate {
+  mkImage =
+    { hostname, username ? "andrew", system ? "x86_64-linux", desktop ? null }:
+    nixos-generators.nixosGenerate {
       specialArgs = inputs // { inherit username hostname desktop; };
       system = system;
       format = "iso";
