@@ -7,11 +7,7 @@ let
     "/mnt/user/video/phone"
   ];
 in {
-  imports = [
-    #./hardware-configuration.nix
-    ./disks.nix
-    ./networking.nix
-  ];
+  imports = [ ./hardware-configuration.nix ./disks.nix ./networking.nix ];
 
   homelab = {
     root = { ephemeralBtrfs.enable = true; };

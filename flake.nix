@@ -77,12 +77,15 @@
         in {
           default = pkgs.mkShell {
             nativeBuildInputs = with pkgs; [
+              btrfs-progs
               git
               nix
               nixfmt
+              parted
               sops
               ssh-to-age
               vim
+              xfsprogs
             ];
           };
         });

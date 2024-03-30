@@ -1,29 +1,30 @@
-
 keys:
   - &andrew 53B0B8FAA9B9D22BA74CBF65A846782DB3E2C28E
   - &laptop age1hzmeyxc78hrgn3p7cjlzvud03gqrdtnr5785sg855ltwwjywny4qkxe77w
   - &apps age185c4mzstg08rercf69fwt2gu4at6ptq57vr70m6h3uydh6zxzcnqladlxt
   - &desktop age1m59suqjpu47nfekrgchkwuqtt4trkzm7ynp50eytqvez57zeedjsf5jlxu
   - &cloud age1333eprdffexpzkklzhl3hwcaezekvdysljwn6pm59vlcdg2ytu4qc6kj53
+  - &nas age10m6dycxazye9s6whgc0rqxrn7g7chdc4ekqf2n6rc0khtkjzq4pst6zkvn
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
     key_groups:
-    - pgp:
-      - *andrew
-      age:
-      - *laptop
-      - *apps
-      - *desktop
-      - *cloud
+      - pgp:
+          - *andrew
+        age:
+          - *laptop
+          - *apps
+          - *desktop
+          - *cloud
+          - *nas
   - path_regex: hosts/apps/.*/*.env$
     key_groups:
-    - pgp:
-      - *andrew
-      age:
-      - *apps
+      - pgp:
+          - *andrew
+        age:
+          - *apps
   - path_regex: hosts/apps/secrets.yaml
     key_groups:
-    - pgp:
-      - *andrew
-      age:
-      - *apps
+      - pgp:
+          - *andrew
+        age:
+          - *apps
