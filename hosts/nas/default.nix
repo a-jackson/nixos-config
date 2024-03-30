@@ -7,7 +7,8 @@ let
     "/mnt/user/video/phone"
   ];
 in {
-  imports = [ ./hardware-configuration.nix ./disks.nix ./networking.nix ];
+  imports =
+    [ ./hardware-configuration.nix ./disks.nix ./networking.nix ./nfs.nix ];
 
   homelab = {
     root = { ephemeralBtrfs.enable = true; };
@@ -16,9 +17,15 @@ in {
     restic = { daily = { paths = backupPaths; }; };
   };
 
+  fileSystems."/mnt/parity" = {
+    device = "/dev/disk/by-label/parity";
+    fsType = "btrfs";
+    options = [ "compress=zstd" ];
+  };
+
   services = {
     snapraid = {
-      enable = false;
+      enable = true;
       parityFiles = [ "/mnt/parity/snapraid.parity" ];
       dataDisks = {
         disk1 = "/mnt/disks/disk1";

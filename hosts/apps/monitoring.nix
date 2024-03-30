@@ -20,6 +20,7 @@
       in [
         (target "apps" "127.0.0.1")
         (target "cloud" "cloud")
+        (target "nas" "nas")
         {
           job_name = "immich";
           static_configs =

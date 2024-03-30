@@ -106,28 +106,18 @@
 
   services.rpcbind.enable = true;
   systemd.mounts = let
-    tritonMount = folder: {
+    nasMount = folder: {
       type = "nfs";
-      mountConfig = { Options = "noatime"; };
+      mountConfig = { Options = "noatime,nfsvers=4.2"; };
       what = "192.168.1.75:/mnt/user/${folder}";
       where = "/mnt/user/${folder}";
     };
-  in [
-    (tritonMount "video")
-    (tritonMount "images")
-    (tritonMount "appdata")
-    (tritonMount "audio")
-  ];
+  in [ (nasMount "video") (nasMount "images") (nasMount "audio") ];
   systemd.automounts = let
-    tritonMount = folder: {
+    nasMount = folder: {
       wantedBy = [ "multi-user.target" ];
       automountConfig = { TimeoutIdleSec = "600"; };
       where = "/mnt/user/${folder}";
     };
-  in [
-    (tritonMount "video")
-    (tritonMount "images")
-    (tritonMount "appdata")
-    (tritonMount "audio")
-  ];
+  in [ (nasMount "video") (nasMount "images") (nasMount "audio") ];
 }
