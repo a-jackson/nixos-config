@@ -38,7 +38,7 @@ in {
         have_nerd_font = true;
       };
 
-      options = {
+      opts = {
         relativenumber = true;
         mouse = "a";
         showmode = false;
