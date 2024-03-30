@@ -46,7 +46,7 @@ in {
     };
 
     fileSystems."/data" = {
-      device = "/dev/disk/by-label/${config.rootDiskLabel}";
+      device = "/dev/disk/by-label/${config.homelab.root.diskLabel}";
       fsType = "btrfs";
       options = [ "subvol=data" "compress=zstd" ];
     };
