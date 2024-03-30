@@ -1,15 +1,13 @@
-{ pkgs, ... }: {
+{ username, ... }: {
 
   virtualisation.docker = {
     enable = true;
     storageDriver = "overlay2";
   };
 
-  users.users.andrew.extraGroups = [ "docker" ];
+  users.users.${username}.extraGroups = [ "docker" ];
 
   environment = {
-    systemPackages = with pkgs; [ docker-compose ];
-
     etc = {
       "docker-compose/immich/docker-compose.yml" = {
         source = ./immich/docker-compose.yml;

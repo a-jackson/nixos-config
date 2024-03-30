@@ -2,9 +2,12 @@
 let public_domain = "andrewjackson.dev";
 in {
   imports = [ ./hardware-configuration.nix ./networking.nix ];
-  ephemeral-btrs = false;
+
   homelab = {
+    root = { ephemeralBtrfs.enable = false; };
+
     impermanence.enable = false;
+
     systemd-boot = false;
     sops.keyPath = "/etc/ssh/ssh_host_ed25519_key";
     monitoring.enable = true;

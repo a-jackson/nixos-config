@@ -2,6 +2,7 @@
   imports = [
     ./nixvim
     ./ephemeral-btrfs.nix
+    ./impermanence.nix
     ./monitoring.nix
     ./nextcloud.nix
     ./notification.nix

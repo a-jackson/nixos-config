@@ -9,21 +9,17 @@
   services = {
     mysqlBackup = {
       enable = true;
-      databases = [
-        "nextcloud"
-      ];
+      databases = [ "nextcloud" ];
       location = "/persist/backups/mysql";
     };
   };
 
-  nextcloud = {
+  homelab.nextcloud = {
     enable = true;
     adminEmail = "andrew@a-jackson.co.uk";
     adminPasswordFile = config.sops.secrets.nextcloud_password.path;
     settings = {
-      system = {
-        appstoreenabled = true;
-      };
+      system = { appstoreenabled = true; };
       apps.core.backgroundjobs_mode = "cron";
       # This avoids users to see the email of all others users when
       # they try to share a file.

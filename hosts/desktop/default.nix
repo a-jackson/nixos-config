@@ -6,8 +6,14 @@
     allowedUDPPorts = [ 21027 22000 ];
   };
 
-  rootDiskLabel = "desktop";
+  homelab = {
+    root = {
+      diskLabel = "desktop";
+      ephemeralBtrfs.enable = true;
+    };
+    impermanence.enable = true;
 
-  homelab.restic = { daily = { paths = [ "/persist" "/home" ]; }; };
-  homelab.homeType = "plasma";
+    restic = { daily = { paths = [ "/persist" "/home" ]; }; };
+    homeType = "plasma";
+  };
 }

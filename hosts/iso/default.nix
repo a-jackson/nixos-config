@@ -6,8 +6,10 @@ in {
   networking.useDHCP = lib.mkDefault true;
 
   networking.firewall.allowedTCPPorts = [ 22 ];
-  homelab = { impermanence.enable = false; };
-  ephemeral-btrs = false;
+  homelab = {
+    impermanence.enable = false;
+    root.ephemeralBtrfs.enable = false;
+  };
 
   users.users = {
     ${username} = {

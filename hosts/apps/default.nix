@@ -42,9 +42,15 @@
     firewall = { allowedTCPPorts = [ 443 ]; };
   };
 
-  rootDiskLabel = "server";
+  homelab = {
+    root = {
+      diskLabel = "server";
+      ephemeralBtrfs.enable = true;
+    };
 
-  homelab.restic = { daily = { paths = [ "/persist" "/data/images" ]; }; };
+    restic = { daily = { paths = [ "/persist" "/data/images" ]; }; };
+    impermanence.enable = true;
+  };
 
   services = {
     adguardhome = {

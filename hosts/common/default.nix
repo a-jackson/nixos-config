@@ -1,12 +1,6 @@
 { pkgs, nixpkgs, lib, config, ... }: {
-  imports = [
-    ./sops.nix
-    ./user.nix
-    ./auto-upgrade.nix
-    ./nvim.nix
-    ./impermanence.nix
-    ../../modules
-  ];
+  imports =
+    [ ./sops.nix ./user.nix ./auto-upgrade.nix ./nvim.nix ../../modules ];
   options.homelab = with lib; {
     systemd-boot = mkOption {
       type = types.bool;

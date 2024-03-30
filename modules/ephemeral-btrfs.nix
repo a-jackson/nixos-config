@@ -1,11 +1,11 @@
 { lib, config, ... }:
 let
-
+  cfg = config.homelab.root;
   wipeScript = ''
     mkdir /tmp -p
     MNTPOINT=$(mktemp -d)
     (
-      mount -t btrfs -o subvol=/ /dev/disk/by-label/${config.rootDiskLabel} "$MNTPOINT"
+      mount -t btrfs -o subvol=/ /dev/disk/by-label/${cfg.diskLabel} "$MNTPOINT"
       trap 'umount "$MNTPOINT"' EXIT
 
       echo "Creating needed directories"
@@ -24,30 +24,29 @@ let
   phase1Systemd = config.boot.initrd.systemd.enable;
 
   inherit (lib) mkOption types;
-in
-{
-  options.rootDiskLabel = mkOption {
-    type = types.str;
-    default = config.networking.hostName;
-  };
-  options.ephemeral-btrs = mkOption {
-    type = types.bool;
-    default = true;
+in {
+  options.homelab.root = {
+    diskLabel = mkOption {
+      type = types.str;
+      default = config.networking.hostName;
+    };
+    ephemeralBtrfs.enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
   };
 
-  config = lib.mkIf config.ephemeral-btrs {
+  config = lib.mkIf cfg.ephemeralBtrfs.enable {
     boot.initrd = {
       supportedFilesystems = [ "btrfs" ];
       postDeviceCommands = lib.mkIf (!phase1Systemd) (lib.mkBefore wipeScript);
       systemd.services.restore-root = lib.mkIf phase1Systemd {
         description = "Rollback btrfs rootfs";
         wantedBy = [ "initrd.target" ];
-        requires = [
-          "dev-disk-by\\x2dlabel-${config.rootDiskLabel}.device"
-        ];
+        requires = [ "dev-disk-by\\x2dlabel-${cfg.diskLabel}.device" ];
         after = [
-          "dev-disk-by\\x2dlabel-${config.rootDiskLabel}.device"
-          "systemd-cryptsetup@${config.rootDiskLabel}.service"
+          "dev-disk-by\\x2dlabel-${cfg.diskLabel}.device"
+          "systemd-cryptsetup@${cfg.diskLabel}.service"
         ];
         before = [ "sysroot.mount" ];
         unitConfig.DefaultDependencies = "no";
@@ -58,33 +57,33 @@ in
 
     fileSystems = {
       "/" = {
-        device = "/dev/disk/by-label/${config.rootDiskLabel}";
+        device = "/dev/disk/by-label/${cfg.diskLabel}";
         fsType = "btrfs";
         options = [ "subvol=root" "compress=zstd" ];
         neededForBoot = true;
       };
 
       "/home" = {
-        device = "/dev/disk/by-label/${config.rootDiskLabel}";
+        device = "/dev/disk/by-label/${cfg.diskLabel}";
         fsType = "btrfs";
         options = [ "subvol=home" "compress=zstd" ];
       };
 
       "/nix" = {
-        device = "/dev/disk/by-label/${config.rootDiskLabel}";
+        device = "/dev/disk/by-label/${cfg.diskLabel}";
         fsType = "btrfs";
         options = [ "subvol=nix" "noatime" "compress=zstd" ];
       };
 
       "/persist" = {
-        device = "/dev/disk/by-label/${config.rootDiskLabel}";
+        device = "/dev/disk/by-label/${cfg.diskLabel}";
         fsType = "btrfs";
         options = [ "subvol=persist" "compress=zstd" ];
         neededForBoot = true;
       };
 
       "/swap" = {
-        device = "/dev/disk/by-label/${config.rootDiskLabel}";
+        device = "/dev/disk/by-label/${cfg.diskLabel}";
         fsType = "btrfs";
         options = [ "subvol=swap" "noatime" ];
       };

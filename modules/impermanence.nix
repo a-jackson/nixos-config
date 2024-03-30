@@ -1,12 +1,10 @@
 { impermanence, config, lib, ... }: {
-  imports = [
-    impermanence.nixosModules.impermanence
-  ];
+  imports = [ impermanence.nixosModules.impermanence ];
 
   options.homelab = with lib; {
     impermanence.enable = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
     };
   };
 
@@ -21,10 +19,7 @@
           "/var/db/sudo/lectured"
           "/etc/NetworkManager"
         ];
-        files = [
-          "/etc/machine_id"
-          "/etc/nix/id_rsa"
-        ];
+        files = [ "/etc/machine_id" "/etc/nix/id_rsa" ];
       };
     };
   };

@@ -14,6 +14,8 @@ in {
   ];
 
   homelab = {
+    root = { ephemeralBtrfs.enable = true; };
+    impermanence.enable = true;
     monitoring.enable = true;
     restic = { daily = { paths = backupPaths; }; };
   };

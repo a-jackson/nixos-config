@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ username, ... }: {
   imports = [ ./hardware-configuration.nix ];
 
   networking.firewall = {
@@ -6,13 +6,16 @@
     allowedUDPPorts = [ 21027 22000 ];
   };
 
-  rootDiskLabel = "kerberos";
-
-  homelab.restic = { daily = { paths = [ "/persist" "/home" ]; }; };
-  homelab.homeType = "gnome";
+  homelab = {
+    root = {
+      diskLabel = "kerberos";
+      ephemeralBtrfs.enable = true;
+    };
+    impermanence.enable = true;
+    restic = { daily = { paths = [ "/persist" "/home" ]; }; };
+    homeType = "gnome";
+  };
 
   virtualisation.docker.enable = true;
-  users.users.andrew.extraGroups = [ "docker" ];
-
-  environment = { systemPackages = with pkgs; [ docker-compose ]; };
+  users.users.${username}.extraGroups = [ "docker" ];
 }

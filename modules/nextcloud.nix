@@ -4,49 +4,38 @@ with lib;
 with builtins;
 
 let
-  cfg = config.nextcloud;
+  cfg = config.homelab.nextcloud;
 
   # Cleanup override info
-  settings = pkgs.lib.mapAttrsRecursiveCond
-    (s: ! s ? "_type")
-    (_: value: if value ? "content" then value.content else value)
-    cfg.settings;
+  settings = pkgs.lib.mapAttrsRecursiveCond (s: !s ? "_type")
+    (_: value: if value ? "content" then value.content else value) cfg.settings;
 
-in
-{
+in {
 
-  options.nextcloud = {
+  options.homelab.nextcloud = {
 
     enable = mkEnableOption "Enable nextcloud";
 
     apps = mkOption {
       type = types.attrsOf types.path;
       default = { };
-      description = "
-        Nextcloud apps to enable
-      ";
+      description = "\n        Nextcloud apps to enable\n      ";
     };
 
     adminEmail = mkOption {
       type = types.str;
       default = "";
-      description = "
-        The email address of the default admin user
-      ";
+      description =
+        "\n        The email address of the default admin user\n      ";
     };
 
-    adminPasswordFile = mkOption {
-      type = types.path;
-    };
+    adminPasswordFile = mkOption { type = types.path; };
 
     settings = mkOption {
       type = types.attrsOf types.attrs;
       default = { };
-      description = "
-        Nextcloud settings to be imported using `occ config:import`
-
-        https://docs.nextcloud.com/server/stable/admin_manual/configuration_server/occ_command.html#config-commands
-      ";
+      description =
+        "\n        Nextcloud settings to be imported using `occ config:import`\n\n        https://docs.nextcloud.com/server/stable/admin_manual/configuration_server/occ_command.html#config-commands\n      ";
     };
 
   };
@@ -57,14 +46,10 @@ in
       enable = true;
       package = pkgs.mysql;
       ensureDatabases = [ "nextcloud" ];
-      ensureUsers = [
-        {
-          name = "nextcloud";
-          ensurePermissions = {
-            "nextcloud.*" = "ALL PRIVILEGES";
-          };
-        }
-      ];
+      ensureUsers = [{
+        name = "nextcloud";
+        ensurePermissions = { "nextcloud.*" = "ALL PRIVILEGES"; };
+      }];
     };
 
     services.nginx = {
@@ -86,9 +71,7 @@ in
       configureRedis = true;
       extraApps = cfg.apps;
       maxUploadSize = "2G";
-      caching = {
-        apcu = true;
-      };
+      caching = { apcu = true; };
       config = {
         dbtype = "mysql";
         adminuser = "andrew";

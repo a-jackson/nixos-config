@@ -1,17 +1,13 @@
-{ config, self, pkgs, lib, ... }:
+{ self, ... }:
 let
-  inherit (config.networking) hostName;
   # Only enable auto upgrade if current config came from a clean tree
   # This avoids accidental auto-upgrades when working locally.
   isClean = self ? rev;
-in
-{
+in {
   system.autoUpgrade = {
     enable = isClean;
     dates = "hourly";
-    flags = [
-      "--refresh"
-    ];
+    flags = [ "--refresh" ];
     flake = "github:a-jackson/nixos-config?ref=master";
   };
 }
