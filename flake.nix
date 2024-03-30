@@ -71,5 +71,20 @@
       };
 
       imageConfigurations = { "iso" = libx.mkImage { hostname = "iso"; }; };
+
+      devShells = libx.forAllSystems (system:
+        let pkgs = nixpkgs.legacyPackages.${system};
+        in {
+          default = pkgs.mkShell {
+            nativeBuildInputs = with pkgs; [
+              git
+              nix
+              nixfmt
+              sops
+              ssh-to-age
+              vim
+            ];
+          };
+        });
     };
 }
