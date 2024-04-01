@@ -11,6 +11,7 @@ in {
     systemd-boot = false;
     sops.keyPath = "/etc/ssh/ssh_host_ed25519_key";
     monitoring.enable = true;
+    monitoring.smartctl.enable = false;
     restic = { daily = { paths = [ "/var/lib" ]; }; };
   };
 

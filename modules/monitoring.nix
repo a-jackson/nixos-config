@@ -4,12 +4,18 @@ let
   cfg = config.homelab.monitoring;
   ports = config.homelab.ports;
 in {
-  options.homelab.monitoring = { enable = mkEnableOption "Enable monitoring"; };
+  options.homelab.monitoring = {
+    enable = mkEnableOption "Enable monitoring";
+    smartctl.enable = mkEnableOption {
+      description = "Enable smartctl";
+      default = true;
+    };
+  };
 
   config = mkIf cfg.enable {
     services.prometheus.exporters = {
       smartctl = {
-        enable = true;
+        enable = cfg.smartctl.enable;
         openFirewall = true;
         port = ports.smartctl;
       };
