@@ -13,7 +13,18 @@
     };
     impermanence.enable = true;
 
-    restic = { daily = { paths = [ "/persist" "/home" ]; }; };
+    restic = {
+      daily = {
+        paths = [ "/persist" "/home" ];
+        exclude = [
+          "/home/andrew/.cache"
+          "/home/andrew/.nuget"
+          "/home/andrew/.npm"
+          "**/node_modules/"
+        ];
+      };
+    };
+
     homeType = "plasma";
   };
 }
