@@ -1,4 +1,4 @@
-{ username, ... }: {
+{ username, pkgs, ... }: {
   imports = [ ./hardware-configuration.nix ];
 
   networking.firewall = {
@@ -14,7 +14,11 @@
     impermanence.enable = true;
     restic = { daily = { paths = [ "/persist" "/home" ]; }; };
     homeType = "gnome";
+    nvim.csharp = true;
   };
+
+  environment.systemPackages = with pkgs;
+    [ (with dotnetCorePackages; combinePackages [ sdk_8_0 ]) ];
 
   virtualisation.docker.enable = true;
   users.users.${username}.extraGroups = [ "docker" ];
