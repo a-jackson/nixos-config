@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-export NIX_SSHOPTS="-At"
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash -p bash nixos-rebuild
 
 hosts="$1"
 shift
@@ -9,5 +9,5 @@ if [ -z "$hosts" ]; then
 fi
 
 for host in ${hosts//,/ }; do
-    nixos-rebuild --flake ".#$host" switch --target-host "root@$host" --build-host "root@$host" "$@"
+    nixos-rebuild switch --flake ".#$host" --target-host "root@$host" --build-host "root@$host"
 done
