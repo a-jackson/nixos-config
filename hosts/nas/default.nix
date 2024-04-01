@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 let
   backupPaths = [
     "/mnt/user/documents"
@@ -43,4 +43,5 @@ in {
     };
   };
 
+  environment.systemPackages = with pkgs; [ smartmontools ];
 }
