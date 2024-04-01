@@ -1,10 +1,12 @@
 { pkgs, ... }:
 let
-  backupPaths = [
-    "/mnt/user/documents"
-    "/mnt/user/images"
-    "/mnt/user/literature"
-    "/mnt/user/video/phone"
+  backupPaths = [ "/persist" "/home" "/mnt/user" ];
+  excludePaths = [
+    "/mnt/user/audio"
+    "/mnt/user/software"
+    "/mnt/user/video/films"
+    "/mnt/user/video/f1"
+    "/mnt/user/video/tv"
   ];
 in {
   imports =
@@ -14,7 +16,12 @@ in {
     root = { ephemeralBtrfs.enable = true; };
     impermanence.enable = true;
     monitoring.enable = true;
-    restic = { daily = { paths = backupPaths; }; };
+    restic = {
+      daily = {
+        paths = backupPaths;
+        exclude = excludePaths;
+      };
+    };
   };
 
   fileSystems."/mnt/parity" = {
