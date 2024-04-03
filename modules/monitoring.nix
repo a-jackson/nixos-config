@@ -6,7 +6,8 @@ let
 in {
   options.homelab.monitoring = {
     enable = mkEnableOption "Enable monitoring";
-    smartctl.enable = mkEnableOption {
+    smartctl.enable = mkOption {
+      type = types.bool;
       description = "Enable smartctl";
       default = true;
     };
