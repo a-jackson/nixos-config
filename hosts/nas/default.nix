@@ -26,8 +26,7 @@ in {
 
   fileSystems."/mnt/parity" = {
     device = "/dev/disk/by-label/parity";
-    fsType = "btrfs";
-    options = [ "compress=zstd" ];
+    fsType = "xfs";
   };
 
   services = {
