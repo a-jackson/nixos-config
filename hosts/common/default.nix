@@ -49,7 +49,7 @@
       };
     };
 
-    environment.systemPackages = with pkgs; [ git vim jq ];
+    environment.systemPackages = with pkgs; [ git vim jq lsof hdparm du-dust ];
 
     systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 

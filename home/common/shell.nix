@@ -137,6 +137,7 @@
     };
     fzf.enable = true;
     htop.enable = true;
+    btop.enable = true;
     direnv.enable = true;
     ripgrep.enable = true;
   };
