@@ -12,6 +12,57 @@
       databases = [ "nextcloud" ];
       location = "/persist/backups/mysql";
     };
+
+    nginx.virtualHosts."office.andrewjackson.dev" = {
+      forceSSL = true;
+      useACMEHost = "andrewjackson.dev";
+      locations = {
+        # static files
+        "^~ /loleaflet" = {
+          proxyPass = "http://localhost:9980";
+          extraConfig = ''
+            proxy_set_header Host $host;
+          '';
+        };
+        # WOPI discovery URL
+        "^~ /hosting/discovery" = {
+          proxyPass = "http://localhost:9980";
+          extraConfig = ''
+            proxy_set_header Host $host;
+          '';
+        };
+
+        # Capabilities
+        "^~ /hosting/capabilities" = {
+          proxyPass = "http://localhost:9980";
+          extraConfig = ''
+            proxy_set_header Host $host;
+          '';
+        };
+
+        # download, presentation, image upload and websocket
+        "~ ^/lool" = {
+          proxyPass = "http://localhost:9980";
+          extraConfig = ''
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "Upgrade";
+            proxy_set_header Host $host;
+            proxy_read_timeout 36000s;
+          '';
+        };
+
+        # Admin Console websocket
+        "^~ /lool/adminws" = {
+          proxyPass = "http://localhost:9980";
+          extraConfig = ''
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "Upgrade";
+            proxy_set_header Host $host;
+            proxy_read_timeout 36000s;
+          '';
+        };
+      };
+    };
   };
 
   homelab.nextcloud = {
