@@ -22,6 +22,12 @@ in {
       device = "/mnt/disks/*";
       options =
         [ "cache.files=partial" "dropcacheonclose=true" "category.create=mfs" ];
+      depends = [
+        "/mnt/disks/disk1"
+        "/mnt/disks/disk2"
+        "/mnt/disks/disk3"
+        "/mnt/disks/disk4"
+      ];
     };
     # "/mnt/parity" = diskMount "parity";
   };
