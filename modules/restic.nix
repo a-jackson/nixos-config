@@ -26,7 +26,7 @@ in {
 
     services.restic.backups = ((flip mapAttrs' cfg (name: backupCfg:
       nameValuePair "${name}" {
-        initialize = true;
+        initialize = false;
 
         environmentFile = config.sops.secrets."restic/env".path;
         repositoryFile = config.sops.secrets."restic/repo".path;
@@ -38,8 +38,10 @@ in {
         timerConfig = {
           OnCalendar = "daily";
           Persistent = true;
-          RandomizedDelaySec = "1h";
+          RandomizedDelaySec = "2h";
         };
+
+        extraBackupArgs = [ "--retry-lock 1h" ];
 
         pruneOpts = [
           "--keep-daily 7"
