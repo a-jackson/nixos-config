@@ -9,8 +9,13 @@ let
     "/mnt/user/video/tv"
   ];
 in {
-  imports =
-    [ ./hardware-configuration.nix ./disks.nix ./networking.nix ./nfs.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ./containers.nix
+    ./disks.nix
+    ./networking.nix
+    ./nfs.nix
+  ];
 
   homelab = {
     root = { ephemeralBtrfs.enable = true; };
