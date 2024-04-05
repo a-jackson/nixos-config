@@ -1,7 +1,6 @@
 { abe, pkgs, config, ... }: {
   imports = [
     ./hardware-configuration.nix
-    ./adguardhome.nix
     ./audiobookshelf.nix
     ./containers.nix
     ./docker.nix
@@ -37,7 +36,7 @@
       address = "192.168.1.1";
       interface = "eno1";
     };
-    nameservers = [ "127.0.0.1" ];
+    nameservers = [ "127.0.0.1" "192.168.1.75" ];
 
     firewall = { allowedTCPPorts = [ 443 ]; };
   };
@@ -50,17 +49,14 @@
 
     restic = { daily = { paths = [ "/persist" "/data/images" ]; }; };
     impermanence.enable = true;
+
+    dns = {
+      enable = true;
+      virtualHosts = { target = "192.168.1.205"; };
+    };
   };
 
   services = {
-    adguardhome = {
-      enable = true;
-      virtualHosts = {
-        target = "192.168.1.205";
-        hosts = builtins.attrNames config.services.nginx.virtualHosts;
-      };
-    };
-
     frigate = {
       enable = true;
       hostname = "cameras.ajackson.dev";

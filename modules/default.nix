@@ -1,6 +1,7 @@
 { lib, ... }: {
   imports = [
     ./nixvim
+    ./dns.nix
     ./ephemeral-btrfs.nix
     ./impermanence.nix
     ./monitoring.nix

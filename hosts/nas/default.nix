@@ -22,6 +22,11 @@ in {
         exclude = excludePaths;
       };
     };
+
+    dns = {
+      enable = true;
+      virtualHosts.target = "192.168.1.205";
+    };
   };
 
   fileSystems."/mnt/parity" = {
