@@ -1,46 +1,52 @@
-{ config, lib, ... }: {
+{ config
+, lib
+, pkgs
+, ...
+}:
+{
   config = lib.mkIf config.homelab.nvim.enable {
     programs.nixvim = {
       plugins = {
         fidget.enable = true;
         lsp = {
           enable = true;
-          servers = {
-            eslint.enable = true;
-            tsserver.enable = true;
-            cssls.enable = true;
-            bashls.enable = true;
-            html.enable = true;
-            emmet_ls.enable = true;
-            pyright.enable = true;
-            nil_ls.enable = true;
-            # nixd.enable = true;
-            marksman.enable = true;
-            yamlls = {
-              enable = true;
-              extraOptions.settings = {
-                yaml = {
-                  schemas = {
-                    "https://json.schemastore.org/github-workflow.json" =
-                      "/.github/workflows/*";
+          servers =
+            {
+              eslint.enable = true;
+              tsserver.enable = true;
+              cssls.enable = true;
+              bashls.enable = true;
+              html.enable = true;
+              emmet_ls.enable = true;
+              pyright.enable = true;
+              nil_ls.enable = true;
+              nixd.enable = true;
+              marksman.enable = true;
+              yamlls = {
+                enable = true;
+                extraOptions.settings = {
+                  yaml = {
+                    schemas = {
+                      "https://json.schemastore.org/github-workflow.json" = "/.github/workflows/*";
+                    };
                   };
                 };
               };
-            };
-          } // lib.optionalAttrs config.homelab.nvim.terraform {
-            terraformls.enable = true;
-          } // lib.optionalAttrs config.homelab.nvim.csharp {
-            csharp-ls.enable = true;
-          };
+            }
+            // lib.optionalAttrs config.homelab.nvim.terraform { terraformls.enable = true; }
+            // lib.optionalAttrs config.homelab.nvim.csharp { csharp-ls.enable = true; };
 
           keymaps = {
-            lspBuf = let map = action: desc: { inherit action desc; };
-            in {
-              "<leader>rn" = map "rename" "[R]e[n]ame";
-              "<leader>ca" = map "code_action" "[C]ode [A]ction";
-              "K" = map "hover" "Hover Documentation";
-              "gD" = map "declaration" "[G]oto [D]eclaration";
-            };
+            lspBuf =
+              let
+                map = action: desc: { inherit action desc; };
+              in
+              {
+                "<leader>rn" = map "rename" "[R]e[n]ame";
+                "<leader>ca" = map "code_action" "[C]ode [A]ction";
+                "K" = map "hover" "Hover Documentation";
+                "gD" = map "declaration" "[G]oto [D]eclaration";
+              };
           };
 
           onAttach = ''
@@ -97,10 +103,8 @@
             mapping = {
               "<C-y>" = "cmp.mapping.confirm({ select = false })";
               "<C-Space>" = "cmp.mapping.complete()";
-              "<C-p>" =
-                "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-              "<C-n>" =
-                "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+              "<C-p>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+              "<C-n>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
               "<C-l>" = ''
                 cmp.mapping(function()
                   if luasnip.expand_or_locally_jumpable() then
@@ -135,36 +139,38 @@
           sources.formatting.prettier.disableTsServerFormatter = true;
           sources.formatting.black.enable = true;
           sources.formatting.nixfmt.enable = true;
+          sources.formatting.nixfmt.package = pkgs.nixfmt-rfc-style;
         };
 
         luasnip.enable = true;
-        luasnip.fromVscode = [ { } ];
+        luasnip.fromVscode = [{ }];
         friendly-snippets.enable = true;
 
         cmp_luasnip.enable = true;
       };
 
-      keymaps = let
-        lspKeymap = key: action: desc: {
-          inherit key;
-          options.desc = desc;
-          lua = true;
-          mode = "n";
-          action = ''
-            function()
-              require('telescope.builtin').${action}()
-            end
-          '';
-        };
-      in [
-        (lspKeymap "gd" "lsp_definitions" "[G]oto [D]efinition")
-        (lspKeymap "gr" "lsp_references" "[G]oto [R]eferences")
-        (lspKeymap "gI" "lsp_implementations" "[G]oto [I]mplementation")
-        (lspKeymap "<leader>D" "lsp_type_definitions" "Type [D]efinition")
-        (lspKeymap "<leader>ds" "lsp_document_symbols" "[D]ocument [S]ymbols")
-        (lspKeymap "<leader>ws" "lsp_dynamic_workspace_symbols"
-          "[W]orkspace [S]ymbols")
-      ];
+      keymaps =
+        let
+          lspKeymap = key: action: desc: {
+            inherit key;
+            options.desc = desc;
+            lua = true;
+            mode = "n";
+            action = ''
+              function()
+                require('telescope.builtin').${action}()
+              end
+            '';
+          };
+        in
+        [
+          (lspKeymap "gd" "lsp_definitions" "[G]oto [D]efinition")
+          (lspKeymap "gr" "lsp_references" "[G]oto [R]eferences")
+          (lspKeymap "gI" "lsp_implementations" "[G]oto [I]mplementation")
+          (lspKeymap "<leader>D" "lsp_type_definitions" "Type [D]efinition")
+          (lspKeymap "<leader>ds" "lsp_document_symbols" "[D]ocument [S]ymbols")
+          (lspKeymap "<leader>ws" "lsp_dynamic_workspace_symbols" "[W]orkspace [S]ymbols")
+        ];
     };
   };
 }

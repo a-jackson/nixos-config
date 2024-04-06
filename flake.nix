@@ -80,7 +80,7 @@
               btrfs-progs
               git
               nix
-              nixfmt
+              nixfmt-rfc-style
               parted
               sops
               ssh-to-age
