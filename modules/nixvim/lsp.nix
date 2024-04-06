@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 {
   config = lib.mkIf config.homelab.nvim.enable {
@@ -143,7 +144,7 @@
         };
 
         luasnip.enable = true;
-        luasnip.fromVscode = [{ }];
+        luasnip.fromVscode = [ { } ];
         friendly-snippets.enable = true;
 
         cmp_luasnip.enable = true;

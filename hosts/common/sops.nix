@@ -1,8 +1,11 @@
-{ sops-nix, lib, config, ... }:
 {
-  imports = [
-    sops-nix.nixosModules.sops
-  ];
+  sops-nix,
+  lib,
+  config,
+  ...
+}:
+{
+  imports = [ sops-nix.nixosModules.sops ];
 
   options = {
     homelab.sops.keyPath = lib.mkOption {

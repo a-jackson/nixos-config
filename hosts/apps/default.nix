@@ -1,4 +1,10 @@
-{ abe, pkgs, config, ... }: {
+{
+  abe,
+  pkgs,
+  config,
+  ...
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ./audiobookshelf.nix
@@ -13,7 +19,9 @@
     abe.nixosModules.default
   ];
 
-  sops.secrets.cloudflare_apikey = { sopsFile = ./secrets.yaml; };
+  sops.secrets.cloudflare_apikey = {
+    sopsFile = ./secrets.yaml;
+  };
 
   nixpkgs.overlays = [
     (final: prev: {
@@ -27,18 +35,25 @@
 
   networking = {
     interfaces = {
-      eno1.ipv4.addresses = [{
-        address = "192.168.1.205";
-        prefixLength = 24;
-      }];
+      eno1.ipv4.addresses = [
+        {
+          address = "192.168.1.205";
+          prefixLength = 24;
+        }
+      ];
     };
     defaultGateway = {
       address = "192.168.1.1";
       interface = "eno1";
     };
-    nameservers = [ "127.0.0.1" "192.168.1.75" ];
+    nameservers = [
+      "127.0.0.1"
+      "192.168.1.75"
+    ];
 
-    firewall = { allowedTCPPorts = [ 443 ]; };
+    firewall = {
+      allowedTCPPorts = [ 443 ];
+    };
   };
 
   homelab = {
@@ -47,12 +62,21 @@
       ephemeralBtrfs.enable = true;
     };
 
-    restic = { daily = { paths = [ "/persist" "/data/images" ]; }; };
+    restic = {
+      daily = {
+        paths = [
+          "/persist"
+          "/data/images"
+        ];
+      };
+    };
     impermanence.enable = true;
 
     dns = {
       enable = true;
-      virtualHosts = { target = "192.168.1.205"; };
+      virtualHosts = {
+        target = "192.168.1.205";
+      };
     };
   };
 
@@ -62,10 +86,15 @@
       hostname = "cameras.ajackson.dev";
       settings.cameras = {
         gp_top = {
-          ffmpeg.inputs = [{
-            path = "rtsp://192.168.1.15:8554/unicast";
-            roles = [ "detect" "record" ];
-          }];
+          ffmpeg.inputs = [
+            {
+              path = "rtsp://192.168.1.15:8554/unicast";
+              roles = [
+                "detect"
+                "record"
+              ];
+            }
+          ];
           detect.enabled = false;
         };
       };
@@ -73,8 +102,10 @@
   };
 
   virtualisation.oci-containers.containers =
-    let images = builtins.fromJSON (builtins.readFile ../../images.json);
-    in {
+    let
+      images = builtins.fromJSON (builtins.readFile ../../images.json);
+    in
+    {
       silverbullet = {
         image = images.silverbullet.image;
         imageFile = pkgs.dockerTools.pullImage {
@@ -87,33 +118,57 @@
       };
     };
 
-  environment = { systemPackages = with pkgs; [ nfs-utils ]; };
+  environment = {
+    systemPackages = with pkgs; [ nfs-utils ];
+  };
 
   fileSystems."/data/images" = {
     device = "/dev/disk/by-label/storage";
     fsType = "btrfs";
-    options = [ "subvol=images" "compress=zstd" ];
+    options = [
+      "subvol=images"
+      "compress=zstd"
+    ];
   };
   fileSystems."/data/audio" = {
     device = "/dev/disk/by-label/storage";
     fsType = "btrfs";
-    options = [ "subvol=audio" "compress=zstd" ];
+    options = [
+      "subvol=audio"
+      "compress=zstd"
+    ];
   };
 
   services.rpcbind.enable = true;
-  systemd.mounts = let
-    nasMount = folder: {
-      type = "nfs";
-      mountConfig = { Options = "noatime,nfsvers=4.2"; };
-      what = "192.168.1.75:/mnt/user/${folder}";
-      where = "/mnt/user/${folder}";
-    };
-  in [ (nasMount "video") (nasMount "images") (nasMount "audio") ];
-  systemd.automounts = let
-    nasMount = folder: {
-      wantedBy = [ "multi-user.target" ];
-      automountConfig = { TimeoutIdleSec = "600"; };
-      where = "/mnt/user/${folder}";
-    };
-  in [ (nasMount "video") (nasMount "images") (nasMount "audio") ];
+  systemd.mounts =
+    let
+      nasMount = folder: {
+        type = "nfs";
+        mountConfig = {
+          Options = "noatime,nfsvers=4.2";
+        };
+        what = "192.168.1.75:/mnt/user/${folder}";
+        where = "/mnt/user/${folder}";
+      };
+    in
+    [
+      (nasMount "video")
+      (nasMount "images")
+      (nasMount "audio")
+    ];
+  systemd.automounts =
+    let
+      nasMount = folder: {
+        wantedBy = [ "multi-user.target" ];
+        automountConfig = {
+          TimeoutIdleSec = "600";
+        };
+        where = "/mnt/user/${folder}";
+      };
+    in
+    [
+      (nasMount "video")
+      (nasMount "images")
+      (nasMount "audio")
+    ];
 }

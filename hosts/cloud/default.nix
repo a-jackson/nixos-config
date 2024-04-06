@@ -1,10 +1,17 @@
 { config, ... }:
-let public_domain = "andrewjackson.dev";
-in {
-  imports = [ ./hardware-configuration.nix ./networking.nix ];
+let
+  public_domain = "andrewjackson.dev";
+in
+{
+  imports = [
+    ./hardware-configuration.nix
+    ./networking.nix
+  ];
 
   homelab = {
-    root = { ephemeralBtrfs.enable = false; };
+    root = {
+      ephemeralBtrfs.enable = false;
+    };
 
     impermanence.enable = false;
 
@@ -12,13 +19,19 @@ in {
     sops.keyPath = "/etc/ssh/ssh_host_ed25519_key";
     monitoring.enable = true;
     monitoring.smartctl.enable = false;
-    restic = { daily = { paths = [ "/var/lib" ]; }; };
+    restic = {
+      daily = {
+        paths = [ "/var/lib" ];
+      };
+    };
   };
 
   boot.tmp.cleanOnBoot = true;
   zramSwap.enable = true;
   networking.firewall.allowedTCPPorts = [ 443 ];
-  sops.secrets = { cloudflare_credentials = { }; };
+  sops.secrets = {
+    cloudflare_credentials = { };
+  };
 
   services = {
     nginx = {
@@ -28,23 +41,25 @@ in {
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
 
-      virtualHosts = let
-        host = acmeHost: proxyPass: {
-          forceSSL = true;
-          useACMEHost = acmeHost;
-          locations."/" = {
-            proxyPass = proxyPass;
-            proxyWebsockets = true;
-            extraConfig = ''
-              client_max_body_size 0;
-            '';
+      virtualHosts =
+        let
+          host = acmeHost: proxyPass: {
+            forceSSL = true;
+            useACMEHost = acmeHost;
+            locations."/" = {
+              proxyPass = proxyPass;
+              proxyWebsockets = true;
+              extraConfig = ''
+                client_max_body_size 0;
+              '';
+            };
           };
+        in
+        {
+          "jellyfin.${public_domain}" = host public_domain "http://apps:8096";
+          "requests.${public_domain}" = host public_domain "http://apps:5055";
+          "notify.${public_domain}" = host public_domain "http://127.0.0.1:8000";
         };
-      in {
-        "jellyfin.${public_domain}" = host public_domain "http://apps:8096";
-        "requests.${public_domain}" = host public_domain "http://apps:5055";
-        "notify.${public_domain}" = host public_domain "http://127.0.0.1:8000";
-      };
     };
 
     gotify = {
@@ -54,7 +69,9 @@ in {
   };
   security.acme = {
     acceptTerms = true;
-    defaults = { email = "andrew@a-jackson.co.uk"; };
+    defaults = {
+      email = "andrew@a-jackson.co.uk";
+    };
     certs = {
       "${public_domain}" = {
         extraDomainNames = [ "*.${public_domain}" ];

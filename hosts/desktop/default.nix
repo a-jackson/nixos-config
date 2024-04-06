@@ -1,9 +1,13 @@
-{ ... }: {
+{ ... }:
+{
   imports = [ ./hardware-configuration.nix ];
 
   networking.firewall = {
     allowedTCPPorts = [ 22000 ];
-    allowedUDPPorts = [ 21027 22000 ];
+    allowedUDPPorts = [
+      21027
+      22000
+    ];
   };
 
   homelab = {
@@ -15,7 +19,10 @@
 
     restic = {
       daily = {
-        paths = [ "/persist" "/home" ];
+        paths = [
+          "/persist"
+          "/home"
+        ];
         exclude = [
           "/home/andrew/.cache"
           "/home/andrew/.nuget"

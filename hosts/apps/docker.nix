@@ -1,4 +1,5 @@
-{ username, ... }: {
+{ username, ... }:
+{
 
   virtualisation.docker = {
     enable = true;
@@ -12,7 +13,9 @@
       "docker-compose/immich/docker-compose.yml" = {
         source = ./immich/docker-compose.yml;
       };
-      "docker-compose/immich/.env" = { source = ./immich/env; };
+      "docker-compose/immich/.env" = {
+        source = ./immich/env;
+      };
     };
   };
 }

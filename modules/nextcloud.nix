@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 with lib;
 with builtins;
@@ -7,10 +12,11 @@ let
   cfg = config.homelab.nextcloud;
 
   # Cleanup override info
-  settings = pkgs.lib.mapAttrsRecursiveCond (s: !s ? "_type")
-    (_: value: if value ? "content" then value.content else value) cfg.settings;
-
-in {
+  settings = pkgs.lib.mapAttrsRecursiveCond (s: !s ? "_type") (
+    _: value: if value ? "content" then value.content else value
+  ) cfg.settings;
+in
+{
 
   options.homelab.nextcloud = {
 
@@ -25,8 +31,7 @@ in {
     adminEmail = mkOption {
       type = types.str;
       default = "";
-      description =
-        "\n        The email address of the default admin user\n      ";
+      description = "\n        The email address of the default admin user\n      ";
     };
 
     adminPasswordFile = mkOption { type = types.path; };
@@ -34,10 +39,8 @@ in {
     settings = mkOption {
       type = types.attrsOf types.attrs;
       default = { };
-      description =
-        "\n        Nextcloud settings to be imported using `occ config:import`\n\n        https://docs.nextcloud.com/server/stable/admin_manual/configuration_server/occ_command.html#config-commands\n      ";
+      description = "\n        Nextcloud settings to be imported using `occ config:import`\n\n        https://docs.nextcloud.com/server/stable/admin_manual/configuration_server/occ_command.html#config-commands\n      ";
     };
-
   };
 
   config = mkIf cfg.enable {
@@ -46,10 +49,14 @@ in {
       enable = true;
       package = pkgs.mysql;
       ensureDatabases = [ "nextcloud" ];
-      ensureUsers = [{
-        name = "nextcloud";
-        ensurePermissions = { "nextcloud.*" = "ALL PRIVILEGES"; };
-      }];
+      ensureUsers = [
+        {
+          name = "nextcloud";
+          ensurePermissions = {
+            "nextcloud.*" = "ALL PRIVILEGES";
+          };
+        }
+      ];
     };
 
     services.nginx = {
@@ -71,7 +78,9 @@ in {
       configureRedis = true;
       extraApps = cfg.apps;
       maxUploadSize = "2G";
-      caching = { apcu = true; };
+      caching = {
+        apcu = true;
+      };
       config = {
         dbtype = "mysql";
         adminuser = "andrew";

@@ -1,4 +1,5 @@
-{ username, pkgs, ... }: {
+{ username, pkgs, ... }:
+{
   services = {
     xserver = {
       enable = true;

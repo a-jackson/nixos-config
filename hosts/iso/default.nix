@@ -1,8 +1,8 @@
 { lib, username, ... }:
 let
-  passwordHash =
-    "$y$j9T$F3gDRp8hGFlKlY7PgHPSf0$LIHQ8VsP4rbc.Xig.ZgixugUwl.zS8l4/A.LkiLH680";
-in {
+  passwordHash = "$y$j9T$F3gDRp8hGFlKlY7PgHPSf0$LIHQ8VsP4rbc.Xig.ZgixugUwl.zS8l4/A.LkiLH680";
+in
+{
   networking.useDHCP = lib.mkDefault true;
 
   networking.firewall.allowedTCPPorts = [ 22 ];

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   keymap = key: action: desc: mode: {
     inherit key action mode;
@@ -10,8 +15,14 @@ let
     options.desc = desc;
     lua = true;
   };
-in {
-  imports = [ ./lsp.nix ./telescope.nix ./terminal.nix ./treesitter.nix ];
+in
+{
+  imports = [
+    ./lsp.nix
+    ./telescope.nix
+    ./terminal.nix
+    ./treesitter.nix
+  ];
 
   options.homelab.nvim = with lib; {
     enable = mkOption {
@@ -84,14 +95,18 @@ in {
       keymaps = [
         (keymap "<Esc>" "<cmd>nohlsearch<CR>" "Clear search hightlight" "n")
 
-        (luaKeymap "[d" "function() vim.diagnostic.goto_prev() end"
-          "Go to previous [D]iagnostic message" "n")
-        (luaKeymap "]d" "function() vim.diagnostic.goto_next() end"
-          "Go to next [D]iagnostic message" "n")
+        (luaKeymap "[d" "function() vim.diagnostic.goto_prev() end" "Go to previous [D]iagnostic message"
+          "n"
+        )
+        (luaKeymap "]d" "function() vim.diagnostic.goto_next() end" "Go to next [D]iagnostic message" "n")
         (luaKeymap "<leader>e" "function() vim.diagnostic.open_float() end"
-          "Show diagnostic [E]rror messages" "n")
+          "Show diagnostic [E]rror messages"
+          "n"
+        )
         (luaKeymap "<leader>q" "function() vim.diagnostic.setloclist() end"
-          "Open diagnostic [Q]uickfix list" "n")
+          "Open diagnostic [Q]uickfix list"
+          "n"
+        )
 
         (keymap "<Esc><Esc>" "<C-\\><C-n>" "Exit terminal mode" "t")
 
@@ -105,8 +120,7 @@ in {
         (keymap "<C-Left>" "<C-w>>" "Resize window left" "n")
         (keymap "<C-Right>" "<C-w><" "Resize window right" "n")
 
-        (keymap "<leader>f" "<Cmd>Neotree toggle reveal<CR>"
-          "[F]ile tree toggle" "n")
+        (keymap "<leader>f" "<Cmd>Neotree toggle reveal<CR>" "[F]ile tree toggle" "n")
         (keymap "<leader>x" "<Cmd>bdelete<CR>" "Close buffer" "n")
         (keymap "<leader>X" "<Cmd>%bdelete<CR>" "Close all buffers" "n")
         (keymap "H" "<Cmd>bprevious<CR>" "Previous buffer" "n")
@@ -115,14 +129,22 @@ in {
         (keymap "<leader>hh" "<Cmd>Neogit<CR>" "Neogit" "n")
       ];
 
-      autoGroups = { kickstart-highlight-yank = { clear = true; }; };
+      autoGroups = {
+        kickstart-highlight-yank = {
+          clear = true;
+        };
+      };
 
-      autoCmd = [{
-        event = [ "TextYankPost" ];
-        desc = "Highlight when yanking (copying) text";
-        group = "kickstart-highlight-yank";
-        callback = { __raw = "function() vim.highlight.on_yank() end"; };
-      }];
+      autoCmd = [
+        {
+          event = [ "TextYankPost" ];
+          desc = "Highlight when yanking (copying) text";
+          group = "kickstart-highlight-yank";
+          callback = {
+            __raw = "function() vim.highlight.on_yank() end";
+          };
+        }
+      ];
 
       plugins = {
         comment.enable = true;
@@ -156,7 +178,9 @@ in {
           '';
         };
 
-        neogit = { enable = true; };
+        neogit = {
+          enable = true;
+        };
 
         gitlinker.enable = true;
 
@@ -176,7 +200,11 @@ in {
 
         mini = {
           enable = true;
-          modules = { statusline = { use_icons = true; }; };
+          modules = {
+            statusline = {
+              use_icons = true;
+            };
+          };
         };
 
         auto-session = {
@@ -207,11 +235,13 @@ in {
               return " " .. icon .. count
             end
           '';
-          offsets = [{
-            filetype = "neo-tree";
-            text = "File Explorer";
-            text_align = "left";
-          }];
+          offsets = [
+            {
+              filetype = "neo-tree";
+              text = "File Explorer";
+              text_align = "left";
+            }
+          ];
         };
 
         noice = {

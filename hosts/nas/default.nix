@@ -1,6 +1,10 @@
 { pkgs, ... }:
 let
-  backupPaths = [ "/persist" "/home" "/mnt/user" ];
+  backupPaths = [
+    "/persist"
+    "/home"
+    "/mnt/user"
+  ];
   excludePaths = [
     "/mnt/user/audio"
     "/mnt/user/software"
@@ -8,7 +12,8 @@ let
     "/mnt/user/video/f1"
     "/mnt/user/video/tv"
   ];
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
     ./containers.nix
@@ -18,7 +23,9 @@ in {
   ];
 
   homelab = {
-    root = { ephemeralBtrfs.enable = true; };
+    root = {
+      ephemeralBtrfs.enable = true;
+    };
     impermanence.enable = true;
     monitoring.enable = true;
     restic = {

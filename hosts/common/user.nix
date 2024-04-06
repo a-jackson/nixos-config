@@ -1,7 +1,17 @@
-{ pkgs, home-manager, username, config, lib, ... }: {
+{
+  pkgs,
+  home-manager,
+  username,
+  config,
+  lib,
+  ...
+}:
+{
   imports = [ home-manager.nixosModules.home-manager ];
 
-  sops.secrets.password = { neededForUsers = true; };
+  sops.secrets.password = {
+    neededForUsers = true;
+  };
 
   users = {
     users."${username}" = {
@@ -27,22 +37,32 @@
     };
   };
 
-  home-manager.users = let type = config.homelab.homeType;
-  in {
-    "${username}" = {
-      imports = [
-        ../../home/${type}.nix
-        {
-          home = {
-            inherit username;
-            homeDirectory = lib.mkDefault "/home/${username}";
-            stateVersion = "23.05";
-          };
-        }
-      ];
+  home-manager.users =
+    let
+      type = config.homelab.homeType;
+    in
+    {
+      "${username}" = {
+        imports = [
+          ../../home/${type}.nix
+          {
+            home = {
+              inherit username;
+              homeDirectory = lib.mkDefault "/home/${username}";
+              stateVersion = "23.05";
+            };
+          }
+        ];
+      };
+      root = {
+        imports = [
+          ../../home/common
+          {
+            home = {
+              stateVersion = "23.05";
+            };
+          }
+        ];
+      };
     };
-    root = {
-      imports = [ ../../home/common { home = { stateVersion = "23.05"; }; } ];
-    };
-  };
 }

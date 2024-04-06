@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   homelab.monitoring.enable = true;
 
   services = {
@@ -6,27 +7,42 @@
       enable = true;
       port = config.homelab.ports.prometheus;
 
-      scrapeConfigs = let
-        smartctlPort = toString config.homelab.ports.smartctl;
-        nodePort = toString config.homelab.ports.node;
+      scrapeConfigs =
+        let
+          smartctlPort = toString config.homelab.ports.smartctl;
+          nodePort = toString config.homelab.ports.node;
 
-        target = name: host: {
-          job_name = name;
-          static_configs = [{
-            targets = [ "${host}:${smartctlPort}" "${host}:${nodePort}" ];
-            labels = { host = name; };
-          }];
-        };
-      in [
-        (target "apps" "127.0.0.1")
-        (target "cloud" "cloud")
-        (target "nas" "nas")
-        {
-          job_name = "immich";
-          static_configs =
-            [{ targets = [ "127.0.0.1:8081" "127.0.0.1:8083" ]; }];
-        }
-      ];
+          target = name: host: {
+            job_name = name;
+            static_configs = [
+              {
+                targets = [
+                  "${host}:${smartctlPort}"
+                  "${host}:${nodePort}"
+                ];
+                labels = {
+                  host = name;
+                };
+              }
+            ];
+          };
+        in
+        [
+          (target "apps" "127.0.0.1")
+          (target "cloud" "cloud")
+          (target "nas" "nas")
+          {
+            job_name = "immich";
+            static_configs = [
+              {
+                targets = [
+                  "127.0.0.1:8081"
+                  "127.0.0.1:8083"
+                ];
+              }
+            ];
+          }
+        ];
     };
 
     grafana = {
@@ -61,14 +77,16 @@
           max_transfer_retries = 0;
         };
 
-        schema_config.configs = [{
-          from = "2020-10-24";
-          store = "boltdb-shipper";
-          object_store = "filesystem";
-          schema = "v11";
-          index.prefix = "index_";
-          index.period = "24h";
-        }];
+        schema_config.configs = [
+          {
+            from = "2020-10-24";
+            store = "boltdb-shipper";
+            object_store = "filesystem";
+            schema = "v11";
+            index.prefix = "index_";
+            index.period = "24h";
+          }
+        ];
 
         compactor = {
           working_directory = "/var/lib/loki/compactor";
@@ -81,7 +99,9 @@
           cache_ttl = "24h";
           shared_store = "filesystem";
         };
-        storage_config.filesystem = { directory = "/var/lib/loki/chunks"; };
+        storage_config.filesystem = {
+          directory = "/var/lib/loki/chunks";
+        };
 
         # ruler = {
         #   storage = {

@@ -1,9 +1,13 @@
-{ username, pkgs, ... }: {
+{ username, pkgs, ... }:
+{
   imports = [ ./hardware-configuration.nix ];
 
   networking.firewall = {
     allowedTCPPorts = [ 22000 ];
-    allowedUDPPorts = [ 21027 22000 ];
+    allowedUDPPorts = [
+      21027
+      22000
+    ];
   };
 
   homelab = {
@@ -14,7 +18,10 @@
     impermanence.enable = true;
     restic = {
       daily = {
-        paths = [ "/persist" "/home" ];
+        paths = [
+          "/persist"
+          "/home"
+        ];
         exclude = [
           "/home/andrew/.cache"
           "/home/andrew/.nuget"
@@ -27,8 +34,7 @@
     nvim.csharp = true;
   };
 
-  environment.systemPackages = with pkgs;
-    [ (with dotnetCorePackages; combinePackages [ sdk_8_0 ]) ];
+  environment.systemPackages = with pkgs; [ (with dotnetCorePackages; combinePackages [ sdk_8_0 ]) ];
 
   virtualisation.docker.enable = true;
   users.users.${username}.extraGroups = [ "docker" ];

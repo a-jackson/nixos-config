@@ -2,7 +2,9 @@
   description = "System config";
 
   inputs = {
-    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-unstable"; };
+    nixpkgs = {
+      url = "github:NixOS/nixpkgs/nixos-unstable";
+    };
 
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
 
@@ -11,7 +13,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    impermanence = { url = "github:nix-community/impermanence"; };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -38,10 +42,22 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, impermanence
-    , sops-nix, abe, nixvim, nixos-generators }@inputs:
-    let libx = import ./lib { inherit self inputs; };
-    in {
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixpkgs-stable,
+      home-manager,
+      impermanence,
+      sops-nix,
+      abe,
+      nixvim,
+      nixos-generators,
+    }@inputs:
+    let
+      libx = import ./lib { inherit self inputs; };
+    in
+    {
       inherit libx;
 
       nixosConfigurations = {
@@ -70,11 +86,16 @@
         "andrew@cloud" = libx.mkHome { system = "aarch64-linux"; };
       };
 
-      imageConfigurations = { "iso" = libx.mkImage { hostname = "iso"; }; };
+      imageConfigurations = {
+        "iso" = libx.mkImage { hostname = "iso"; };
+      };
 
-      devShells = libx.forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in {
+      devShells = libx.forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
           default = pkgs.mkShell {
             nativeBuildInputs = with pkgs; [
               btrfs-progs
@@ -88,6 +109,7 @@
               xfsprogs
             ];
           };
-        });
+        }
+      );
     };
 }

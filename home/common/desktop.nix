@@ -1,9 +1,12 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   programs.kitty = {
     enable = true;
     font.name = "Fira Code";
     theme = "Catppuccin-Mocha";
-    settings = { hide_window_decorations = "yes"; };
+    settings = {
+      hide_window_decorations = "yes";
+    };
   };
 
   home.packages = with pkgs; [ neovide ];

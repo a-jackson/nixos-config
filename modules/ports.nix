@@ -1,6 +1,8 @@
 { lib, ... }:
-let inherit (lib) mkOption types;
-in {
+let
+  inherit (lib) mkOption types;
+in
+{
   options.homelab.ports = mkOption { type = types.attrsOf types.int; };
 
   config = {

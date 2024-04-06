@@ -1,8 +1,14 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf mkEnableOption mkOption types;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    ;
   cfg = config.homelab.dns;
-in {
+in
+{
   options.homelab.dns = {
     enable = mkEnableOption "Enable DNS Server";
     lanHosts = mkOption {
@@ -51,28 +57,32 @@ in {
       enable = true;
       mutableSettings = false;
       openFirewall = true;
-      settings = let
-        lanHosts = builtins.map (domain: {
-          inherit domain;
-          answer = cfg.lanHosts.${domain};
-        }) (builtins.attrNames cfg.lanHosts);
+      settings =
+        let
+          lanHosts = builtins.map (domain: {
+            inherit domain;
+            answer = cfg.lanHosts.${domain};
+          }) (builtins.attrNames cfg.lanHosts);
 
-        virtualHosts = builtins.map (domain: {
-          inherit domain;
-          answer = cfg.virtualHosts.target;
-        }) cfg.virtualHosts.hosts;
+          virtualHosts = builtins.map (domain: {
+            inherit domain;
+            answer = cfg.virtualHosts.target;
+          }) cfg.virtualHosts.hosts;
 
-        rewrites = lanHosts ++ virtualHosts;
-      in {
-        bind_host = "0.0.0.0";
-        bind_port = 3500;
-        http = { address = "0.0.0.0:3500"; };
-        dns = {
-          bootstrap_dns = [ "9.9.9.9" ];
+          rewrites = lanHosts ++ virtualHosts;
+        in
+        {
           bind_host = "0.0.0.0";
-          inherit rewrites;
+          bind_port = 3500;
+          http = {
+            address = "0.0.0.0:3500";
+          };
+          dns = {
+            bootstrap_dns = [ "9.9.9.9" ];
+            bind_host = "0.0.0.0";
+            inherit rewrites;
+          };
         };
-      };
     };
 
     networking.firewall.allowedUDPPorts = [ 53 ];

@@ -1,4 +1,5 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
   # This file was populated at runtime with the networking
   # details gathered from the active system.
   networking = {
@@ -13,10 +14,12 @@
     usePredictableInterfaceNames = lib.mkForce false;
     interfaces = {
       eth0 = {
-        ipv4.addresses = [{
-          address = "95.216.200.233";
-          prefixLength = 32;
-        }];
+        ipv4.addresses = [
+          {
+            address = "95.216.200.233";
+            prefixLength = 32;
+          }
+        ];
         ipv6.addresses = [
           {
             address = "2a01:4f9:c011:9f5a::1";
@@ -38,12 +41,13 @@
             via = "172.31.1.1";
           }
         ];
-        ipv6.routes = [{
-          address = "fe80::1";
-          prefixLength = 128;
-        }];
+        ipv6.routes = [
+          {
+            address = "fe80::1";
+            prefixLength = 128;
+          }
+        ];
       };
-
     };
   };
   services.udev.extraRules = ''

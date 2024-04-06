@@ -1,6 +1,18 @@
-{ pkgs, nixpkgs, lib, config, ... }: {
-  imports =
-    [ ./sops.nix ./user.nix ./auto-upgrade.nix ./nvim.nix ../../modules ];
+{
+  pkgs,
+  nixpkgs,
+  lib,
+  config,
+  ...
+}:
+{
+  imports = [
+    ./sops.nix
+    ./user.nix
+    ./auto-upgrade.nix
+    ./nvim.nix
+    ../../modules
+  ];
   options.homelab = with lib; {
     systemd-boot = mkOption {
       type = types.bool;
@@ -20,8 +32,7 @@
       networkmanager.enable = true;
     };
 
-    fonts.packages = with pkgs;
-      [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
+    fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
 
     services.tailscale.enable = true;
 
@@ -37,9 +48,15 @@
 
     nix = {
       settings = {
-        experimental-features = [ "nix-command" "flakes" ];
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
         warn-dirty = false;
-        trusted-users = [ "root" "@wheel" ];
+        trusted-users = [
+          "root"
+          "@wheel"
+        ];
       };
 
       gc = {
@@ -49,7 +66,14 @@
       };
     };
 
-    environment.systemPackages = with pkgs; [ git vim jq lsof hdparm du-dust ];
+    environment.systemPackages = with pkgs; [
+      git
+      vim
+      jq
+      lsof
+      hdparm
+      du-dust
+    ];
 
     systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 

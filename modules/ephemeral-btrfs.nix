@@ -24,7 +24,8 @@ let
   phase1Systemd = config.boot.initrd.systemd.enable;
 
   inherit (lib) mkOption types;
-in {
+in
+{
   options.homelab.root = {
     diskLabel = mkOption {
       type = types.str;
@@ -59,33 +60,49 @@ in {
       "/" = {
         device = "/dev/disk/by-label/${cfg.diskLabel}";
         fsType = "btrfs";
-        options = [ "subvol=root" "compress=zstd" ];
+        options = [
+          "subvol=root"
+          "compress=zstd"
+        ];
         neededForBoot = true;
       };
 
       "/home" = {
         device = "/dev/disk/by-label/${cfg.diskLabel}";
         fsType = "btrfs";
-        options = [ "subvol=home" "compress=zstd" ];
+        options = [
+          "subvol=home"
+          "compress=zstd"
+        ];
       };
 
       "/nix" = {
         device = "/dev/disk/by-label/${cfg.diskLabel}";
         fsType = "btrfs";
-        options = [ "subvol=nix" "noatime" "compress=zstd" ];
+        options = [
+          "subvol=nix"
+          "noatime"
+          "compress=zstd"
+        ];
       };
 
       "/persist" = {
         device = "/dev/disk/by-label/${cfg.diskLabel}";
         fsType = "btrfs";
-        options = [ "subvol=persist" "compress=zstd" ];
+        options = [
+          "subvol=persist"
+          "compress=zstd"
+        ];
         neededForBoot = true;
       };
 
       "/swap" = {
         device = "/dev/disk/by-label/${cfg.diskLabel}";
         fsType = "btrfs";
-        options = [ "subvol=swap" "noatime" ];
+        options = [
+          "subvol=swap"
+          "noatime"
+        ];
       };
     };
   };

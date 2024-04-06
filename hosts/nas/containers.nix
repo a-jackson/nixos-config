@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   networking = {
     firewall = {
       extraCommands = ''
@@ -20,36 +21,44 @@
           isReadOnly = false;
         };
       };
-      forwardPorts = [{
-        containerPort = 3500;
-        hostPort = 3501;
-        protocol = "tcp";
-      }];
+      forwardPorts = [
+        {
+          containerPort = 3500;
+          hostPort = 3501;
+          protocol = "tcp";
+        }
+      ];
       autoStart = true;
       ephemeral = true;
       enableTun = true;
       privateNetwork = true;
       hostAddress = "10.100.0.1";
       localAddress = "10.100.0.2";
-      config = { lib, ... }: {
-        imports = [ ../../modules/dns.nix ];
+      config =
+        { lib, ... }:
+        {
+          imports = [ ../../modules/dns.nix ];
 
-        homelab.dns = {
-          enable = true;
-          virtualHosts = { target = "100.92.22.51"; };
+          homelab.dns = {
+            enable = true;
+            virtualHosts = {
+              target = "100.92.22.51";
+            };
+          };
+
+          services.tailscale.enable = true;
+
+          system.stateVersion = "23.05";
+
+          networking = {
+            firewall = {
+              enable = true;
+            };
+
+            useHostResolvConf = lib.mkForce false;
+            nameservers = [ "192.168.1.1" ];
+          };
         };
-
-        services.tailscale.enable = true;
-
-        system.stateVersion = "23.05";
-
-        networking = {
-          firewall = { enable = true; };
-
-          useHostResolvConf = lib.mkForce false;
-          nameservers = [ "192.168.1.1" ];
-        };
-      };
     };
   };
 }

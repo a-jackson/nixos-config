@@ -1,6 +1,9 @@
-{ pkgs, lib, config, ... }:
 {
-  imports = [
-    ./shell.nix
-  ];
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
+  imports = [ ./shell.nix ];
 }

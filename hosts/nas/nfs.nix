@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   options.homelab.nfs = { };
 
   config = {

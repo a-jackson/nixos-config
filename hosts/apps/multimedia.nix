@@ -2,7 +2,8 @@
 let
   cfg = config.homelab.multimedia;
   ports = config.homelab.ports;
-in {
+in
+{
   options.homelab.multimedia = with lib; {
     group = mkOption {
       type = types.str;
@@ -48,7 +49,10 @@ in {
     fileSystems."/data" = {
       device = "/dev/disk/by-label/${config.homelab.root.diskLabel}";
       fsType = "btrfs";
-      options = [ "subvol=data" "compress=zstd" ];
+      options = [
+        "subvol=data"
+        "compress=zstd"
+      ];
     };
   };
 }
