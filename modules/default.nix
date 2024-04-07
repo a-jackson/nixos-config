@@ -11,6 +11,7 @@
     ./ports.nix
     ./restic.nix
     ./ssh.nix
+    ./syncthing.nix
   ];
 
   options.homelab.homeType = lib.mkOption {

@@ -5,7 +5,6 @@
     ./common/desktop.nix
     ./common/vscode.nix
     ./common/firefox.nix
-    ./common/syncthing.nix
   ];
 
   dconf.settings = {

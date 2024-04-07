@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  username,
+  pkgs,
+  config,
+  ...
+}:
 let
   backupPaths = [
     "/persist"
@@ -63,6 +68,51 @@ in
         "/mnt/disks/disk3/.snapraid.3.content"
         "/mnt/disks/disk4/.snapraid.4.content"
       ];
+    };
+
+    syncthing = {
+      enable = true;
+      user = username;
+      group = "users";
+      dataDir = "/home/${username}";
+      guiAddress = "0.0.0.0:8384";
+      openDefaultPorts = true;
+      settings = {
+        devices =
+          let
+            devices = config.homelab.syncthing.devices;
+          in
+          {
+            pixel6.id = devices.pixel6;
+            laptop.id = devices.laptop;
+          };
+        folders = {
+          logseq = {
+            path = "/mnt/user/documents/logseq";
+            devices = [
+              "pixel6"
+              "laptop"
+            ];
+            versioning.type = "simple";
+          };
+          camera = {
+            path = "/mnt/user/images/photos/pixel6";
+            devices = [ "pixel6" ];
+            versioning.type = "simple";
+            ignoreDelete = true;
+          };
+          whatsapp = {
+            path = "/mnt/user/backups/whatsapp-media";
+            devices = [ "pixel6" ];
+            ignoreDelete = true;
+          };
+          phoneBackups = {
+            path = "/mnt/user/backups/pixel6";
+            devices = [ "pixel6" ];
+            versioning.type = "simple";
+          };
+        };
+      };
     };
   };
 
