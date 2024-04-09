@@ -19,12 +19,20 @@
 
   programs.dconf.enable = true;
   hardware.pulseaudio.enable = false;
+  hardware.sane.enable = true;
+  hardware.sane.extraBackends = [ pkgs.hplipWithPlugin ];
   security.rtkit.enable = true;
+
+  users.users.${username}.extraGroups = [
+    "scanner"
+    "lp"
+  ];
 
   environment.systemPackages = with pkgs; [
     libreoffice
     hunspell
     hunspellDicts.en_GB-ise
+    gnome.simple-scan
   ];
 
   services.printing.enable = true;

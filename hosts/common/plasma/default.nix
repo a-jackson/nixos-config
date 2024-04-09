@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ username, pkgs, ... }: {
 
   services = {
     xserver = {
@@ -29,11 +28,16 @@
 
   security.rtkit.enable = true;
   hardware.pulseaudio.enable = false;
+  hardware.sane.enable = true;
+  hardware.sane.extraBackends = [ pkgs.hplipWithPlugin ];
   programs.dconf.enable = true;
+
+  users.users.${username}.extraGroups = [ "scanner" "lp" ];
 
   environment.systemPackages = with pkgs; [
     libreoffice
     hunspell
     hunspellDicts.en_GB-ise
+    libsForQt5.skanlite
   ];
 }
