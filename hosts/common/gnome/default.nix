@@ -26,6 +26,7 @@
   users.users.${username}.extraGroups = [
     "scanner"
     "lp"
+    "flatpak"
   ];
 
   environment.systemPackages = with pkgs; [
@@ -49,6 +50,4 @@
       hash = "sha256-M3HdJQ5h2eFjNjAHP+/aFTzUQm9y9K+gwzc64uj+oDo=";
     };
   };
-
-  users.users."${username}".extraGroups = [ "flatpak" ];
 }
