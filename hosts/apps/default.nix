@@ -11,6 +11,7 @@
     ./containers.nix
     ./docker.nix
     ./forgejo.nix
+    ./kodi.nix
     ./monitoring.nix
     ./multimedia.nix
     ./nextcloud.nix
