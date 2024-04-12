@@ -133,6 +133,9 @@ in
         kickstart-highlight-yank = {
           clear = true;
         };
+        insert-enter-notify = {
+          clear = true;
+        };
       };
 
       autoCmd = [
@@ -142,6 +145,18 @@ in
           group = "kickstart-highlight-yank";
           callback = {
             __raw = "function() vim.highlight.on_yank() end";
+          };
+        }
+        {
+          event = [ "InsertEnter" ];
+          desc = "Hide notifications";
+          group = "insert-enter-notify";
+          callback = {
+            __raw = ''
+              function()
+                require("notify").dismiss({ silent = true })
+              end
+            '';
           };
         }
       ];
