@@ -6,7 +6,7 @@ in
 {
   systemd.tmpfiles.rules = [
     "d /data/audio/books 0770 ${user} ${group} - -"
-    "d /data/audio/aax 0700 ${user} ${group} - -"
+    "d /data/audio/aax 0770 ${user} ${group} - -"
   ];
 
   services = {

@@ -4,12 +4,10 @@
     enable = true;
     desktopManager.kodi.enable = true;
     desktopManager.kodi.package = pkgs.kodi.withPackages (p: with p; [ jellyfin ]);
-    displayManager = {
-      autoLogin.enable = true;
-      autoLogin.user = "kodi";
-      lightdm.autoLogin.timeout = 3;
-    };
+    displayManager.lightdm.autoLogin.timeout = 3;
   };
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "kodi";
 
   users.extraUsers.kodi.isNormalUser = true;
   users.extraUsers.kodi.extraGroups = [ "audio" ];

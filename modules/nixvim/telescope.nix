@@ -15,39 +15,39 @@
 
         keymaps = {
           "<leader>sh" = {
-            desc = "[S]earch [H]elp";
+            options.desc = "[S]earch [H]elp";
             action = "help_tags";
           };
           "<leader>sk" = {
-            desc = "[S]earch [K]eymaps";
+            options.desc = "[S]earch [K]eymaps";
             action = "keymaps";
           };
           "<leader>ss" = {
-            desc = "[S]earch [S]elect Telescope";
+            options.desc = "[S]earch [S]elect Telescope";
             action = "builtin";
           };
           "<leader>sw" = {
-            desc = "[S]earch current [W]ord";
+            options.desc = "[S]earch current [W]ord";
             action = "grep_string";
           };
           "<leader>sg" = {
-            desc = "[S]earch by [Grep]";
+            options.desc = "[S]earch by [Grep]";
             action = "live_grep";
           };
           "<leader>sd" = {
-            desc = "[S]earch [Diagnostics]";
+            options.desc = "[S]earch [Diagnostics]";
             action = "diagnostics";
           };
           "<leader>sr" = {
-            desc = "[S]earch [R]esume";
+            options.desc = "[S]earch [R]esume";
             action = "resume";
           };
           "<leader>s." = {
-            desc = ''[S]earch Recent Files ("." for repeat)'';
+            options.desc = ''[S]earch Recent Files ("." for repeat)'';
             action = "oldfiles";
           };
           "<leader><leader>" = {
-            desc = "[ ] Find existing buffers";
+            options.desc = "[ ] Find existing buffers";
             action = "buffers";
           };
         };
