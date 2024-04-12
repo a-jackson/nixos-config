@@ -3,7 +3,7 @@ keys:
   - &laptop age1hzmeyxc78hrgn3p7cjlzvud03gqrdtnr5785sg855ltwwjywny4qkxe77w
   - &apps age185c4mzstg08rercf69fwt2gu4at6ptq57vr70m6h3uydh6zxzcnqladlxt
   - &desktop age1m59suqjpu47nfekrgchkwuqtt4trkzm7ynp50eytqvez57zeedjsf5jlxu
-  - &cloud age1333eprdffexpzkklzhl3hwcaezekvdysljwn6pm59vlcdg2ytu4qc6kj53
+  - &cloud age1cwan2l0y7sj2v4ypj6uklrp85m2lw84hzy2zs8djsj87squq3ytsnt5294
   - &nas age10m6dycxazye9s6whgc0rqxrn7g7chdc4ekqf2n6rc0khtkjzq4pst6zkvn
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
