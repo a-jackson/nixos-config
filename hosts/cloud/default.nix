@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 let
   public_domain = "andrewjackson.dev";
 in
@@ -32,6 +32,8 @@ in
   sops.secrets = {
     cloudflare_credentials = { };
   };
+
+  networking.useDHCP = lib.mkForce false;
 
   services = {
     nginx = {
