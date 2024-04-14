@@ -1,0 +1,13 @@
+name: collabora
+services:
+  collabora:
+    ports:
+      - 9980:9980
+    environment:
+      - domain=cloud.andrewjackson.dev
+      - extra_params=--o:ssl.enable=false --o:ssl.termination=true
+    cap_add:
+      - MKNOD
+    container_name: collabora
+    image: collabora/code
+    restart: always

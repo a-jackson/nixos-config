@@ -16,6 +16,9 @@
       "docker-compose/immich/.env" = {
         source = ./immich/env;
       };
+      "docker-compose/collabora/docker-compose.yml" = {
+        source = ./collabora/docker-compose.yml;
+      };
     };
   };
 }
