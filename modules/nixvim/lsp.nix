@@ -108,6 +108,7 @@
               "<C-n>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
               "<C-l>" = ''
                 cmp.mapping(function()
+                  luasnip = require('luasnip')
                   if luasnip.expand_or_locally_jumpable() then
                     luasnip.expand_or_jump()
                   end
@@ -115,6 +116,7 @@
               '';
               "<C-h>" = ''
                 cmp.mapping(function()
+                  luasnip = require('luasnip')
                   if luasnip.locally_jumpable(-1) then
                     luasnip.jump(-1)
                   end
@@ -136,11 +138,13 @@
 
         none-ls = {
           enable = true;
-          sources.formatting.prettier.enable = true;
-          sources.formatting.prettier.disableTsServerFormatter = true;
-          sources.formatting.black.enable = true;
-          sources.formatting.nixfmt.enable = true;
-          sources.formatting.nixfmt.package = pkgs.nixfmt-rfc-style;
+          sources.formatting = {
+            prettier.enable = true;
+            prettier.disableTsServerFormatter = true;
+            black.enable = true;
+            nixfmt.enable = true;
+            nixfmt.package = pkgs.nixfmt-rfc-style;
+          } // lib.optionalAttrs config.homelab.nvim.csharp { csharpier.enable = true; };
         };
 
         luasnip.enable = true;
