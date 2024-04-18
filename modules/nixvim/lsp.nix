@@ -35,7 +35,7 @@
               };
             }
             // lib.optionalAttrs config.homelab.nvim.terraform { terraformls.enable = true; }
-            // lib.optionalAttrs config.homelab.nvim.csharp { csharp-ls.enable = true; };
+            // lib.optionalAttrs config.homelab.nvim.csharp { omnisharp.enable = true; };
 
           keymaps = {
             lspBuf =

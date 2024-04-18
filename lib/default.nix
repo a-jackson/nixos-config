@@ -40,6 +40,18 @@ in
             stateVersion = "23.05";
           };
         }
+        {
+          nixpkgs.overlays = [
+            (prev: final: {
+              csharpier = prev.buildDotnetGlobalTool {
+                pname = "csharpier";
+                version = "0.28.0";
+                executables = "dotnet-csharpier";
+                nugetSha256 = "sha256-qR09YQF45QlwGuQ1iuebPMM3mJLx4S7uUJErZJDFhGI=";
+              };
+            })
+          ];
+        }
       ];
       pkgs = nixpkgs.legacyPackages.${system};
       extraSpecialArgs = {
