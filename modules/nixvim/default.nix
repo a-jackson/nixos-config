@@ -289,7 +289,7 @@ in
 
       colorschemes.catppuccin = {
         enable = true;
-        flavour = "mocha";
+        settings.flavour = "mocha";
       };
 
       extraPlugins = with pkgs.vimPlugins; [ nvim-web-devicons ];

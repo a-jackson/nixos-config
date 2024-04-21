@@ -48,6 +48,17 @@
         set __fish_git_prompt_show_informative_status 1
         set __fish_git_prompt_showupstream 1
       '';
+      plugins = [
+        {
+          name = "forgit";
+          src = pkgs.fetchFromGitHub {
+            owner = "wfxr";
+            repo = "forgit";
+            rev = "24.04.0";
+            sha256 = "sha256-fvhlN2N3u++rfAeiwRRUX+Cv5expyA6aEUB6/TvV5+4=";
+          };
+        }
+      ];
     };
 
     bash.enable = true;
