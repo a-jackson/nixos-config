@@ -128,10 +128,14 @@
 
         conform-nvim = {
           enable = true;
-          formatOnSave = {
-            timeoutMs = 1000;
-            lspFallback = true;
-          };
+          formatOnSave = ''
+            function(bufnr)
+              if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+                return
+              end
+              return { timeout_ms = 1000, lsp_fallback = true }
+            end
+          '';
         };
 
         cmp-path.enable = true;
@@ -175,6 +179,40 @@
           (lspKeymap "<leader>D" "lsp_type_definitions" "Type [D]efinition")
           (lspKeymap "<leader>ds" "lsp_document_symbols" "[D]ocument [S]ymbols")
           (lspKeymap "<leader>ws" "lsp_dynamic_workspace_symbols" "[W]orkspace [S]ymbols")
+          {
+            key = "<leader>df";
+            options.desc = "[D]ocument toggle auto [F]ormat";
+            lua = true;
+            mode = "n";
+            action = ''
+              function()
+                if vim.b.disable_autoformat then
+                  vim.b.disable_autoformat = false
+                  require("notify")("Autoformat enabled on current buffer")
+                else
+                  vim.b.disable_autoformat = true
+                  require("notify")("Autoformat disabled on current buffer")
+                end
+              end
+            '';
+          }
+          {
+            key = "<leader>wf";
+            options.desc = "[W]orkspace toggle auto [F]ormat";
+            lua = true;
+            mode = "n";
+            action = ''
+              function()
+                if vim.g.disable_autoformat then
+                  vim.g.disable_autoformat = false
+                  require("notify")("Autoformat enabled in workspace")
+                else
+                  vim.g.disable_autoformat=true
+                  require("notify")("Autoformat disabled in workspace")
+                end
+              end
+            '';
+          }
         ];
     };
   };
