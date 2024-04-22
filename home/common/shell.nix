@@ -47,15 +47,16 @@
         set fish_greeting # Disable greeting
         set __fish_git_prompt_show_informative_status 1
         set __fish_git_prompt_showupstream 1
+        fzf_configure_bindings --git_log=\e\cg
       '';
       plugins = [
         {
-          name = "forgit";
+          name = "fzf.fish";
           src = pkgs.fetchFromGitHub {
-            owner = "wfxr";
-            repo = "forgit";
-            rev = "24.04.0";
-            sha256 = "sha256-fvhlN2N3u++rfAeiwRRUX+Cv5expyA6aEUB6/TvV5+4=";
+            owner = "PatrickF1";
+            repo = "fzf.fish";
+            rev = "v10.3";
+            sha256 = "sha256-T8KYLA/r/gOKvAivKRoeqIwE2pINlxFQtZJHpOy9GMM=";
           };
         }
       ];
@@ -169,6 +170,8 @@
     btop.enable = true;
     direnv.enable = true;
     ripgrep.enable = true;
+    bat.enable = true;
+    fd.enable = true;
   };
 
   services.gpg-agent = {
