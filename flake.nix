@@ -78,7 +78,7 @@
       };
 
       homeConfigurations = {
-        "andrew@laptop" = libx.mkHome { type = "gnome"; };
+        "andrew@laptop" = libx.mkHome { type = "hyprland"; };
         "andrew@desktop" = libx.mkHome { type = "plasma"; };
         "andrew@work" = libx.mkHome { type = "work"; };
         "andrew@apps" = libx.mkHome;
