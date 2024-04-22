@@ -40,6 +40,12 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    stylix = {
+      url = "github:danth/stylix/release-23.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs =
@@ -53,6 +59,7 @@
       abe,
       nixvim,
       nixos-generators,
+      stylix,
     }@inputs:
     let
       libx = import ./lib { inherit self inputs; };
@@ -63,7 +70,7 @@
       nixosConfigurations = {
         laptop = libx.mkSystem {
           hostname = "laptop";
-          desktop = "gnome";
+          desktop = "hyprland";
         };
         apps = libx.mkSystem { hostname = "apps"; };
         desktop = libx.mkSystem {
@@ -78,7 +85,7 @@
       };
 
       homeConfigurations = {
-        "andrew@laptop" = libx.mkHome { type = "gnome"; };
+        "andrew@laptop" = libx.mkHome { type = "hyprland"; };
         "andrew@desktop" = libx.mkHome { type = "plasma"; };
         "andrew@work" = libx.mkHome { type = "work"; };
         "andrew@apps" = libx.mkHome;

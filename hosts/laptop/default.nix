@@ -35,7 +35,7 @@
         ];
       };
     };
-    homeType = "gnome";
+    homeType = "hyprland";
     nvim.csharp = true;
   };
 

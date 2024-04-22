@@ -1,6 +1,7 @@
 {
   pkgs,
   home-manager,
+  stylix,
   username,
   config,
   lib,
@@ -44,6 +45,7 @@
     {
       "${username}" = {
         imports = [
+          stylix.homeManagerModules.stylix
           ../../home/${type}.nix
           {
             home = {

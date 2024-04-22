@@ -5,6 +5,7 @@ let
     home-manager
     nixvim
     nixos-generators
+    stylix
     ;
 in
 {
@@ -31,7 +32,12 @@ in
     }:
     home-manager.lib.homeManagerConfiguration {
       modules = [
-        { imports = [ nixvim.homeManagerModules.nixvim ]; }
+        {
+          imports = [
+            nixvim.homeManagerModules.nixvim
+            stylix.homeManagerModules.stylix
+          ];
+        }
         ../home/${type}.nix
         {
           home = {

@@ -1,4 +1,4 @@
-{ username, pkgs, ... }:
+{ pkgs, ... }:
 {
   services = {
     xserver = {
@@ -19,35 +19,7 @@
 
   programs.dconf.enable = true;
   hardware.pulseaudio.enable = false;
-  hardware.sane.enable = true;
-  hardware.sane.extraBackends = [ pkgs.hplipWithPlugin ];
   security.rtkit.enable = true;
 
-  users.users.${username}.extraGroups = [
-    "scanner"
-    "lp"
-    "flatpak"
-  ];
-
-  environment.systemPackages = with pkgs; [
-    libreoffice
-    hunspell
-    hunspellDicts.en_GB-ise
-    gnome.simple-scan
-  ];
-
-  services.printing.enable = true;
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
-
-  services.flatpak.enable = true;
-  environment.etc = {
-    "flatpak/remotes.d/flathub.flatpakrepo".source = pkgs.fetchurl {
-      url = "https://dl.flathub.org/repo/flathub.flatpakrepo";
-      hash = "sha256-M3HdJQ5h2eFjNjAHP+/aFTzUQm9y9K+gwzc64uj+oDo=";
-    };
-  };
+  environment.systemPackages = with pkgs; [ gnome.simple-scan ];
 }
