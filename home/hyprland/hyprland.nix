@@ -105,6 +105,7 @@
         ''SUPER, P, pseudo, # dwindle''
         ''SUPER, J, togglesplit, # dwindle''
         ''SUPER, F, exec, firefox''
+        ''SUPER, B, exec, rofi-rbw --action copy --no-folder''
 
         # Move focus with mainMod + arrow keys
         ''SUPER_ALT, left, movefocus, l''
@@ -151,7 +152,9 @@
         # ''SUPER, space, exec, fuzzel''
         ''SUPER, space, exec, rofi -show drun -show-icons''
         # Take a screenshot with the Print key''
-        '', Print, exec, grim -g "$(slurp)" | wl-copy -t image/png''
+        '', Print, exec, grim -g "$(slurp)" - | wl-copy -t image/png''
+        ''SHIFT, Print, exec, grim -g "$(hyprctl activewindow -j | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')" - | wl-copy -t image/png''
+        ''ALT, Print, exec, grim - | wl-copy -t image/png''
 
         # Move to the previous / next workspace with SUPER-LEFT and SUPER-RIGHT
         ''SUPER      , right, workspace, e+1''

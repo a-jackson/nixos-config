@@ -56,7 +56,7 @@
 
   # XDG portal
   xdg.portal.enable = true;
-  # xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   # system packages
   environment.systemPackages = with pkgs; [
@@ -84,10 +84,15 @@
     gruvbox-gtk-theme # Gruvbox Theme
     papirus-icon-theme # Papirus Icons
 
-    rofi-wayland # App Launcher
+    rofi-wayland
+    rofi-rbw
+    bitwarden-cli
+    bitwarden-menu
 
     # wayland-packages
     # inputs.nixpkgs-wayland.packages.${system}.wayprompt # from nixpkgs-wayland exclusively - pinentry UI
+
+    gnome.gnome-software
   ];
 
   # Enable sound with pipewire.
