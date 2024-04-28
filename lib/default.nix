@@ -33,9 +33,11 @@ in
     home-manager.lib.homeManagerConfiguration {
       modules = [
         {
-          imports = [
-            nixvim.homeManagerModules.nixvim
-          ] ++ home-manager.lib.optionals (type == "hyprland") [ stylix.homeManagerModules.stylix ];
+          imports =
+            [ nixvim.homeManagerModules.nixvim ]
+            ++ nixpkgs.lib.optionals (builtins.substring 0 8 type == "hyprland") [
+              stylix.homeManagerModules.stylix
+            ];
         }
         ../home/${type}.nix
         {

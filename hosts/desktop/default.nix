@@ -31,7 +31,5 @@
         ];
       };
     };
-
-    homeType = "plasma";
   };
 }

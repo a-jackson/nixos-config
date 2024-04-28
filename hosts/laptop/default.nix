@@ -35,7 +35,6 @@
         ];
       };
     };
-    homeType = "hyprland";
     nvim.csharp = true;
   };
 

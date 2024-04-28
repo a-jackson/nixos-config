@@ -53,7 +53,7 @@
               stateVersion = "23.05";
             };
           }
-        ] ++ lib.optionals (type == "hyprland") [ stylix.homeManagerModules.stylix ];
+        ] ++ lib.optionals (builtins.substring 0 8 type == "hyprland") [ stylix.homeManagerModules.stylix ];
       };
       root = {
         imports = [

@@ -16,4 +16,5 @@
     ];
 
   networking.hostName = hostname;
+  homelab.homeType = desktop;
 }

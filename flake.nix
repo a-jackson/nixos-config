@@ -75,7 +75,7 @@
         apps = libx.mkSystem { hostname = "apps"; };
         desktop = libx.mkSystem {
           hostname = "desktop";
-          desktop = "plasma";
+          desktop = "hyprland-dualscreen";
         };
         cloud = libx.mkSystem {
           hostname = "cloud";
@@ -86,7 +86,7 @@
 
       homeConfigurations = {
         "andrew@laptop" = libx.mkHome { type = "hyprland"; };
-        "andrew@desktop" = libx.mkHome { type = "plasma"; };
+        "andrew@desktop" = libx.mkHome { type = "hyprland-dualscreen"; };
         "andrew@work" = libx.mkHome { type = "work"; };
         "andrew@apps" = libx.mkHome;
         "andrew@nas" = libx.mkHome;
