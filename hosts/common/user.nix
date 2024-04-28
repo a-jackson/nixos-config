@@ -45,7 +45,6 @@
     {
       "${username}" = {
         imports = [
-          stylix.homeManagerModules.stylix
           ../../home/${type}.nix
           {
             home = {
@@ -54,7 +53,7 @@
               stateVersion = "23.05";
             };
           }
-        ];
+        ] ++ lib.optionals (type == "hyprland") [ stylix.homeManagerModules.stylix ];
       };
       root = {
         imports = [

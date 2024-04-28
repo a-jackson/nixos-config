@@ -35,8 +35,7 @@ in
         {
           imports = [
             nixvim.homeManagerModules.nixvim
-            stylix.homeManagerModules.stylix
-          ];
+          ] ++ home-manager.lib.optionals (type == "hyprland") [ stylix.homeManagerModules.stylix ];
         }
         ../home/${type}.nix
         {
