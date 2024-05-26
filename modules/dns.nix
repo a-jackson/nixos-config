@@ -57,6 +57,8 @@ in
       enable = true;
       mutableSettings = false;
       openFirewall = true;
+      host = "0.0.0.0";
+      port = 3500;
       settings =
         let
           lanHosts = builtins.map (domain: {
@@ -72,14 +74,14 @@ in
           rewrites = lanHosts ++ virtualHosts;
         in
         {
-          bind_host = "0.0.0.0";
-          bind_port = 3500;
           http = {
             address = "0.0.0.0:3500";
           };
           dns = {
             bootstrap_dns = [ "9.9.9.9" ];
             bind_host = "0.0.0.0";
+          };
+          filtering = {
             inherit rewrites;
           };
         };
