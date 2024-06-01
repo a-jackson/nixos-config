@@ -16,5 +16,5 @@
     ];
 
   networking.hostName = hostname;
-  homelab.homeType = desktop;
+  homelab.homeType = if desktop != null then desktop else "headless";
 }
