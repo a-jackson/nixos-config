@@ -56,7 +56,7 @@
       keymaps = [
         {
           key = "<leader>/";
-          action = ''
+          action.__raw = ''
             function()
               require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
                 winblend = 10,
@@ -65,12 +65,11 @@
             end
           '';
           mode = "n";
-          lua = true;
           options.desc = "[/] Fuzzily search in current buffer";
         }
         {
           key = "<leader>s/";
-          action = ''
+          action.__raw = ''
             function()
               require('telescope.builtin').live_grep {
                 grep_open_files = true,
@@ -79,12 +78,11 @@
             end
           '';
           mode = "n";
-          lua = true;
           options.desc = "[S]earch [/] in Open Files";
         }
         {
           key = "<leader>sn";
-          action = ''
+          action.__raw = ''
             function()
               require('telescope.builtin').find_files {
                 cwd = vim.fn.stdpath 'config'
@@ -92,12 +90,11 @@
             end
           '';
           mode = "n";
-          lua = true;
           options.desc = "[S]earch [N]eovim files";
         }
         {
           key = "<leader>sf";
-          action = ''
+          action.__raw = ''
             function()
               require('telescope.builtin').git_files {
                 hidden = true,
@@ -106,7 +103,6 @@
             end
           '';
           mode = "n";
-          lua = true;
           options.desc = "[S]earch [F]iles";
         }
       ];

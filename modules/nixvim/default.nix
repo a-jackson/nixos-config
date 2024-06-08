@@ -11,9 +11,9 @@ let
   };
 
   luaKeymap = key: action: desc: mode: {
-    inherit key action mode;
+    inherit key mode;
     options.desc = desc;
-    lua = true;
+    action.__raw = action;
   };
 in
 {
@@ -24,20 +24,24 @@ in
     ./treesitter.nix
   ];
 
-  options.homelab.nvim = with lib; {
-    enable = mkOption {
-      type = types.bool;
-      default = false;
+  options.homelab.nvim =
+    let
+      inherit (lib) mkOption types;
+    in
+    {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+      };
+      terraform = mkOption {
+        type = types.bool;
+        default = false;
+      };
+      csharp = mkOption {
+        type = types.bool;
+        default = false;
+      };
     };
-    terraform = mkOption {
-      type = types.bool;
-      default = false;
-    };
-    csharp = mkOption {
-      type = types.bool;
-      default = false;
-    };
-  };
 
   config = lib.mkIf config.homelab.nvim.enable {
     programs.nixvim = {

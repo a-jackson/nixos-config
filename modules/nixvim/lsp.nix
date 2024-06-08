@@ -18,9 +18,9 @@
               cssls.enable = true;
               bashls.enable = true;
               html.enable = true;
-              emmet_ls.enable = true;
+              emmet-ls.enable = true;
               pyright.enable = true;
-              nil_ls.enable = true;
+              nil-ls.enable = true;
               nixd.enable = true;
               marksman.enable = true;
               yamlls = {
@@ -163,9 +163,8 @@
           lspKeymap = key: action: desc: {
             inherit key;
             options.desc = desc;
-            lua = true;
             mode = "n";
-            action = ''
+            action.__raw = ''
               function()
                 require('telescope.builtin').${action}()
               end
@@ -182,9 +181,8 @@
           {
             key = "<leader>df";
             options.desc = "[D]ocument toggle auto [F]ormat";
-            lua = true;
             mode = "n";
-            action = ''
+            action.__raw = ''
               function()
                 if vim.b.disable_autoformat then
                   vim.b.disable_autoformat = false
@@ -199,9 +197,8 @@
           {
             key = "<leader>wf";
             options.desc = "[W]orkspace toggle auto [F]ormat";
-            lua = true;
             mode = "n";
-            action = ''
+            action.__raw = ''
               function()
                 if vim.g.disable_autoformat then
                   vim.g.disable_autoformat = false
