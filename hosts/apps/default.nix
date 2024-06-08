@@ -1,7 +1,7 @@
 {
   abe,
-  pkgs,
   config,
+  pkgs,
   ...
 }:
 {
@@ -100,24 +100,11 @@
         };
       };
     };
-  };
-
-  virtualisation.oci-containers.containers =
-    let
-      images = builtins.fromJSON (builtins.readFile ../../images.json);
-    in
-    {
-      silverbullet = {
-        image = images.silverbullet.image;
-        imageFile = pkgs.dockerTools.pullImage {
-          imageName = images.silverbullet.image;
-          imageDigest = images.silverbullet.imageDigest;
-          sha256 = images.silverbullet.sha256;
-        };
-        ports = [ "${toString config.homelab.ports.silverbullet}:3000" ];
-        volumes = [ "silverbullet:/space" ];
-      };
+    silverbullet = {
+      enable = true;
+      listenPort = config.homelab.ports.silverbullet;
     };
+  };
 
   environment = {
     systemPackages = with pkgs; [ nfs-utils ];
