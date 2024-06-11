@@ -2,7 +2,6 @@ services:
   immich-server:
     container_name: immich_server
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
-    command: ["start.sh", "immich"]
     user: "${PUID}:${PGID}"
     volumes:
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
@@ -11,25 +10,6 @@ services:
     ports:
       - 2283:3001
       - 8081:8081
-    depends_on:
-      - redis
-      - database
-    restart: always
-
-  immich-microservices:
-    container_name: immich_microservices
-    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
-    command: ["start.sh", "microservices"]
-    user: "${PUID}:${PGID}"
-    volumes:
-      - ${UPLOAD_LOCATION}:/usr/src/app/upload
-      - geocoding:/usr/src/app/.reverse-geocoding-dump
-    env_file:
-      - .env
-    ports:
-      - 8083:8081
-    devices:
-      - /dev/dri:/dev/dri
     depends_on:
       - redis
       - database
