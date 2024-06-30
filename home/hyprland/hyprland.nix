@@ -89,7 +89,6 @@
         preserve_split = true; # you probably want this
         no_gaps_when_only = 1; # If it's the only window int he layout, 1=don't show gaps
       };
-      master.new_is_master = true;
       windowrule = [
         "noblur,^(firefox)$" # disables blur for firefox
         "opacity 1.0 override,^(firefox)$" # Sets opacity to 1

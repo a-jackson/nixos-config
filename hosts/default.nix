@@ -1,6 +1,7 @@
 {
   hostname,
   desktop,
+  homeType,
   lib,
   ...
 }:
@@ -16,5 +17,11 @@
     ];
 
   networking.hostName = hostname;
-  homelab.homeType = if desktop != null then desktop else "headless";
+  homelab.homeType =
+    if homeType != null then
+      homeType
+    else if desktop != null then
+      desktop
+    else
+      "headless";
 }

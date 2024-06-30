@@ -75,7 +75,8 @@
         apps = libx.mkSystem { hostname = "apps"; };
         desktop = libx.mkSystem {
           hostname = "desktop";
-          desktop = "hyprland-dualscreen";
+          desktop = "hyprland";
+          homeType = "hyprland-dualscreen";
         };
         cloud = libx.mkSystem {
           hostname = "cloud";

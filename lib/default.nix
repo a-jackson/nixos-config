@@ -15,11 +15,17 @@ in
       system ? "x86_64-linux",
       username ? "andrew",
       desktop ? null,
+      homeType ? null,
     }:
     nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = inputs // {
-        inherit username hostname desktop;
+        inherit
+          username
+          hostname
+          desktop
+          homeType
+          ;
       };
       modules = [ ../hosts ];
     };
