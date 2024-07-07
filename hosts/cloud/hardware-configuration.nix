@@ -5,6 +5,7 @@
     efiSupport = true;
     efiInstallAsRemovable = true;
     device = "nodev";
+    configurationLimit = 3;
   };
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/D951-0FE6";
