@@ -25,6 +25,7 @@ in
       node = 9100;
       promtail = 28183;
       adguardhome = 3500;
+      miniflux = 8678;
     };
   };
 }

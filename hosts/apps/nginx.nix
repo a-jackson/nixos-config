@@ -54,6 +54,7 @@ in
             useACMEHost = internal_domain;
           };
           "git.${internal_domain}" = host internal_domain ports.forgejo;
+          "rss.${internal_domain}" = host internal_domain ports.miniflux;
         };
     };
   };

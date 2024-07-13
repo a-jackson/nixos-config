@@ -50,6 +50,7 @@ in
         "requests.andrewjackson.dev"
         "sabnzbd.ajackson.dev"
         "sonarr.ajackson.dev"
+        "rss.ajackson.dev"
       ];
     };
 
