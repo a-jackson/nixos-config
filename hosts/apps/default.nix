@@ -25,16 +25,6 @@
     sopsFile = ./secrets.yaml;
   };
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      frigate = prev.frigate.overrideAttrs (o: {
-        patches = (o.patches or [ ]) ++ [
-          ./patches/frigate/0001-fix-config-check-read-access-to-run-secrets.patch
-        ];
-      });
-    })
-  ];
-
   networking = {
     interfaces = {
       eno1.ipv4.addresses = [
