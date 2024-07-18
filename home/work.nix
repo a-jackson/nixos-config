@@ -49,6 +49,8 @@
   };
 
   programs = {
+    nixvim.plugins.copilot-vim.enable = true;
+
     git = {
       userEmail = lib.mkForce "andrew.jackson@dataflexnet.com";
       signing = {
