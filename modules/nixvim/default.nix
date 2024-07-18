@@ -89,6 +89,7 @@ in
 
         inccommand = "split";
         scrolloff = 10;
+        foldenable = false;
       };
 
       clipboard = {
