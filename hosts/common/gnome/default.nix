@@ -5,8 +5,9 @@
       enable = true;
       xkb.layout = "gb";
       libinput.enable = true;
-      displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
+      displayManager.gdm.enable = true;
+      displayManager.gdm.wayland = false;
     };
 
     pipewire = {

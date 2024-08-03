@@ -70,7 +70,7 @@
       nixosConfigurations = {
         laptop = libx.mkSystem {
           hostname = "laptop";
-          desktop = "hyprland";
+          desktop = "gnome";
         };
         apps = libx.mkSystem { hostname = "apps"; };
         desktop = libx.mkSystem {
