@@ -41,7 +41,7 @@
       "nvidia-persistenced"
     ];
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
   };
 

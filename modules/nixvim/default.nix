@@ -208,14 +208,14 @@ in
 
         which-key = {
           enable = true;
-          registrations = {
-            "<leader>d" = "[D]ocument";
-            "<leader>r" = "[R]ename";
-            "<leader>s" = "[S]earch";
-            "<leader>w" = "[W]orkspace";
-            "<leader>t" = "[T]erminal";
-            "<leader>h" = "Git";
-          };
+          #   registrations = {
+          #     "<leader>d" = "[D]ocument";
+          #     "<leader>r" = "[R]ename";
+          #     "<leader>s" = "[S]earch";
+          #     "<leader>w" = "[W]orkspace";
+          #     "<leader>t" = "[T]erminal";
+          #     "<leader>h" = "Git";
+          #   };
         };
 
         mini = {
