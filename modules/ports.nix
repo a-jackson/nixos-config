@@ -26,6 +26,7 @@ in
       promtail = 28183;
       adguardhome = 3500;
       miniflux = 8678;
+      stirling-pdf = 8080;
     };
   };
 }

@@ -55,6 +55,7 @@ in
           };
           "git.${internal_domain}" = host internal_domain ports.forgejo;
           "rss.${internal_domain}" = host internal_domain ports.miniflux;
+          "pdf.${internal_domain}" = host internal_domain ports.stirling-pdf;
         };
     };
   };

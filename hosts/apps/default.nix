@@ -18,6 +18,7 @@
     ./nextcloud.nix
     ./nginx.nix
     ./paperless.nix
+    ./stirling.nix
     abe.nixosModules.default
   ];
 

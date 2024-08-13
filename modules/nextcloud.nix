@@ -4,11 +4,15 @@
   config,
   ...
 }:
-
-with lib;
-with builtins;
-
 let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    types
+    mkIf
+    mkAfter
+    ;
+
   cfg = config.homelab.nextcloud;
 
   # Cleanup override info
@@ -98,7 +102,7 @@ in
       requires = [ "mysql.service" ];
       script = mkAfter ''
         nextcloud-occ user:setting admin settings email ${cfg.adminEmail}
-        echo '${toJSON settings}' | nextcloud-occ config:import
+        echo '${builtins.toJSON settings}' | nextcloud-occ config:import
         # After upgrade make sure DB is up-to-date
         nextcloud-occ db:add-missing-columns -n
         nextcloud-occ db:add-missing-primary-keys -n
