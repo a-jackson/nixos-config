@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   services.stirling-pdf = {
     enable = true;
@@ -6,4 +6,6 @@
       SERVER_PORT = config.homelab.ports.stirling-pdf;
     };
   };
+
+  systemd.services.stirling-pdf.path = with pkgs; [ ghostscript_headless ];
 }
