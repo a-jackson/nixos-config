@@ -6,7 +6,11 @@
         hmts.enable = true;
         treesitter = {
           enable = true;
-          settings.indent.enable = true;
+          settings = {
+            highlight.enable = true;
+            incremental_selection.enable = true;
+            indent.enable = true;
+          };
         };
       };
     };
