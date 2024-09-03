@@ -99,6 +99,7 @@
               require('telescope.builtin').git_files {
                 hidden = true,
                 no_ignore = true,
+                show_untracked = true,
               }
             end
           '';
