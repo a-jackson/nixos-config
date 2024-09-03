@@ -49,7 +49,8 @@
   };
 
   programs = {
-    nixvim.plugins.copilot-vim.enable = true;
+    nixvim.plugins.copilot-cmp.enable = true;
+    nixvim.plugins.cmp.settings.sources = [ { name = "copilot"; } ];
 
     git = {
       userEmail = lib.mkForce "andrew.jackson@dataflexnet.com";

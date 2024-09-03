@@ -126,7 +126,7 @@ in
         (keymap "<C-Right>" "<C-w><" "Resize window right" "n")
 
         (keymap "<leader>f" "<Cmd>Neotree toggle reveal<CR>" "[F]ile tree toggle" "n")
-        (keymap "<leader>x" "<Cmd>bdelete<CR>" "Close buffer" "n")
+        (luaKeymap "<leader>x" "function() require('bufdelete').bufdelete(0) end" "Close buffer" "n")
         (keymap "<leader>X" "<Cmd>%bdelete<CR>" "Close all buffers" "n")
         (keymap "H" "<Cmd>bprevious<CR>" "Previous buffer" "n")
         (keymap "L" "<Cmd>bnext<CR>" "Next buffer" "n")
@@ -202,20 +202,45 @@ in
           enable = true;
         };
 
-        gitlinker.enable = true;
+        gitlinker = {
+          enable = true;
+          mappings = "<leader>hy";
+        };
 
         markdown-preview.enable = true;
 
         which-key = {
           enable = true;
-          #   registrations = {
-          #     "<leader>d" = "[D]ocument";
-          #     "<leader>r" = "[R]ename";
-          #     "<leader>s" = "[S]earch";
-          #     "<leader>w" = "[W]orkspace";
-          #     "<leader>t" = "[T]erminal";
-          #     "<leader>h" = "Git";
-          #   };
+          settings.spec = [
+            {
+              __unkeyed-1 = "<leader>d";
+              group = "Document";
+            }
+            {
+              __unkeyed-1 = "<leader>r";
+              group = "Rename";
+            }
+            {
+              __unkeyed-1 = "<leader>s";
+              group = "Search";
+            }
+            {
+              __unkeyed-1 = "<leader>w";
+              group = "Workspace";
+            }
+            {
+              __unkeyed-1 = "<leader>t";
+              group = "Terminal";
+            }
+            {
+              __unkeyed-1 = "<leader>h";
+              group = "Git";
+            }
+            {
+              __unkeyed-1 = "<leader>c";
+              group = "Code";
+            }
+          ];
         };
 
         mini = {
@@ -286,6 +311,7 @@ in
         lualine.enable = true;
         surround.enable = true;
         tmux-navigator.enable = true;
+        bufdelete.enable = true;
       };
 
       extraConfigVim = ''
