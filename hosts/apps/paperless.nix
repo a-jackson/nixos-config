@@ -19,16 +19,16 @@
 
     samba = {
       enable = true;
-      securityType = "user";
       openFirewall = true;
-      extraConfig = ''
-        workgroup = WORKGROUP
-        server string = apps
-        netbios name = apps
-        hosts allow = 192.168.1.0/24 127.0.0.1 localhost
-        hosts deny 0.0.0.0/0
-      '';
-      shares = {
+      settings = {
+        global = {
+          workgroup = "WORKGROUP";
+          security = "user";
+          "server string" = "apps";
+          "netbios name" = "apps";
+          "hosts allow" = "192.168.1.0/24 127.0.0.1 localhost";
+          "hosts deny" = "0.0.0.0/0";
+        };
         consume = {
           path = config.services.paperless.consumptionDir;
           browseable = "yes";

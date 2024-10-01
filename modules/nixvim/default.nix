@@ -311,9 +311,10 @@ in
 
         notify.enable = true;
         lualine.enable = true;
-        surround.enable = true;
+        vim-surround.enable = true;
         tmux-navigator.enable = true;
         bufdelete.enable = true;
+        web-devicons.enable = true;
       };
 
       extraConfigVim = ''

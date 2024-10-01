@@ -12,7 +12,7 @@
   users.extraUsers.kodi.isNormalUser = true;
   users.extraUsers.kodi.extraGroups = [ "audio" ];
 
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
