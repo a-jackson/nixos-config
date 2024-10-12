@@ -38,7 +38,10 @@
     nvim.csharp = true;
   };
 
-  environment.systemPackages = with pkgs; [ (with dotnetCorePackages; combinePackages [ sdk_8_0 ]) ];
+  environment.systemPackages = with pkgs; [
+    (with dotnetCorePackages; combinePackages [ sdk_8_0 ])
+    darktable
+  ];
 
   virtualisation.docker.enable = true;
   users.users.${username}.extraGroups = [ "docker" ];
