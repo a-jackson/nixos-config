@@ -6,6 +6,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ./networking.nix
+    ../../modules/dns.nix
   ];
 
   homelab = {
@@ -22,6 +23,13 @@ in
     restic = {
       daily = {
         paths = [ "/var/lib" ];
+      };
+    };
+
+    dns = {
+      enable = true;
+      virtualHosts = {
+        target = "100.92.22.51";
       };
     };
   };
