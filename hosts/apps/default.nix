@@ -90,8 +90,21 @@
           ];
           detect.enabled = false;
         };
+        kitchen = {
+          ffmpeg.inputs = [
+            {
+              path = "rtsp://camera:shorts-coat-drinking@192.168.1.109:554/stream1";
+              roles = [
+                "detect"
+                "record"
+              ];
+            }
+          ];
+          detect.enabled = false;
+        };
       };
     };
+
     silverbullet = {
       enable = true;
       listenPort = config.homelab.ports.silverbullet;
