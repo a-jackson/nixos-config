@@ -14,13 +14,13 @@
           servers =
             {
               eslint.enable = true;
-              ts-ls.enable = true;
+              ts_ls.enable = true;
               cssls.enable = true;
               bashls.enable = true;
               html.enable = true;
-              emmet-ls.enable = true;
+              emmet_ls.enable = true;
               pyright.enable = true;
-              nil-ls.enable = true;
+              nil_ls.enable = true;
               nixd.enable = true;
               marksman.enable = true;
               yamlls = {

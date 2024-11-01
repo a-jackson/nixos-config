@@ -3,7 +3,7 @@
   programs.kitty = {
     enable = true;
     # font.name = "Fira Code";
-    theme = "Catppuccin-Mocha";
+    themeFile = "Catppuccin-Mocha";
     settings = {
       hide_window_decorations = "yes";
     };
