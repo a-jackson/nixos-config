@@ -51,7 +51,7 @@ in
 
     services.mysql = {
       enable = true;
-      package = pkgs.mysql;
+      package = pkgs.mariadb;
       ensureDatabases = [ "nextcloud" ];
       ensureUsers = [
         {
@@ -75,7 +75,7 @@ in
 
     services.nextcloud = {
       enable = true;
-      package = pkgs.nextcloud29;
+      package = pkgs.nextcloud30;
       settings.loglevel = 0;
       https = true;
       hostName = "cloud.andrewjackson.dev";
