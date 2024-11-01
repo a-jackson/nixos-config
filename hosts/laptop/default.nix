@@ -41,6 +41,7 @@
   environment.systemPackages = with pkgs; [
     (with dotnetCorePackages; combinePackages [ sdk_8_0 ])
     darktable
+    nfs-utils
   ];
 
   virtualisation.docker.enable = true;
@@ -70,4 +71,37 @@
       };
     };
   };
+
+  systemd.mounts =
+    let
+      nasMount = folder: {
+        type = "nfs";
+        mountConfig = {
+          Options = "noatime,nfsvers=4.2";
+        };
+        what = "192.168.1.75:/mnt/user/${folder}";
+        where = "/mnt/user/${folder}";
+      };
+    in
+    [
+      (nasMount "video")
+      (nasMount "images")
+      (nasMount "audio")
+    ];
+  systemd.automounts =
+    let
+      nasMount = folder: {
+        wantedBy = [ "multi-user.target" ];
+        automountConfig = {
+          TimeoutIdleSec = "600";
+        };
+        where = "/mnt/user/${folder}";
+      };
+    in
+    [
+      (nasMount "video")
+      (nasMount "images")
+      (nasMount "audio")
+    ];
+
 }

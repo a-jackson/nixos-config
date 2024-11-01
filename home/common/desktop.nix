@@ -21,7 +21,7 @@
     desktop = "${config.home.homeDirectory}/desktop";
     download = "${config.home.homeDirectory}/downloads";
     music = null;
-    pictures = null;
+    pictures = "${config.home.homeDirectory}/Pictures";
     videos = null;
     templates = null;
     publicShare = null;
