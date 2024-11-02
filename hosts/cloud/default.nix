@@ -74,7 +74,7 @@ in
 
     gotify = {
       enable = true;
-      port = 8000;
+      environment.GOTIFY_SERVER_PORT = 8000;
     };
   };
   security.acme = {
