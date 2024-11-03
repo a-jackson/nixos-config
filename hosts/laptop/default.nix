@@ -39,10 +39,17 @@
   };
 
   environment.systemPackages = with pkgs; [
-    (with dotnetCorePackages; combinePackages [ sdk_8_0 ])
     darktable
+    dotnetCorePackages.dotnet_8.sdk
     nfs-utils
+    bottles
+    jetbrains.rider
+    siril
   ];
+
+  environment.variables = {
+    DOTNET_ROOT = pkgs.dotnetCorePackages.dotnet_8.sdk;
+  };
 
   virtualisation.docker.enable = true;
   users.users.${username}.extraGroups = [ "docker" ];
