@@ -27,6 +27,7 @@ in
       adguardhome = 3500;
       miniflux = 8678;
       stirling-pdf = 8080;
+      pitpat = 5007;
     };
   };
 }

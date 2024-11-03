@@ -52,6 +52,7 @@ in
         "sonarr.ajackson.dev"
         "rss.ajackson.dev"
         "pdf.ajackson.dev"
+        "pitpat.ajackson.dev"
       ];
     };
 
