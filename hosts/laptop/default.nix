@@ -45,6 +45,7 @@
     bottles
     jetbrains.rider
     siril
+    gimp
   ];
 
   environment.variables = {
