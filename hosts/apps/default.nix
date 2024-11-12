@@ -8,10 +8,10 @@
   imports = [
     ./hardware-configuration.nix
     ./audiobookshelf.nix
-    ./containers.nix
+    # ./containers.nix
     ./docker.nix
     ./forgejo.nix
-    ./kodi.nix
+    # ./kodi.nix
     ./miniflux.nix
     ./monitoring.nix
     ./multimedia.nix
@@ -75,7 +75,7 @@
 
   services = {
     frigate = {
-      enable = true;
+      enable = false;
       hostname = "cameras.ajackson.dev";
       settings.cameras = {
         gp_top = {

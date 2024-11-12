@@ -21,7 +21,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ./containers.nix
+    # ./containers.nix
     ./disks.nix
     ./networking.nix
     ./nfs.nix

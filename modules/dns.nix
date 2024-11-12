@@ -36,7 +36,7 @@ in
       virtualHosts.hosts = [
         "audiobooks.ajackson.dev"
         "bazarr.ajackson.dev"
-        "cameras.ajackson.dev"
+        # "cameras.ajackson.dev"
         "cloud.andrewjackson.dev"
         "git.ajackson.dev"
         "grafana.ajackson.dev"
