@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
   imports = [ ./hardware-configuration.nix ];
 
@@ -44,6 +49,16 @@
   hardware.graphics = {
     enable = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    darktable
+    dotnetCorePackages.dotnet_8.sdk
+    nfs-utils
+    bottles
+    jetbrains.rider
+    siril
+    gimp
+  ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
 
