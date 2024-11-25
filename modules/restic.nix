@@ -14,7 +14,7 @@ in
       default = { };
       type = types.attrsOf (
         types.submodule (
-          { config, name, ... }:
+          { ... }:
           {
             options = {
               paths = mkOption { type = types.listOf types.str; };
@@ -37,7 +37,7 @@ in
     };
 
     services.restic.backups = (
-      (flip mapAttrs' cfg (
+      flip mapAttrs' cfg (
         name: backupCfg:
         nameValuePair "${name}" {
           initialize = false;
@@ -62,13 +62,18 @@ in
             "--keep-weekly 5"
             "--keep-monthly 12"
             "--host ${config.networking.hostName}"
+            "--retry-lock 1h"
+          ];
+
+          checkOpts = [
+            "--retry-lock 1h"
           ];
         }
-      ))
+      )
     );
 
     systemd.services = (
-      (flip mapAttrs' cfg (
+      flip mapAttrs' cfg (
         name: backupCfg:
         nameValuePair "restic-backups-${name}" {
           serviceConfig.ExecStopPost = [
@@ -86,7 +91,7 @@ in
             '')
           ];
         }
-      ))
+      )
     );
   };
 }
