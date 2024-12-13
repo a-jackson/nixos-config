@@ -28,6 +28,7 @@ in
       miniflux = 8678;
       stirling-pdf = 8080;
       pitpat = 5007;
+      mealie = 9342;
     };
   };
 }

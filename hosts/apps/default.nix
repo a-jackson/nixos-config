@@ -81,6 +81,12 @@
   };
 
   services = {
+    mealie = {
+      enable = true;
+      listenAddress = "127.0.0.1";
+      port = config.homelab.ports.mealie;
+    };
+
     frigate = {
       enable = false;
       hostname = "cameras.ajackson.dev";

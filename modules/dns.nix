@@ -53,6 +53,7 @@ in
         "rss.ajackson.dev"
         "pdf.ajackson.dev"
         "pitpat.ajackson.dev"
+        "mealie.ajackson.dev"
       ];
     };
 

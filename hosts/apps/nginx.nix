@@ -57,6 +57,7 @@ in
           "rss.${internal_domain}" = host internal_domain ports.miniflux;
           "pdf.${internal_domain}" = host internal_domain ports.stirling-pdf;
           "pitpat.${internal_domain}" = host internal_domain ports.pitpat;
+          "mealie.${internal_domain}" = host internal_domain ports.mealie;
         };
     };
   };
