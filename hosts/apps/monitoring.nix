@@ -54,6 +54,12 @@
           domain = "grafana.ajackson.dev";
           root_url = "https://grafana.ajackson.dev";
         };
+        analytics = {
+          enabled = false;
+          reporting_enabled = false;
+          check_for_updates = false;
+          check_for_plugin_updates = false;
+        };
       };
     };
 
