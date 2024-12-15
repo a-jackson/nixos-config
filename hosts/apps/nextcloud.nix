@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   sops.secrets = {
     nextcloud_password = {
@@ -47,27 +47,43 @@
           "~ /cool/adminws" = socket;
         };
     };
-  };
 
-  homelab.nextcloud = {
-    enable = true;
-    adminEmail = "andrew@a-jackson.co.uk";
-    adminPasswordFile = config.sops.secrets.nextcloud_password.path;
-    settings = {
-      system = {
-        appstoreenabled = true;
+    nginx.virtualHosts."cloud.andrewjackson.dev" = {
+      forceSSL = true;
+      useACMEHost = "andrewjackson.dev";
+    };
+
+    nextcloud = {
+      enable = true;
+      package = pkgs.nextcloud30;
+      settings.loglevel = 0;
+      https = true;
+      hostName = "cloud.andrewjackson.dev";
+      configureRedis = true;
+      maxUploadSize = "2G";
+      database.createLocally = true;
+      caching = {
+        apcu = true;
+        redis = true;
       };
-      apps.core.backgroundjobs_mode = "cron";
-      # This avoids users to see the email of all others users when
-      # they try to share a file.
-      apps.core.shareapi_only_share_with_group_members = "yes";
-      apps.registration.admin_approval_required = "yes";
-      # Default quota for new users
-      apps.files.default_quota = "40GB";
-      apps.richdocuments.wopi_url = "https://office.andrewjackson.dev";
-      # This is to disable the rich workspace feature because of this issue:
-      # https://help.nextcloud.com/t/loading-spinner-in-files-overview/80393
-      apps.text.workspace_available = "0";
+      config = {
+        dbtype = "mysql";
+        adminuser = "andrew";
+        adminpassFile = config.sops.secrets.nextcloud_password.path;
+      };
+      settings = {
+        apps.core.backgroundjobs_mode = "cron";
+        # This avoids users to see the email of all others users when
+        # they try to share a file.
+        apps.core.shareapi_only_share_with_group_members = "yes";
+        apps.registration.admin_approval_required = "yes";
+        # Default quota for new users
+        apps.files.default_quota = "40GB";
+        apps.richdocuments.wopi_url = "https://office.andrewjackson.dev";
+        # This is to disable the rich workspace feature because of this issue:
+        # https://help.nextcloud.com/t/loading-spinner-in-files-overview/80393
+        apps.text.workspace_available = "0";
+      };
     };
   };
 }
