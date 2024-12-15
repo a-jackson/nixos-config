@@ -128,6 +128,9 @@
 
         table_manager.retention_deletes_enabled = false;
         table_manager.retention_period = "0s";
+        analytics = {
+          reporting_enabled = false;
+        };
       };
     };
   };
