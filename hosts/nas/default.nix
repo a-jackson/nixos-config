@@ -125,6 +125,6 @@ in
       ExecStart = [ "${pkgs.hd-idle}/bin/hd-idle -i 300" ];
       Restart = "always";
     };
-    wants = [ "multi-user.target" ];
+    wantedBy = [ "multi-user.target" ];
   };
 }
