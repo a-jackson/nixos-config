@@ -117,4 +117,16 @@ in
   };
 
   environment.systemPackages = with pkgs; [ smartmontools ];
+
+  systemd.services.hd-idle = {
+    enable = true;
+    description = "spin down idle hard disks";
+    documentation = "man hd-idle(8)";
+    type = "simple";
+    serviceConfig = {
+      ExecStart = [ "${pkgs.hd-idle}/bin/hd-idle -i 300" ];
+    };
+    Restart = "always";
+    wants = [ "multi-user.target" ];
+  };
 }
