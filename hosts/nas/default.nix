@@ -122,7 +122,7 @@ in
     enable = true;
     serviceConfig = {
       Type = "simple";
-      ExecStart = [ "${pkgs.hd-idle}/bin/hd-idle -i 300" ];
+      ExecStart = [ "${pkgs.hd-idle}/bin/hd-idle -i 600" ];
       Restart = "always";
     };
     wantedBy = [ "multi-user.target" ];
