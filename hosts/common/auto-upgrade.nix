@@ -7,7 +7,7 @@ in
 {
   system.autoUpgrade = {
     enable = isClean;
-    dates = "hourly";
+    dates = "daily";
     flags = [ "--refresh" ];
     flake = "github:a-jackson/nixos-config?ref=master";
   };

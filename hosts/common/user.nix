@@ -1,7 +1,6 @@
 {
   pkgs,
   home-manager,
-  stylix,
   username,
   config,
   lib,
@@ -50,16 +49,6 @@
             home = {
               inherit username;
               homeDirectory = lib.mkDefault "/home/${username}";
-              stateVersion = "23.05";
-            };
-          }
-        ] ++ lib.optionals (builtins.substring 0 8 type == "hyprland") [ stylix.homeManagerModules.stylix ];
-      };
-      root = {
-        imports = [
-          ../../home/common
-          {
-            home = {
               stateVersion = "23.05";
             };
           }

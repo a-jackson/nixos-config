@@ -1,11 +1,9 @@
-{ self, inputs }:
+{ inputs }:
 let
   inherit (inputs)
     nixpkgs
     home-manager
     nixvim
-    nixos-generators
-    stylix
     ;
 in
 {
@@ -40,10 +38,7 @@ in
       modules = [
         {
           imports =
-            [ nixvim.homeManagerModules.nixvim ]
-            ++ nixpkgs.lib.optionals (builtins.substring 0 8 type == "hyprland") [
-              stylix.homeManagerModules.stylix
-            ];
+            [ nixvim.homeManagerModules.nixvim ];
         }
         ../home/${type}.nix
         {
@@ -70,23 +65,6 @@ in
       extraSpecialArgs = {
         inherit inputs;
       };
-    };
-
-  mkImage =
-    {
-      hostname,
-      username ? "andrew",
-      system ? "x86_64-linux",
-      desktop ? null,
-    }:
-    nixos-generators.nixosGenerate {
-      specialArgs = inputs // {
-        inherit username hostname desktop;
-      };
-      system = system;
-      format = "iso";
-
-      modules = [ ../hosts ];
     };
 
   forAllSystems = inputs.nixpkgs.lib.genAttrs [
