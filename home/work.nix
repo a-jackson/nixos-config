@@ -25,9 +25,8 @@
     (
       with dotnetCorePackages;
       combinePackages [
-        sdk_6_0
-        sdk_7_0
         sdk_8_0
+        sdk_9_0
       ]
     )
     (python312.withPackages (
@@ -40,6 +39,8 @@
       ]
     ))
     openssl
+    slides
+    graph-easy
   ];
 
   homelab.nvim = {
@@ -85,5 +86,12 @@
         };
       };
     };
+
+    fish.interactiveShellInit = lib.mkOrder 200 ''
+      function __fish_complete_aws
+        env COMP_LINE=(commandline -cp) ${pkgs.awscli2}/bin/aws_completer | tr -d ' '
+      end
+      complete -c aws -f -a "(__fish_complete_aws)"
+    '';
   };
 }
