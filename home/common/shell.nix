@@ -174,6 +174,11 @@
     fd.enable = true;
   };
 
+  home.file.zellij = {
+    target = ".config/zellij/config.kdl";
+    source = ./zellij-config.kdl;
+  };
+
   services.gpg-agent = {
     enable = true;
     pinentryPackage = pkgs.pinentry-tty;
