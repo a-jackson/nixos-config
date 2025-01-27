@@ -69,12 +69,19 @@ in
           "jellyfin.${public_domain}" = host public_domain "http://apps:8096";
           "requests.${public_domain}" = host public_domain "http://apps:5055";
           "notify.${public_domain}" = host public_domain "http://127.0.0.1:8000";
+          "pics.${public_domain}" = host public_domain "http://127.0.0.1:3000";
         };
     };
 
     gotify = {
       enable = true;
       environment.GOTIFY_SERVER_PORT = 8000;
+    };
+
+    immich-public-proxy = {
+      enable = true;
+      port = 3000;
+      immichUrl = "https://pics.ajackson.dev";
     };
   };
   security.acme = {
