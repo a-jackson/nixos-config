@@ -86,6 +86,7 @@
         };
       };
     };
+    lazygit.enable = true;
 
     fish.interactiveShellInit = lib.mkOrder 200 ''
       function __fish_complete_aws

@@ -134,26 +134,22 @@ keybinds clear-defaults=true {
       }
   }
   shared_among "normal" "locked" {
-      bind "Alt left" { MoveFocusOrTab "left"; }
-      bind "Alt down" { MoveFocus "down"; }
-      bind "Alt up" { MoveFocus "up"; }
-      bind "Alt right" { MoveFocusOrTab "right"; }
-      bind "Alt +" { Resize "Increase"; }
-      bind "Alt -" { Resize "Decrease"; }
-      bind "Alt =" { Resize "Increase"; }
+      bind "Shift Alt +" { Resize "Increase"; }
+      bind "Shift Alt -" { Resize "Decrease"; }
+      bind "Shift Alt =" { Resize "Increase"; }
       bind "Alt [" { PreviousSwapLayout; }
       bind "Alt ]" { NextSwapLayout; }
-      bind "Alt f" { ToggleFloatingPanes; }
-      bind "Alt h" { MoveFocusOrTab "left"; }
-      bind "Alt i" { MoveTab "left"; }
-      bind "Alt j" { MoveFocus "down"; }
-      bind "Alt k" { MoveFocus "up"; }
-      bind "Alt l" { MoveFocusOrTab "right"; }
-      bind "Alt n" { NewPane; }
-      bind "Alt o" { MoveTab "right"; }
+      bind "Shift Alt f" { ToggleFloatingPanes; }
+      bind "Shift Alt h" { MoveFocusOrTab "left"; }
+      bind "Shift Alt i" { MoveTab "left"; }
+      bind "Shift Alt j" { MoveFocus "down"; }
+      bind "Shift Alt k" { MoveFocus "up"; }
+      bind "Shift Alt l" { MoveFocusOrTab "right"; }
+      bind "Shift Alt n" { NewPane; }
+      bind "Shift Alt o" { MoveTab "right"; }
   }
   shared_except "locked" "renametab" "renamepane" {
-      bind "Ctrl g" { SwitchToMode "locked"; }
+      bind "Ctrl b" { SwitchToMode "locked"; }
       bind "Ctrl q" { Quit; }
   }
   shared_except "locked" "entersearch" {
