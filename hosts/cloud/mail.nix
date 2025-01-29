@@ -62,4 +62,9 @@
       useACMEHost = "andrewjackson.dev";
     };
   };
+
+  homelab.restic.daily.paths = [
+    "/var/vmail"
+    "/var/dkim"
+  ];
 }
