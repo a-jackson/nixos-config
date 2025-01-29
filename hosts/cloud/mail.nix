@@ -30,10 +30,11 @@
   services = {
     postfix = {
       relayHost = "smtp.sendgrid.net";
-      relayPort = 587;
+      relayPort = 465;
       rootAlias = "andrew@andrewjackson.dev";
       mapFiles.sasl_password = config.sops.secrets.sasl_password.path;
       config = {
+        smtp_use_tls = "yes";
         smtp_sasl_auth_enable = "yes";
         smtp_sasl_security_options = "noanonymous";
         smtp_sasl_tls_security_options = "noanonymous";
