@@ -28,3 +28,9 @@ creation_rules:
           - *andrew
         age:
           - *apps
+  - path_regex: hosts/cloud/secrets.yaml
+    key_groups:
+      - pgp:
+          - *andrew
+        age:
+          - *cloud

@@ -40,7 +40,9 @@
 
   environment.systemPackages = with pkgs; [
     darktable
+    davinci-resolve
     dotnetCorePackages.dotnet_8.sdk
+    kdePackages.kdenlive
     nfs-utils
     bottles
     jetbrains.rider
