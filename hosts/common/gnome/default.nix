@@ -19,7 +19,7 @@
   };
 
   programs.dconf.enable = true;
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
   environment.systemPackages = with pkgs; [ simple-scan ];

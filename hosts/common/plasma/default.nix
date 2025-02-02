@@ -20,7 +20,7 @@
   };
 
   security.rtkit.enable = true;
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   programs.dconf.enable = true;
 
   environment.systemPackages = with pkgs; [ libsForQt5.skanlite ];
