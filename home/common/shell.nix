@@ -189,16 +189,22 @@
 
   services.ssh-agent.enable = true;
 
-  home.packages = with pkgs; [
-    home-manager
-    sops
-    jq
-    gcc
-    nodejs_20
-    tea
-    fd
-    # (python312.withPackages (ps: with ps; []))
-  ];
+  home.packages =
+    with pkgs;
+    let
+      get_password = writeShellScript "get-password" ''${bitwarden-cli}/bin/bw get password "$(cat /etc/hostname) SSHKey Passphrase"'';
+    in
+    [
+      (writeShellScriptBin "init-ssh" ''SSH_ASKPASS_REQUIRE="force" SSH_ASKPASS="${get_password}" ssh-add'')
+      bitwarden-cli
+      home-manager
+      sops
+      jq
+      gcc
+      nodejs_20
+      tea
+      fd
+    ];
 
   home.sessionVariables = {
     EDITOR = "nvim";
