@@ -22,15 +22,11 @@
     loginAccounts = {
       "andrew@andrewjackson.dev" = {
         hashedPasswordFile = config.sops.secrets.mail_password.path;
-        aliases = [ "@andrewjackson.dev" ];
-      };
-      "andrew@jksn.uk" = {
-        hashedPasswordFile = config.sops.secrets.mail_password.path;
-        aliases = [ "@jksn.uk" ];
-      };
-      "andrew@a-jackson.co.uk" = {
-        hashedPasswordFile = config.sops.secrets.mail_password.path;
-        aliases = [ "@a-jackson.co.uk" ];
+        aliases = [
+          "@andrewjackson.dev"
+          "@jksn.uk"
+          "@a-jackson.co.uk"
+        ];
       };
     };
     certificateScheme = "acme";
