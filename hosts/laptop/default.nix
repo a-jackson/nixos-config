@@ -1,7 +1,6 @@
 {
   username,
   pkgs,
-  config,
   ...
 }:
 {
@@ -55,31 +54,6 @@
 
   virtualisation.docker.enable = true;
   users.users.${username}.extraGroups = [ "docker" ];
-
-  services.syncthing = {
-    enable = true;
-    user = username;
-    group = "users";
-    dataDir = "/home/${username}";
-    openDefaultPorts = true;
-    settings.devices =
-      let
-        devices = config.homelab.syncthing.devices;
-      in
-      {
-        pixel6.id = devices.pixel6;
-        nas.id = devices.nas;
-      };
-    settings.folders = {
-      logseq = {
-        path = "/home/andrew/documents/Logseq";
-        devices = [
-          "pixel6"
-          "nas"
-        ];
-      };
-    };
-  };
 
   systemd.mounts =
     let

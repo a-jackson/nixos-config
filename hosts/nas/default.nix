@@ -87,14 +87,6 @@ in
             laptop.id = devices.laptop;
           };
         folders = {
-          logseq = {
-            path = "/mnt/user/documents/logseq";
-            devices = [
-              "pixel6"
-              "laptop"
-            ];
-            versioning.type = "simple";
-          };
           camera = {
             path = "/mnt/user/images/photos/pixel6";
             devices = [ "pixel6" ];
@@ -108,6 +100,11 @@ in
           };
           phoneBackups = {
             path = "/mnt/user/backups/pixel6";
+            devices = [ "pixel6" ];
+            versioning.type = "simple";
+          };
+          seedvault = {
+            path = "/mnt/user/backups/seedvault";
             devices = [ "pixel6" ];
             versioning.type = "simple";
           };
