@@ -5,7 +5,7 @@ theme "catppuccin-mocha"
 
 keybinds clear-defaults=true {
   locked {
-      bind "Ctrl b" { SwitchToMode "normal"; }
+      bind "Ctrl s" { SwitchToMode "normal"; }
   }
   pane {
       bind "left" { MoveFocus "left"; }
@@ -149,7 +149,7 @@ keybinds clear-defaults=true {
       bind "Shift Alt o" { MoveTab "right"; }
   }
   shared_except "locked" "renametab" "renamepane" {
-      bind "Ctrl b" { SwitchToMode "locked"; }
+      bind "Ctrl s" { SwitchToMode "locked"; }
       bind "Ctrl q" { Quit; }
   }
   shared_except "locked" "entersearch" {
