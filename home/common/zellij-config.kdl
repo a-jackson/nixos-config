@@ -149,7 +149,7 @@ keybinds clear-defaults=true {
       bind "Shift Alt o" { MoveTab "right"; }
   }
   shared_except "locked" "renametab" "renamepane" {
-      bind "Ctrl s" { SwitchToMode "locked"; }
+      bind "Ctrl s" { Write 19; SwitchToMode "locked"; }
       bind "Ctrl q" { Quit; }
   }
   shared_except "locked" "entersearch" {
