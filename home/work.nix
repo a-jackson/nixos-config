@@ -17,6 +17,7 @@
 
   home.packages = with pkgs; [
     awscli2
+    home-manager
     terraform
     terraform-ls
     omnisharp-roslyn

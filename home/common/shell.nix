@@ -192,7 +192,6 @@
     [
       (writeShellScriptBin "init-ssh" ''SSH_ASKPASS_REQUIRE="force" SSH_ASKPASS="${get_password}" ssh-add'')
       bitwarden-cli
-      home-manager
       sops
       jq
       gcc

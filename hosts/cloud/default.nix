@@ -11,6 +11,8 @@ in
   ];
 
   homelab = {
+    nvim.enable = lib.mkForce false;
+    homeType = lib.mkForce "minimal";
     root = {
       ephemeralBtrfs.enable = false;
     };
