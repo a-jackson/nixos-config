@@ -1,8 +1,7 @@
 default_mode "locked"
-// simplified_ui true
-// default_layout "compact"
 theme "catppuccin-mocha"
 session_serialization false
+pane_frames false
 
 keybinds clear-defaults=true {
   locked {
