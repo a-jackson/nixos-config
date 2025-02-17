@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  imports = [ ./zellij.nix ];
 
   programs = {
     git = {
@@ -160,7 +161,6 @@
       '';
     };
 
-    zellij.enable = true;
     zoxide = {
       enable = true;
       options = [ "--cmd cd" ];
@@ -172,11 +172,6 @@
     ripgrep.enable = true;
     bat.enable = true;
     fd.enable = true;
-  };
-
-  home.file.zellij = {
-    target = ".config/zellij/config.kdl";
-    source = ./zellij-config.kdl;
   };
 
   services.gpg-agent = {
@@ -208,7 +203,5 @@
 
   home.sessionVariables = {
     EDITOR = "nvim";
-    ZELLIJ_AUTO_ATTACH = "true";
-    ZELLIJ_AUTO_EXIT = "true";
   };
 }
