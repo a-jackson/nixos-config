@@ -35,6 +35,7 @@
       };
     };
     nvim.csharp = true;
+    nvim.rust = true;
   };
 
   environment.systemPackages = with pkgs; [
@@ -46,6 +47,9 @@
     jetbrains.rider
     siril
     gimp
+    rustc
+    cargo
+    rustfmt
   ];
 
   environment.variables = {

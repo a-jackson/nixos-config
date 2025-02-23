@@ -36,6 +36,8 @@
         ];
       };
     };
+    nvim.csharp = true;
+    nvim.rust = true;
   };
 
   nixpkgs.config.allowUnfreePredicate =
@@ -58,6 +60,9 @@
     jetbrains.rider
     siril
     gimp
+    rustc
+    cargo
+    rustfmt
   ];
 
   services.xserver.videoDrivers = [ "nvidia" ];

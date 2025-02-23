@@ -41,6 +41,10 @@ in
         type = types.bool;
         default = false;
       };
+      rust = mkOption {
+        type = types.bool;
+        default = false;
+      };
     };
 
   config = lib.mkIf config.homelab.nvim.enable {

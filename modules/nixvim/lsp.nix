@@ -33,9 +33,21 @@
                   };
                 };
               };
+              rust_analyzer = {
+                enable = true;
+                installRustc = true;
+                installCargo = true;
+              };
             }
             // lib.optionalAttrs config.homelab.nvim.terraform { terraformls.enable = true; }
-            // lib.optionalAttrs config.homelab.nvim.csharp { omnisharp.enable = true; };
+            // lib.optionalAttrs config.homelab.nvim.csharp { omnisharp.enable = true; }
+            // lib.optionalAttrs config.homelab.nvim.rust {
+              rust_analyzer = {
+                enable = true;
+                installRustc = true;
+                installCargo = true;
+              };
+            };
 
           keymaps = {
             lspBuf =
