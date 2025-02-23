@@ -15,7 +15,10 @@
             {
               eslint.enable = true;
               ts_ls.enable = true;
+              volar.enable = true;
               cssls.enable = true;
+              cssls.settings.css.lint.unknownAtRules = "ignore";
+              tailwindcss.enable = true;
               bashls.enable = true;
               html.enable = true;
               emmet_ls.enable = true;
@@ -168,6 +171,8 @@
         friendly-snippets.enable = true;
 
         cmp_luasnip.enable = true;
+
+        tailwind-tools.enable = true;
       };
 
       keymaps =

@@ -195,7 +195,7 @@
       sops
       jq
       gcc
-      nodejs_20
+      nodejs_22
       tea
       fd
     ];
@@ -203,4 +203,8 @@
   home.sessionVariables = {
     EDITOR = "nvim";
   };
+
+  home.sessionPath = [
+    "$HOME/.npm-global/bin"
+  ];
 }
