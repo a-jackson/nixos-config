@@ -38,23 +38,36 @@
     nvim.rust = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    darktable
-    dotnetCorePackages.dotnet_8.sdk
-    kdePackages.kdenlive
-    nfs-utils
-    bottles
-    jetbrains.rider
-    siril
-    gimp
-    rustc
-    cargo
-    rustfmt
-  ];
+  environment =
+    with pkgs;
+    let
+      dotnet = (
+        with dotnetCorePackages;
+        combinePackages [
+          dotnet_8.sdk
+          dotnet_9.sdk
+        ]
+      );
+    in
+    {
+      systemPackages = with pkgs; [
+        darktable
+        dotnet
+        kdePackages.kdenlive
+        nfs-utils
+        bottles
+        jetbrains.rider
+        siril
+        gimp
+        rustc
+        cargo
+        rustfmt
+      ];
 
-  environment.variables = {
-    DOTNET_ROOT = pkgs.dotnetCorePackages.dotnet_8.sdk;
-  };
+      variables = {
+        DOTNET_ROOT = "${dotnet}/share/dotnet";
+      };
+    };
 
   virtualisation.docker.enable = true;
   users.users.${username}.extraGroups = [ "docker" ];
