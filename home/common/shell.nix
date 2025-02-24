@@ -172,6 +172,7 @@
     ripgrep.enable = true;
     bat.enable = true;
     fd.enable = true;
+    lazygit.enable = true;
   };
 
   services.gpg-agent = {
