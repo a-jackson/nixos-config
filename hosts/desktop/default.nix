@@ -1,5 +1,4 @@
 {
-  lib,
   config,
   pkgs,
   ...
@@ -33,20 +32,13 @@
           "/home/andrew/.nuget"
           "/home/andrew/.npm"
           "**/node_modules/"
+          "/home/andrew/Pictures/**/process/"
         ];
       };
     };
     nvim.csharp = true;
     nvim.rust = true;
   };
-
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "nvidia-x11"
-      "nvidia-settings"
-      "nvidia-persistenced"
-    ];
 
   hardware.graphics = {
     enable = true;
@@ -63,6 +55,7 @@
     rustc
     cargo
     rustfmt
+    kdePackages.kdenlive
   ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -95,6 +88,6 @@
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
 }
