@@ -3,6 +3,7 @@
   nixpkgs,
   lib,
   config,
+  isd,
   ...
 }:
 {
@@ -73,6 +74,7 @@
       lsof
       hdparm
       du-dust
+      isd.packages.${pkgs.system}.default
     ];
 
     systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;

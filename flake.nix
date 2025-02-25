@@ -41,6 +41,11 @@
     simple-nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
     };
+
+    isd = {
+      url = "github:isd-project/isd";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
