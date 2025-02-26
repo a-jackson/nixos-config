@@ -147,6 +147,7 @@ keybinds clear-defaults=true {
       bind "Shift Alt l" { MoveFocusOrTab "right"; }
       bind "Shift Alt n" { NewPane; }
       bind "Shift Alt o" { MoveTab "right"; }
+      bind "Shift Alt t" { NewTab; }
   }
   shared_except "locked" "renametab" "renamepane" {
       bind "Ctrl s" { Write 19; SwitchToMode "locked"; }
