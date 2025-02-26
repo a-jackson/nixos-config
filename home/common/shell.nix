@@ -73,6 +73,7 @@
         set __fish_git_prompt_show_informative_status 1
         set __fish_git_prompt_showupstream 1
         fzf_configure_bindings --git_log=\e\cg
+        yes | fish_config theme save "Catppuccin Mocha"
       '';
       plugins = [
         {
@@ -106,10 +107,10 @@
               pkgs.fetchFromGitHub {
                 owner = "catppuccin";
                 repo = "starship";
-                rev = "5629d2356f62a9f2f8efad3ff37476c19969bd4f";
-                sha256 = "sha256-nsRuxQFKbQkyEI4TXgvAjcroVdG+heKX5Pauq/4Ota0=";
+                rev = "e99ba6b210c0739af2a18094024ca0bdf4bb3225";
+                sha256 = "sha256-1w0TJdQP5lb9jCrCmhPlSexf0PkAlcz8GBDEsRjPRns=";
               }
-              + /palettes/${flavour}.toml
+              + /themes/${flavour}.toml
             )
           );
       };
@@ -232,4 +233,17 @@
   home.sessionPath = [
     "$HOME/.npm-global/bin"
   ];
+
+  xdg.configFile =
+    let
+      catppuccin-fish = pkgs.fetchFromGitHub {
+        owner = "catppuccin";
+        repo = "fish";
+        rev = "cc8e4d8fffbdaab07b3979131030b234596f18da";
+        sha256 = "sha256-udiU2TOh0lYL7K7ylbt+BGlSDgCjMpy75vQ98C1kFcc=";
+      };
+    in
+    {
+      "fish/themes/Catppuccin Mocha.theme".source = "${catppuccin-fish}/themes/Catppuccin Mocha.theme";
+    };
 }
