@@ -17,7 +17,7 @@ in
   programs.fish.interactiveShellInit = (
     mkOrder 200 ''
       if not set -q ZELLIJ
-          ${zellijCmd} attach -c main || zellij
+          ${zellijCmd} attach -c main || ${zellijCmd}
 
           kill $fish_pid
       end
