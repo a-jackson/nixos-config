@@ -25,6 +25,30 @@
       };
       extraConfig = {
         credential.helper = "store";
+        pull.rebase = true;
+        fetch = {
+          prune = true;
+          pruneTags = true;
+          all = true;
+        };
+        rebase = {
+          autoStash = true;
+          autoSquash = true;
+          updateRefs = true;
+        };
+        column.ui = "auto";
+        branch.sort = "-committerdate";
+        tag.sort = "-version:refname";
+        init.defaultBranch = "main";
+        push = {
+          default = "simple";
+          autoSetupRemote = true;
+          followTags = true;
+        };
+        rerere = {
+          enabled = true;
+          autoUpdate = true;
+        };
       };
       difftastic.enable = true;
     };
