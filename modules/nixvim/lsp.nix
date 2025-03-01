@@ -16,6 +16,7 @@
               eslint.enable = true;
               ts_ls.enable = true;
               volar.enable = true;
+              svelte.enable = true;
               cssls.enable = true;
               cssls.settings.css.lint.unknownAtRules = "ignore";
               tailwindcss.enable = true;
