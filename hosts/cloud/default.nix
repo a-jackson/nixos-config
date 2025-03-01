@@ -90,7 +90,7 @@ in
         behind-proxy = true;
         smtp-server-listen = ":2525";
         smtp-server-domain = "ntfy.ajackson.dev";
-        auth-file = "/var/lib/ntfy/user.db";
+        auth-file = "/var/lib/ntfy-sh/user.db";
         auth-default-access = "deny-all";
       };
     };
