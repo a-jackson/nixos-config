@@ -73,12 +73,24 @@ in
           "requests.${public_domain}" = host public_domain "http://apps:5055";
           "notify.${public_domain}" = host public_domain "http://127.0.0.1:8000";
           "pics.${public_domain}" = host public_domain "http://127.0.0.1:3000";
+          "ntfy.${public_domain}" = host public_domain "http://127.0.0.1:8888";
         };
     };
 
     gotify = {
       enable = true;
       environment.GOTIFY_SERVER_PORT = 8000;
+    };
+
+    ntfy-sh = {
+      enable = true;
+      settings = {
+        base-url = "https://ntfy.${public_domain}";
+        listen-http = "127.0.0.1:8888";
+        behind-proxy = true;
+        smtp-server-listen = ":2525";
+        smtp-server-domain = "ntfy.ajackson.dev";
+      };
     };
 
     immich-public-proxy = {
