@@ -81,10 +81,16 @@ in
               if [[ "$EXIT_STATUS" != "0" ]]; then
                 logs=$(journalctl -u "restic-backups-${name}.service" --lines 20)
                 title="${config.networking.hostName} backups"
-                message="Backup failed with result '$SERVICE_RESULT'\n\n\`\`\`\n$logs\n\`\`\`\n"
+                message="Backup failed with result '$SERVICE_RESULT'
+              \`\`\`
+              $logs
+              \`\`\`
+              "
 
                 ${config.homelab.notifications.sendNotification} \
                   --title "$title" \
+                  --priority 3 \
+                  --tags warning \
                   --message "$message" \
                   --markdown
                 fi
