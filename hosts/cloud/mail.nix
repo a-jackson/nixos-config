@@ -25,6 +25,11 @@
         aliases = [
           "@andrewjackson.dev"
           "@jksn.uk"
+        ];
+      };
+      "andrew@a-jackson.co.uk" = {
+        hashedPasswordFile = config.sops.secrets.mail_password.path;
+        aliases = [
           "@a-jackson.co.uk"
         ];
       };
