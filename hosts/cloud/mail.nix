@@ -34,6 +34,7 @@
         ];
       };
     };
+    enableManageSieve = true;
     certificateScheme = "acme";
     acmeCertificateName = "andrewjackson.dev";
     localDnsResolver = false;
