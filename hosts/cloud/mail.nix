@@ -71,6 +71,7 @@
         $config['smtp_user'] = "%u";
         $config['smtp_pass'] = "%p";
       '';
+      plugins = [ "managesieve" ];
     };
 
     nginx.virtualHosts."mail.andrewjackson.dev" = {
