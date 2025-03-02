@@ -32,6 +32,9 @@
     certificateScheme = "acme";
     acmeCertificateName = "andrewjackson.dev";
     localDnsResolver = false;
+    mailDirectory = "/mnt/mail/vmail";
+    sieveDirectory = "/mnt/mail/sieve";
+    dkimKeyDirectory = "/mnt/mail/dkim";
   };
 
   services = {
@@ -71,7 +74,6 @@
   };
 
   homelab.restic.daily.paths = [
-    "/var/vmail"
-    "/var/dkim"
+    "/mnt/mail"
   ];
 }

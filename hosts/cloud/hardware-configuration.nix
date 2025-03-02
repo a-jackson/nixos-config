@@ -11,6 +11,10 @@
     device = "/dev/disk/by-uuid/D951-0FE6";
     fsType = "vfat";
   };
+  fileSystems."/mnt/mail" = {
+    device = "/dev/disk/by-label/mail";
+    fsType = "btrfs";
+  };
   boot.initrd.availableKernelModules = [
     "ata_piix"
     "uhci_hcd"

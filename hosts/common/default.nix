@@ -75,6 +75,7 @@
       hdparm
       du-dust
       isd.packages.${pkgs.system}.default
+      btrfs-progs
     ];
 
     systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
