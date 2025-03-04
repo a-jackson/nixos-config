@@ -16,6 +16,7 @@
     fqdn = "mx.andrewjackson.dev";
     domains = [
       "andrewjackson.dev"
+      "ajackson.dev"
       "jksn.uk"
       "a-jackson.co.uk"
     ];
@@ -24,6 +25,7 @@
         hashedPasswordFile = config.sops.secrets.mail_password.path;
         aliases = [
           "@andrewjackson.dev"
+          "@ajackson.dev"
           "@jksn.uk"
         ];
       };
