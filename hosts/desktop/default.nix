@@ -38,25 +38,46 @@
     };
     nvim.csharp = true;
     nvim.rust = true;
+    nvim.terraform = true;
   };
 
   hardware.graphics = {
     enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    darktable
-    dotnetCorePackages.dotnet_8.sdk
-    nfs-utils
-    bottles
-    jetbrains.rider
-    siril
-    gimp
-    rustc
-    cargo
-    rustfmt
-    kdePackages.kdenlive
-  ];
+  environment =
+    with pkgs;
+    let
+      dotnet = (
+        with dotnetCorePackages;
+        combinePackages [
+          dotnet_8.sdk
+          dotnet_9.sdk
+        ]
+      );
+    in
+    {
+      systemPackages = with pkgs; [
+        darktable
+        dotnet
+        nfs-utils
+        bottles
+        jetbrains.rider
+        siril
+        gimp
+        rustc
+        cargo
+        rustfmt
+        kdePackages.kdenlive
+        terraform
+        terraform-ls
+        awscli2
+      ];
+
+      variables = {
+        DOTNET_ROOT = "${dotnet}/share/dotnet";
+      };
+    };
 
   services.xserver.videoDrivers = [ "nvidia" ];
 
