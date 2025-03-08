@@ -22,7 +22,7 @@
   ];
   boot.initrd.kernelModules = [ "nvme" ];
   fileSystems."/" = {
-    device = "/dev/sda1";
+    device = "/dev/disk/by-uuid/ae52778a-0099-4263-9bdc-a07abf37920c";
     fsType = "ext4";
   };
 }
