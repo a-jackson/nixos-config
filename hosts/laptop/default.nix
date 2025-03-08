@@ -36,6 +36,7 @@
     };
     nvim.csharp = true;
     nvim.rust = true;
+    nvim.terraform = true;
   };
 
   environment =
@@ -62,6 +63,9 @@
         rustc
         cargo
         rustfmt
+        terraform
+        terraform-ls
+        awscli2
       ];
 
       variables = {
