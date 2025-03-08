@@ -10,6 +10,23 @@ in
     ../../modules/dns.nix
   ];
 
+  nixpkgs.overlays = [
+    (
+      self: super:
+
+      {
+        immich-public-proxy = super.immich-public-proxy.overrideAttrs (oldAttrs: {
+          patches = oldAttrs.patches or [ ] ++ [
+            (self.fetchpatch {
+              url = "https://github.com/a-jackson/immich-public-proxy/commit/0c9225e6b8db34bcdd1202f36f8dc5996dfdede5.patch";
+              sha256 = "sha256-YeTm32KDBINM7VCHDt8kqs96Qz5/dPYNctqKuHYQ2tE=";
+              stripLen = 1;
+            })
+          ];
+        });
+      })
+  ];
+
   homelab = {
     nvim.enable = lib.mkForce false;
     homeType = lib.mkForce "minimal";
