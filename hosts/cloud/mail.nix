@@ -47,8 +47,8 @@
 
   services = {
     postfix = {
-      relayHost = "email-smtp.eu-west-2.amazonaws.com";
-      relayPort = 587;
+      #relayHost = "email-smtp.eu-west-2.amazonaws.com";
+      #relayPort = 587;
       rootAlias = "andrew@andrewjackson.dev";
       mapFiles.sasl_password = config.sops.secrets.sasl_password.path;
       config = {
