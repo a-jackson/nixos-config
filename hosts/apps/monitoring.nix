@@ -120,7 +120,7 @@
         #   enable_api = true;
         # };
 
-        limits_config.reject_old_samples = true;
+        limits_config.reject_old_samples = false;
         limits_config.allow_structured_metadata = false;
         limits_config.reject_old_samples_max_age = "168h";
 
