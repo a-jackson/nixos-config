@@ -1,7 +1,7 @@
 { pkgs, username, ... }:
 {
   hardware.sane.enable = true;
-  hardware.sane.extraBackends = [ pkgs.hplipWithPlugin ];
+  # hardware.sane.extraBackends = [ pkgs.hplipWithPlugin ];
 
   users.users.${username}.extraGroups = [
     "scanner"
