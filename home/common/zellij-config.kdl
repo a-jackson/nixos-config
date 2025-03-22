@@ -2,6 +2,7 @@ default_mode "locked"
 theme "catppuccin-mocha"
 session_serialization false
 pane_frames false
+show_startup_tips false
 
 keybinds clear-defaults=true {
   locked {
