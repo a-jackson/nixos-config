@@ -1,18 +1,12 @@
-{ pkgs, config, ... }:
+{ config, ... }:
 {
   programs.kitty = {
     enable = true;
-    # font.name = "Fira Code";
     themeFile = "Catppuccin-Mocha";
     settings = {
       hide_window_decorations = "yes";
     };
   };
-
-  home.packages = with pkgs; [
-    neovide
-    protonmail-bridge
-  ];
 
   xdg.userDirs = {
     enable = true;
@@ -25,22 +19,6 @@
     videos = null;
     templates = null;
     publicShare = null;
-  };
-
-  systemd.user.services = {
-    protonmail-bridge = {
-      Unit = {
-        Description = "Protonmail Bridge";
-        After = [ "network.target" ];
-      };
-      Service = {
-        ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
-        ExecStart = "${pkgs.protonmail-bridge}/bin/protonmail-bridge --no-window --noninteractive";
-        Restart = "always";
-        RestartSec = 30;
-      };
-      Install.WantedBy = [ "default.target" ];
-    };
   };
 
   services.nextcloud-client.enable = true;

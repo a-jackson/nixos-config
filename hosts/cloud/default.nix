@@ -4,7 +4,6 @@ let
 in
 {
   imports = [
-    ./mail.nix
     ./hardware-configuration.nix
     ./networking.nix
     ../../modules/dns.nix

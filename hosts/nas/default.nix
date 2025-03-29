@@ -21,7 +21,6 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    # ./containers.nix
     ./disks.nix
     ./networking.nix
     ./nfs.nix
@@ -84,7 +83,6 @@ in
           in
           {
             pixel6.id = devices.pixel6;
-            laptop.id = devices.laptop;
           };
         folders = {
           camera = {

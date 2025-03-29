@@ -25,7 +25,6 @@ in
       node = 9100;
       promtail = 28183;
       adguardhome = 3500;
-      miniflux = 8678;
       stirling-pdf = 8080;
       pitpat = 5007;
       mealie = 9342;
