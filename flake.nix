@@ -32,10 +32,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    simple-nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
-    };
-
     isd = {
       url = "github:isd-project/isd";
       inputs.nixpkgs.follows = "nixpkgs";
