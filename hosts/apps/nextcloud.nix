@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   sops.secrets = {
     nextcloud_password = {
@@ -8,10 +13,10 @@
   };
 
   services = {
-    mysqlBackup = {
+    postgresqlBackup = {
       enable = true;
-      databases = [ "nextcloud" ];
-      location = "/persist/backups/mysql";
+      backupAll = true;
+      location = "/persist/backups/postgresql";
     };
 
     nginx.virtualHosts."office.andrewjackson.dev" = {
@@ -67,7 +72,7 @@
         redis = true;
       };
       config = {
-        dbtype = "mysql";
+        dbtype = "pgsql";
         adminuser = "andrew";
         adminpassFile = config.sops.secrets.nextcloud_password.path;
       };
@@ -83,6 +88,16 @@
         # This is to disable the rich workspace feature because of this issue:
         # https://help.nextcloud.com/t/loading-spinner-in-files-overview/80393
         apps.text.workspace_available = "0";
+
+        maintenance_window_start = 1;
+        default_phone_region = "GB";
+      };
+      phpOptions = {
+        "opcache.enable" = "1";
+        "opcache.save_comments" = "1";
+        "opcache.revalidate_freq" = lib.mkForce "0";
+        "opcache.memory_consumption" = lib.mkForce "1024";
+        "opcache.interned_strings_buffer" = lib.mkForce "512";
       };
     };
   };
