@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   imports = [ ./zellij.nix ];
 
@@ -80,4 +80,26 @@
     };
 
   home.packages = [ pkgs.home-manager ];
+
+  systemd.user.services."home-manager-gc" = {
+    Unit = {
+      Description = "Home Manager Garbage Collection";
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${lib.getExe pkgs.home-manager} expire-generations -7days";
+    };
+    Install.WantedBy = [ "default.target" ];
+
+  };
+
+  systemd.user.timers."home-manager-gc" = {
+    Unit.Description = "Run Home Manager Garbage Collection Daily";
+
+    Timer = {
+      OnCalendar = "weekly";
+      Persistent = true;
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
 }
