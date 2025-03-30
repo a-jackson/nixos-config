@@ -78,4 +78,6 @@
     {
       "fish/themes/Catppuccin Mocha.theme".source = "${catppuccin-fish}/themes/Catppuccin Mocha.theme";
     };
+
+  home.packages = [ pkgs.home-manager ];
 }
