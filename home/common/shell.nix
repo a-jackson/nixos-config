@@ -64,6 +64,8 @@
 
   };
 
+  nix.gc.automatic = true;
+
   xdg.configFile =
     let
       catppuccin-fish = pkgs.fetchFromGitHub {
