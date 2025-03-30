@@ -3,7 +3,6 @@
   nixpkgs,
   lib,
   config,
-  isd,
   ...
 }:
 {
@@ -74,7 +73,6 @@
       lsof
       hdparm
       du-dust
-      isd.packages.${pkgs.system}.default
       btrfs-progs
     ];
 
