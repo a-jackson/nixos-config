@@ -1,13 +1,6 @@
-#!/usr/bin/env nix-shell
-#! nix-shell -i bash -p bash nixos-rebuild
+#!/usr/bin/env nix
+#! nix shell nixpkgs#bash nixpkgs#nixos-rebuild --command bash
 
-hosts="$1"
-shift
+cmd="${1-switch}"
 
-if [ -z "$hosts" ]; then
-    sudo nixos-rebuild switch --flake ".#$(hostname)"
-fi
-
-for host in ${hosts//,/ }; do
-    nixos-rebuild switch --flake ".#$host" --target-host "root@$host" --build-host "root@$host"
-done
+sudo nixos-rebuild "$cmd" --flake ".#$(hostname)"
