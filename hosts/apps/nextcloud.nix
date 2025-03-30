@@ -15,8 +15,8 @@
   services = {
     postgresqlBackup = {
       enable = true;
-      backupAll = true;
       location = "/persist/backups/postgresql";
+      databases = [ config.services.nextcloud.config.dbname ];
     };
 
     nginx.virtualHosts."office.andrewjackson.dev" = {

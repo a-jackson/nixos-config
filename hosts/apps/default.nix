@@ -15,6 +15,7 @@
     ./nextcloud.nix
     ./nginx.nix
     ./paperless.nix
+    ./postgres-upgrade.nix
     ./stirling.nix
     abe.nixosModules.default
   ];
@@ -84,41 +85,12 @@
       port = config.homelab.ports.mealie;
     };
 
-    frigate = {
-      enable = false;
-      hostname = "cameras.ajackson.dev";
-      settings.cameras = {
-        gp_top = {
-          ffmpeg.inputs = [
-            {
-              path = "rtsp://192.168.1.15:8554/unicast";
-              roles = [
-                "detect"
-                "record"
-              ];
-            }
-          ];
-          detect.enabled = false;
-        };
-        kitchen = {
-          ffmpeg.inputs = [
-            {
-              path = "rtsp://camera:shorts-coat-drinking@192.168.1.109:554/stream1";
-              roles = [
-                "detect"
-                "record"
-              ];
-            }
-          ];
-          detect.enabled = false;
-        };
-      };
-    };
-
     silverbullet = {
       enable = true;
       listenPort = config.homelab.ports.silverbullet;
     };
+
+    postgresql.package = pkgs.postgresql_16;
   };
 
   environment = {
