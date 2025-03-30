@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 {
   imports = [
-    ./common/shell.nix
+    ./common
     ../modules/nixvim
   ];
 
