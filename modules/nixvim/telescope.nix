@@ -30,10 +30,6 @@
             options.desc = "[S]earch current [W]ord";
             action = "grep_string";
           };
-          "<leader>sg" = {
-            options.desc = "[S]earch by [Grep]";
-            action = "live_grep";
-          };
           "<leader>sd" = {
             options.desc = "[S]earch [Diagnostics]";
             action = "diagnostics";
@@ -105,6 +101,18 @@
           '';
           mode = "n";
           options.desc = "[S]earch [F]iles";
+        }
+        {
+          key = "<leader>sg";
+          action.__raw = ''
+            function()
+              require('telescope.builtin').live_grep {
+                additional_args = { "--hidden", "--glob", "!**/.git/*" },
+              }
+            end
+          '';
+          mode = "n";
+          options.desc = "[S]earch [G]rep";
         }
       ];
     };

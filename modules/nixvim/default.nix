@@ -317,7 +317,6 @@ in
 
         notify = {
           enable = true;
-          settings.background_colour = "#000000";
         };
         lualine.enable = true;
         vim-surround.enable = true;

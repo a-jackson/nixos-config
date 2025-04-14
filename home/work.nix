@@ -37,11 +37,13 @@
         mypy-boto3-s3
         mypy-boto3-dynamodb
         mypy-boto3-ssm
+        requests
       ]
     ))
     openssl
     slides
     graph-easy
+    git-filter-repo
   ];
 
   homelab.nvim = {
