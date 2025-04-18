@@ -16,6 +16,8 @@ in
     users.users.andrew.extraGroups = [ cfg.group ];
 
     systemd.tmpfiles.rules = [ "d /data/media 0770 - ${cfg.group} - -" ];
+    systemd.services.jellyfin.environment.JELLYFIN_PublishedServerUrl =
+      "https://jellyfin.andrewjackson.dev";
 
     services = {
       sonarr = {
