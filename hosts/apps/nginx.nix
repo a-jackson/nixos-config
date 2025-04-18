@@ -37,6 +37,15 @@ in
           ports = config.homelab.ports;
         in
         {
+          default = {
+            default = true;
+            forceSSL = true;
+            useACMEHost = public_domain;
+            serverName = "_";
+            extraConfig = ''
+              return 404;
+            '';
+          };
           "jellyfin.${public_domain}" = host public_domain ports.jellyfin;
           "requests.${public_domain}" = host public_domain ports.jellyseerr;
           "audiobooks.${internal_domain}" = host internal_domain ports.audiobookshelf;

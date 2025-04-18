@@ -17,8 +17,8 @@ in
         immich-public-proxy = super.immich-public-proxy.overrideAttrs (oldAttrs: {
           patches = oldAttrs.patches or [ ] ++ [
             (self.fetchpatch {
-              url = "https://github.com/a-jackson/immich-public-proxy/commit/0c9225e6b8db34bcdd1202f36f8dc5996dfdede5.patch";
-              sha256 = "sha256-YeTm32KDBINM7VCHDt8kqs96Qz5/dPYNctqKuHYQ2tE=";
+              url = "https://github.com/a-jackson/immich-public-proxy/commit/3e0d89ac957dbf03e9f1c8b561fb2ed89701d713.patch";
+              sha256 = "sha256-u6UyTRy6w8RrwR0hevY//B7gKOXyW2HtqUlUwJfc7i4=";
               stripLen = 1;
             })
           ];
@@ -85,6 +85,15 @@ in
           };
         in
         {
+          default = {
+            default = true;
+            forceSSL = true;
+            useACMEHost = public_domain;
+            serverName = "_";
+            extraConfig = ''
+              return 404;
+            '';
+          };
           "jellyfin.${public_domain}" = host public_domain "http://apps:8096";
           "requests.${public_domain}" = host public_domain "http://apps:5055";
           "notify.${public_domain}" = host public_domain "http://127.0.0.1:8000";
