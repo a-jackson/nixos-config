@@ -63,7 +63,7 @@
         rustc
         cargo
         rustfmt
-        terraform
+        opentofu
         terraform-ls
         awscli2
       ];

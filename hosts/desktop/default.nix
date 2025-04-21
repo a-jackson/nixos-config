@@ -69,7 +69,7 @@
         cargo
         rustfmt
         kdePackages.kdenlive
-        terraform
+        opentofu
         terraform-ls
         awscli2
       ];
