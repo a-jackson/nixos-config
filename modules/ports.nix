@@ -28,6 +28,7 @@ in
       stirling-pdf = 8080;
       pitpat = 5007;
       mealie = 9342;
+      karakeep = 3333;
     };
   };
 }

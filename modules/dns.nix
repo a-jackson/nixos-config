@@ -52,6 +52,7 @@ in
         "pdf.ajackson.dev"
         "pitpat.ajackson.dev"
         "mealie.ajackson.dev"
+        "karakeep.ajackson.dev"
       ];
     };
 
