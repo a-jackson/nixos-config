@@ -13,6 +13,7 @@
       settings = {
         PAPERLESS_FILENAME_FORMAT = "{created_year}/{correspondent}/{title}";
         PAPERLESS_CONSUMER_RECURSIVE = "true";
+        PAPERLESS_URL = "https://paperless.ajackson.dev";
         LD_LIBRARY_PATH = "${lib.getLib pkgs.mkl}/lib";
       };
     };
