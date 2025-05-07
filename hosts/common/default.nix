@@ -59,6 +59,10 @@
         ];
       };
 
+      extraOptions = ''
+        download-buffer-size = 524288000
+      '';
+
       gc = {
         automatic = true;
         dates = "weekly";

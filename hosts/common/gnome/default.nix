@@ -5,7 +5,7 @@
       enable = true;
       xkb.layout = "gb";
       displayManager.gdm.enable = true;
-      displayManager.gdm.wayland = false;
+      displayManager.gdm.wayland = true;
       desktopManager.gnome.enable = true;
     };
 

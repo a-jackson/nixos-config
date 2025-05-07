@@ -64,7 +64,7 @@
         bottles
         jetbrains.rider
         siril
-        gimp
+        gimp3
         rustc
         cargo
         rustfmt
