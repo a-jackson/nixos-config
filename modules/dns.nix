@@ -53,6 +53,7 @@ in
         "pitpat.ajackson.dev"
         "mealie.ajackson.dev"
         "karakeep.ajackson.dev"
+        "location.ajackson.dev"
       ];
     };
 

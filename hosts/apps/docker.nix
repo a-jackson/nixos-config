@@ -31,6 +31,9 @@
       "docker-compose/karakeep/docker-compose.yml" = {
         source = ./karakeep/docker-compose.yml;
       };
+      "docker-compose/dawarich/docker-compose.yml" = {
+        source = ./dawarich/docker-compose.yml;
+      };
     };
   };
 }

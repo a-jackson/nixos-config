@@ -67,6 +67,7 @@ in
           "pitpat.${internal_domain}" = host internal_domain ports.pitpat;
           "mealie.${internal_domain}" = host internal_domain ports.mealie;
           "karakeep.${internal_domain}" = host internal_domain ports.karakeep;
+          "location.${internal_domain}" = host internal_domain ports.dawarich;
         };
     };
   };
