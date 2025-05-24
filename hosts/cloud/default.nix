@@ -9,23 +9,6 @@ in
     ../../modules/dns.nix
   ];
 
-  nixpkgs.overlays = [
-    (
-      self: super:
-
-      {
-        immich-public-proxy = super.immich-public-proxy.overrideAttrs (oldAttrs: {
-          patches = oldAttrs.patches or [ ] ++ [
-            (self.fetchpatch {
-              url = "https://github.com/a-jackson/immich-public-proxy/commit/3e0d89ac957dbf03e9f1c8b561fb2ed89701d713.patch";
-              sha256 = "sha256-u6UyTRy6w8RrwR0hevY//B7gKOXyW2HtqUlUwJfc7i4=";
-              stripLen = 1;
-            })
-          ];
-        });
-      })
-  ];
-
   homelab = {
     nvim.enable = lib.mkForce false;
     homeType = lib.mkForce "minimal";
@@ -124,6 +107,9 @@ in
       enable = true;
       port = 3000;
       immichUrl = "https://pics.ajackson.dev";
+      settings = {
+        ipp.showMetadata.description = true;
+      };
     };
   };
   security.acme = {
