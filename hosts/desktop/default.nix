@@ -80,6 +80,8 @@
     };
 
   services.xserver.videoDrivers = [ "nvidia" ];
+  virtualisation.podman.enable = true;
+  hardware.nvidia-container-toolkit.enable = true;
 
   hardware.nvidia = {
     # Modesetting is required.
