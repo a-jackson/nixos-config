@@ -2,7 +2,7 @@ networks:
   dawarich:
 services:
   dawarich_redis:
-    image: redis:7.0-alpine
+    image: redis:7.4-alpine
     container_name: dawarich_redis
     command: redis-server
     networks:
@@ -43,11 +43,12 @@ services:
       - dawarich_public:/var/app/public
       - dawarich_watched:/var/app/tmp/imports/watched
       - dawarich_storage:/var/app/storage
+      - dawarich_db_data:/dawarich_db_data
     networks:
       - dawarich
     ports:
       - 3002:3000
-      - 9394:9394 # Prometheus exporter, uncomment if needed
+      # - 9394:9394 # Prometheus exporter, uncomment if needed
     stdin_open: true
     tty: true
     entrypoint: web-entrypoint.sh
@@ -55,7 +56,7 @@ services:
     restart: on-failure
     environment:
       RAILS_ENV: development
-      REDIS_URL: redis://dawarich_redis:6379/0
+      REDIS_URL: redis://dawarich_redis:6379
       DATABASE_HOST: dawarich_db
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: password
@@ -69,6 +70,7 @@ services:
       PROMETHEUS_EXPORTER_HOST: 0.0.0.0
       PROMETHEUS_EXPORTER_PORT: 9394
       SELF_HOSTED: "true"
+      STORE_GEODATA: "true"
     logging:
       driver: "json-file"
       options:
@@ -112,7 +114,7 @@ services:
     restart: on-failure
     environment:
       RAILS_ENV: development
-      REDIS_URL: redis://dawarich_redis:6379/0
+      REDIS_URL: redis://dawarich_redis:6379
       DATABASE_HOST: dawarich_db
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: password
@@ -125,6 +127,7 @@ services:
       PROMETHEUS_EXPORTER_HOST: dawarich_app
       PROMETHEUS_EXPORTER_PORT: 9394
       SELF_HOSTED: "true"
+      STORE_GEODATA: "true"
     logging:
       driver: "json-file"
       options:
