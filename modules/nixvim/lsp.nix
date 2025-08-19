@@ -85,7 +85,7 @@
 
         lspkind = {
           enable = true;
-          mode = "symbol";
+          settings.mode = "symbol";
         };
 
         cmp-nvim-lsp.enable = true;
